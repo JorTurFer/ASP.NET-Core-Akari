@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Akari_Net.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Akari_Net.Core.Controllers
 {
@@ -21,7 +22,7 @@ namespace Akari_Net.Core.Controllers
 
             return View();
         }
-
+        [Authorize]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

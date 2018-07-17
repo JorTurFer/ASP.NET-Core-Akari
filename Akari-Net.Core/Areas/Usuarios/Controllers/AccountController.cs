@@ -66,7 +66,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToAction(nameof(HomeController), nameof(HomeController.Index), new { area = "" });
+                    return RedirectToLocal(returnUrl);
 
                 }
                 if (result.RequiresTwoFactor)
@@ -249,7 +249,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToLocal("default");
         }
 
         [HttpPost]
@@ -457,7 +457,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home",new { area = "" });
             }
         }
 
