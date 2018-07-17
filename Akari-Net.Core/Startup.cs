@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Models.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,12 +39,38 @@ namespace Akari_Net.Core
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser,IdentityRole>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = false;
+            })
+           .AddEntityFrameworkStores<ApplicationDbContext>()
+           .AddDefaultTokenProviders();
 
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAuthentication();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                             .AddRazorPagesOptions(options =>
+                             {
+                                 options.AllowAreas = true;
+                                 options.Conventions.AuthorizeAreaFolder("Usuarios", "/Account/Manage");
+                                 options.Conventions.AuthorizeAreaPage("Usuarios", "/Account/Logout");
+                             });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Usuarios/Account/Login";
+                options.LogoutPath = $"/Usuarios/Account/Logout";
+                options.AccessDeniedPath = $"/Usuarios/Account/AccessDenied";
+            });
+
+            services.AddSingleton<IEmailSender, EmailSender>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
