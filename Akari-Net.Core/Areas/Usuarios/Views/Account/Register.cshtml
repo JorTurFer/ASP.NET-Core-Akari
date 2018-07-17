@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-area="Usuarios" asp-controller="Account" asp-action="Register" method="post">
+        <form asp-area="Usuarios" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
             @Html.AntiForgeryToken()
             <h4>Crea una nueva cuenta</h4>
             <hr />
