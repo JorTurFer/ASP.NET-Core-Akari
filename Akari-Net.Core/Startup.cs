@@ -117,7 +117,7 @@ namespace Akari_Net.Core
             //initializing custom roles 
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "Admin", "Manager", "Member" };
+            string[] roleNames = { "WebMaster", "Podologo", "Administracion" };
 
             try
             {
