@@ -226,6 +226,16 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            //Compruebo el modelo
+            var availableEmail = await _userManager.IsEmailAvalilable(model.Email);
+            if (!availableEmail)
+                ModelState.AddModelError(nameof(model.Email), "El 'Correo electrónico' no esta disponible");
+            var availableUserName = await _userManager.IsUserNameAvalilable(model.UserName);
+            if (!availableUserName)
+                ModelState.AddModelError(nameof(model.UserName), "El 'Usuario' no esta disponible");
+
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, NombreCompleto = model.FullName };
@@ -427,9 +437,31 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             var RequiredUniqueChars = passSettingds.GetValue<int>("RequiredUniqueChars");
             if (password.ToCharArray().GroupBy(x => x).Count() < RequiredUniqueChars)
                 return Json($"El password debe contener al menos {RequiredUniqueChars} caracteres diferentes");
-            
+
             //Success
             return Json(data: true);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> CheckUsernameIsAvailable(string userName)
+        {
+            var available = await _userManager.IsUserNameAvalilable(userName);
+            if (available)
+                return Json(data: true);
+            else
+                return Json(data: "El 'Usuario' no esta disponible");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> CheckEmailIsAvailable(string email)
+        {
+            var available = await _userManager.IsEmailAvalilable(email);
+            if (available)
+                return Json(data: true);
+            else
+                return Json(data: "El 'Correo electrónico' no esta disponible");
         }
         #endregion
     }
