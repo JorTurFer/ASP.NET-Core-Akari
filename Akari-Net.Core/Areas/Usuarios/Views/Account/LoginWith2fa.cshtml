@@ -1,0 +1,40 @@
+﻿@model LoginWith2faViewModel
+@{
+    ViewData["Title"] = "Autenticación en dos fases";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<p>Tu login esta protegido con una app de autenticación. Introduce tu codigo a continuación.</p>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+            <input asp-for="RememberMe" type="hidden" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TwoFactorCode"></label>
+                <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="RememberMachine">
+                        <input asp-for="RememberMachine" />
+                        @Html.DisplayNameFor(m => m.RememberMachine)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Log in</button>
+            </div>
+        </form>
+    </div>
+</div>
+<p>
+    ¿No tienes acceso a tu sistema de autenticación? Puedes
+    <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@ViewData["ReturnUrl"]">Entrar con código de recuperación</a>.
+</p>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
