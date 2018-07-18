@@ -1,15 +1,8 @@
 language: csharp
-mono: latest
-dotnet: 2.1.301
-
-sudo: required
 dist: trusty
-
-os:
-  - linux
-
+mono: none
+dotnet: 2.1.301
+install:
+- dotnet restore
 script:
-- ./build.sh --verbosity diagnostic
-  
-notifications:
-  email: false
+- dotnet build
