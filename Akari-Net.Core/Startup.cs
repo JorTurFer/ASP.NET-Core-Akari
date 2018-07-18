@@ -39,18 +39,23 @@ namespace Akari_Net.Core
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser,IdentityRole>(options =>
-            {
-                // Password settings
-                var passSettingds = Configuration.GetSection("PasswordSettings");
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+             {
+                 // Password settings
+                 var passSettings = Configuration.GetSection("PasswordSettings");
 
-                options.Password.RequireDigit = passSettingds.GetValue<bool>("RequireDigit");
-                options.Password.RequiredLength = passSettingds.GetValue<int>("RequiredLength");
-                options.Password.RequiredUniqueChars = passSettingds.GetValue<int>("RequiredUniqueChars");
-                options.Password.RequireLowercase = passSettingds.GetValue<bool>("RequireLowercase");
-                options.Password.RequireNonAlphanumeric = passSettingds.GetValue<bool>("RequireNonAlphanumeric");
-                options.Password.RequireUppercase = passSettingds.GetValue<bool>("RequireUppercase");
-            })
+                 options.Password.RequireDigit = passSettings.GetValue<bool>("RequireDigit");
+                 options.Password.RequiredLength = passSettings.GetValue<int>("RequiredLength");
+                 options.Password.RequiredUniqueChars = passSettings.GetValue<int>("RequiredUniqueChars");
+                 options.Password.RequireLowercase = passSettings.GetValue<bool>("RequireLowercase");
+                 options.Password.RequireNonAlphanumeric = passSettings.GetValue<bool>("RequireNonAlphanumeric");
+                 options.Password.RequireUppercase = passSettings.GetValue<bool>("RequireUppercase");
+                 
+                 //Lockout settings
+                 var lockoutSettings = Configuration.GetSection("Lockout");
+                 options.Lockout.MaxFailedAccessAttempts = lockoutSettings.GetValue<int>("MaxFailedAccessAttempts");
+                 options.Lockout.DefaultLockoutTimeSpan = lockoutSettings.GetValue<TimeSpan>("DefaultLockoutTimeSpan");
+             })
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultTokenProviders();
 
