@@ -42,12 +42,14 @@ namespace Akari_Net.Core
             services.AddIdentity<ApplicationUser,IdentityRole>(options =>
             {
                 // Password settings
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequiredUniqueChars = 2;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = false;
+                var passSettingds = Configuration.GetSection("PasswordSettings");
+
+                options.Password.RequireDigit = passSettingds.GetValue<bool>("RequireDigit");
+                options.Password.RequiredLength = passSettingds.GetValue<int>("RequiredLength");
+                options.Password.RequiredUniqueChars = passSettingds.GetValue<int>("RequiredUniqueChars");
+                options.Password.RequireLowercase = passSettingds.GetValue<bool>("RequireLowercase");
+                options.Password.RequireNonAlphanumeric = passSettingds.GetValue<bool>("RequireNonAlphanumeric");
+                options.Password.RequireUppercase = passSettingds.GetValue<bool>("RequireUppercase");
             })
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultTokenProviders();

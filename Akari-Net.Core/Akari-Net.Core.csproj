@@ -32,5 +32,6 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="true" /></VisualStudio></ProjectExtensions>
 
 </Project>

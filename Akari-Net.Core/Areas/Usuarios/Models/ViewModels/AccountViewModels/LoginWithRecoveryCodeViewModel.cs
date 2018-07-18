@@ -10,7 +10,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
     {
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Recovery Code")]
+        [Display(Name = "Código de recuperación")]
         public string RecoveryCode { get; set; }
     }
 }
