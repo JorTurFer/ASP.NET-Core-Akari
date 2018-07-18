@@ -1,6 +1,6 @@
 ﻿using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Microsoft.AspNetCore.Identity;
-using System;
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +19,10 @@ namespace Akari_Net.Core.Extensions
         {
             var user = await userManager.FindByEmailAsync(email);
             return user is null;
+        }
+        public static string GetEmail(this UserManager<ApplicationUser> userManager, ClaimsPrincipal claims)
+        {            
+            return userManager.GetUserAsync(claims).Result.Email;
         }
     }
 }
