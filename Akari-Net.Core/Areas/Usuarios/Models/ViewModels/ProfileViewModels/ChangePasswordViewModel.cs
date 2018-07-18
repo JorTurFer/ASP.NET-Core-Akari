@@ -18,11 +18,11 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels
         [Remote(areaName: "Usuarios", controller: "Account", action: "CheckPassword", HttpMethod = "POST")]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva contraseña")]
-        public string NewPassword { get; set; }
+        public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirme contraseña")]
-        [Compare("NewPassword", ErrorMessage = "La nuevas contraseñas no coinciden")]
+        [Compare("Password", ErrorMessage = "La nuevas contraseñas no coinciden")]
         public string ConfirmPassword { get; set; }
 
         public string StatusMessage { get; set; }
