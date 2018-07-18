@@ -127,7 +127,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             var email = user.Email;
             await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Se ha enviado el correo de verificación. Por favor, revise su bandeja de entrada.";
             return RedirectToAction(nameof(Index));
         }
 
