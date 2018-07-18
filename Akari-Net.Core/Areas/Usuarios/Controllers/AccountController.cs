@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
@@ -25,17 +28,20 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [TempData]
@@ -250,7 +256,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             return RedirectToLocal("default");
-        }             
+        }
 
         [HttpGet]
         [AllowAnonymous]
@@ -378,10 +384,53 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home",new { area = "" });
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "" });
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult CheckPassword(string password)
+        {
+            var passSettingds = _configuration.GetSection("PasswordSettings");
+            //Check digits
+            if (passSettingds.GetValue<bool>("RequireDigit"))
+            {
+                if (!Regex.IsMatch(password, "[0-9]"))
+                    return Json("*El password debe contener un numero");
+            }
+            //Check lenght
+            var RequiredLength = passSettingds.GetValue<int>("RequiredLength");
+            if (password.Length < RequiredLength)
+            {
+                return Json($"El password debe tener una longitud mayor que {passSettingds.GetValue<int>("RequiredLength")}");
+            }
+            //Check lowercase
+            if (passSettingds.GetValue<bool>("RequireLowercase"))
+            {
+                if (!Regex.IsMatch(password, "[a-z]"))
+                    return Json("El password debe contener al menos una letra minúscula");
+            }
+            //Check uppercase
+            if (passSettingds.GetValue<bool>("RequireUppercase"))
+            {
+                if (!Regex.IsMatch(password, "[A-Z]"))
+                    return Json("El password debe contener al menos una letra mayúscula");
+            }
+            //Check nonalphanumeric
+            if (passSettingds.GetValue<bool>("RequireNonAlphanumeric"))
+            {
+                if (!Regex.IsMatch(password, @"[^a-zA-Z\d\s:]"))
+                    return Json("El password debe contener al menos un caracter no alfanumérico");
+            }
+            //Check uniquechars
+            var RequiredUniqueChars = passSettingds.GetValue<int>("RequiredUniqueChars");
+            if (password.ToCharArray().GroupBy(x => x).Count() < RequiredUniqueChars)
+                return Json($"El password debe contener al menos {RequiredUniqueChars} caracteres diferentes");
+            
+            //Success
+            return Json(data: true);
+        }
         #endregion
     }
 }
