@@ -86,7 +86,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "El usuario y/o la contraseña no es correcto");
+                    ModelState.AddModelError(string.Empty, "El usuario y/o la contraseña no son válidos");
                     return View(model);
                 }
             }
