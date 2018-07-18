@@ -264,7 +264,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home", new { area = "" });
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
