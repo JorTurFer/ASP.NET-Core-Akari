@@ -8,8 +8,8 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
 {
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [EmailAddress(ErrorMessage = "El campo debe ser un correo electrónico")]
         public string Email { get; set; }
     }
 }
