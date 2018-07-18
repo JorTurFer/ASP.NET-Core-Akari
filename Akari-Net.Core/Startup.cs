@@ -76,6 +76,8 @@ namespace Akari_Net.Core
                 options.AccessDeniedPath = $"/Usuarios/Account/AccessDenied";
             });
 
+            services.AddResponseCompression();
+
             services.AddSingleton<IEmailSender, EmailSender>();
 
         }
@@ -97,6 +99,7 @@ namespace Akari_Net.Core
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseResponseCompression();
 
 
             app.UseMvc(routes =>
