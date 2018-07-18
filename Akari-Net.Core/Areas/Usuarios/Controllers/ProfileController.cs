@@ -72,15 +72,21 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (user.Email != model.Email)
+            {
+                var availableNewMail = await _userManager.IsEmailAvalilable(model.Email);
+                if (!availableNewMail)
+                    ModelState.AddModelError(nameof(model.Email), "El 'Correo electrónico' no esta disponible");
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
             }
 
             var email = user.Email;
