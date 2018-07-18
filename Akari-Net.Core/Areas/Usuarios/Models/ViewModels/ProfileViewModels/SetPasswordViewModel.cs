@@ -9,7 +9,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels
 {
     public class SetPasswordViewModel
     {
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [Remote(areaName: "Usuarios", controller: "Account", action: "CheckPassword", HttpMethod = "POST")]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva contraseña")]

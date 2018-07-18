@@ -9,11 +9,11 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
 {
     public class ResetPasswordViewModel
     {
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [EmailAddress(ErrorMessage = "El campo debe ser un correo electrónico")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [Remote(areaName: "Usuarios", controller: "Account", action: "CheckPassword", HttpMethod = "POST")]
         [Display(Name = "Contraseña")]
         [DataType(DataType.Password)]

@@ -8,11 +8,12 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels
 {
     public class IndexViewModel
     {
+        [Display(Name = "Usuario")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [EmailAddress(ErrorMessage = "El campo debe ser un correo electrónico")]
         public string Email { get; set; }
 

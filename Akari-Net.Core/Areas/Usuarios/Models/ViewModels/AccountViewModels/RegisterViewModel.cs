@@ -9,20 +9,20 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [Display(Name = "Nombre Completo")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [Display(Name = "Usuario")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [EmailAddress(ErrorMessage = "El campo debe ser un correo electrónico")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
         [Remote(areaName:"Usuarios",controller: "Account", action: "CheckPassword",HttpMethod = "POST")]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
