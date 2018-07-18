@@ -2,6 +2,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var Habilitado2FA = false;
 }
 
 <ul class="nav nav-pills nav-stacked">
@@ -11,6 +12,9 @@
     {
         <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">Logins Externos</a></li>
     }
+    @if (Habilitado2FA)
+    {
     <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Autenticación en dos fases</a></li>
+    }
 </ul>
 

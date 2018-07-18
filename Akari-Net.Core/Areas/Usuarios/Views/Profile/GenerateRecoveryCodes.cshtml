@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Generar códigos de autenticación en dos fases (2FA)";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>Esta acción genera nuevos códigos de recuperación.</strong>
+    </p>
+    <p>
+        Si pierdes tu dispositivo y no te quedan códigos de recuperación perderas el acceso a tu cuenta.
+    </p>
+    <p>
+        Deshabilitando 2FA no cambias las claves usadas en las aplicaciones de autenticación.
+        Si quieres cambiar la clave que usan deberias <a asp-action="ResetAuthenticatorWarning">resetear tus claves</a>
+    </p>
+</div>
+
+<div>
+    <form asp-action="GenerateRecoveryCodes" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">Generar Códigos</button>
+    </form>
+</div>
