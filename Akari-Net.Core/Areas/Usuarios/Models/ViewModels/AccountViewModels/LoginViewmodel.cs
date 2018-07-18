@@ -9,6 +9,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
     public class LoginViewModel
     {
         [Required]
+        [Display(Name = "Usuario")]
         public string UserName { get; set; }
 
         [Required]
