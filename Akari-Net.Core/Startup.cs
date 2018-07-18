@@ -79,7 +79,6 @@ namespace Akari_Net.Core
             services.AddResponseCompression();
 
             services.AddSingleton<IEmailSender, EmailSender>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,7 +100,6 @@ namespace Akari_Net.Core
             app.UseAuthentication();
             app.UseResponseCompression();
 
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -112,7 +110,6 @@ namespace Akari_Net.Core
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             CreateRoles(serviceProvider, loggerFactory);
-
         }
 
         private void CreateRoles(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)

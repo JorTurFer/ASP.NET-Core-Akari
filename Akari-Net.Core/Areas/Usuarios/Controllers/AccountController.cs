@@ -73,7 +73,6 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 {
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
-
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -235,7 +234,6 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             if (!availableUserName)
                 ModelState.AddModelError(nameof(model.UserName), "El 'Usuario' no esta disponible");
 
-
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, NombreCompleto = model.FullName };
@@ -368,8 +366,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             return View();
         }
-
-
+        
         [HttpGet]
         public IActionResult AccessDenied()
         {

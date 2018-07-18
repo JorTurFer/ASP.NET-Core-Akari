@@ -16,7 +16,6 @@ namespace Akari_Net.Core.Extensions
                 controller: "Account",
                 values: new { userId, code, area = "Usuarios" },
                 protocol: scheme);
-
         }
 
         public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
