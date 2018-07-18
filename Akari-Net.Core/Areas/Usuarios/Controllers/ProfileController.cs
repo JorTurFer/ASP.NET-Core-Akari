@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Text;
+using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
@@ -101,7 +103,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 }
             }
 
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Tu perfil ha sido actualizado";
             return RedirectToAction(nameof(Index));
         }
 
@@ -172,7 +174,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            StatusMessage = "Tu contraseña se ha actualizado";
 
             return RedirectToAction(nameof(ChangePassword));
         }
@@ -220,7 +222,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "Se ha asignado tu contraseña";
 
             return RedirectToAction(nameof(SetPassword));
         }
@@ -281,7 +283,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            StatusMessage = "El login externo se ha añadido";
             return RedirectToAction(nameof(ExternalLogins));
         }
 
@@ -302,7 +304,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "The external login was removed.";
+            StatusMessage = "El login externo se ha eliminado";
             return RedirectToAction(nameof(ExternalLogins));
         }
 
@@ -401,7 +403,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
             if (!is2faTokenValid)
             {
-                ModelState.AddModelError("Code", "Verification code is invalid.");
+                ModelState.AddModelError("Code", "El código de verificación no es válido");
                 await LoadSharedKeyAndQrCodeUriAsync(user, model);
                 return View(model);
             }
