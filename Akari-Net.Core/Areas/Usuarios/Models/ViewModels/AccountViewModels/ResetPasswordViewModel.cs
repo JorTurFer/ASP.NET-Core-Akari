@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,13 +14,14 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "El {0} debe contener entre {2} y {1} caracteres", MinimumLength = 6)]
+        [Remote(areaName: "Usuarios", controller: "Account", action: "CheckPassword", HttpMethod = "POST")]
+        [Display(Name = "Contraseña")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirma contraseña")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

@@ -25,11 +25,11 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
         [Required]
         [Remote(areaName:"Usuarios",controller: "Account", action: "CheckPassword",HttpMethod = "POST")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirma password")]
+        [Display(Name = "Confirma contraseña")]
         [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
         public string ConfirmPassword { get; set; }
     }
