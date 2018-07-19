@@ -20,7 +20,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Helpers
                 var exist = claims.Any(x => string.Compare(x.Type, policy.PolicyName, true) == 0);
                 policyItemViewModel.Add(new PolicyItemViewModel { Id = policy.Id, PolicyName = policy.PolicyName, PolicyDesiption = policy.PolicyDesiption, IsActive = exist });
             }
-            return new ClaimsManageViewModel { policyItems = policyItemViewModel };
+            return new ClaimsManageViewModel { policyItems = policyItemViewModel, roleId = role.Id };
         }
     }
 }

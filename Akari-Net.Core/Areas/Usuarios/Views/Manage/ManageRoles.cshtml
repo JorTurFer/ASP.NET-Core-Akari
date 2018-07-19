@@ -8,10 +8,7 @@
 <h5 style="text-align:center">Crear un nuevo Rol</h5>
 <div class="container">
     <div class="row">
-        <div class="col-md-2 text-right">
-            <label class="control-label">Nuevo Rol:</label>
-        </div>
-        <div class="col-md-5">
+        <div class="col-md-5 col-md-offset-1">
             <input type="text" class="form-control" id="roleName" />
         </div>
         <div class="col-md-2">
@@ -28,9 +25,6 @@
                 var listRoles = RoleManager.Roles.OrderBy(x => x.Name).ToList();
             }
             @Html.DropDownList("listaRolesUpd", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables", @onchange = "getClaims()" })
-        </div>
-        <div class="col-md-2">
-            <button class="btn-primary form-control" id="updateRole">Guardar</button>
         </div>
     </div>
 </div>
@@ -75,7 +69,7 @@
         }
             $.ajax({
               url: "@Url.Action("RemoveRole", "Manage")",
-              data: { id: $("#listaRolesDel").val() },
+                data: { roleId: $("#listaRolesDel").val() },
               type: "post",
               success: function (data) {
                     $(".desplegables option[value=" + $("#listaRolesDel").val()+"]").remove()
@@ -92,7 +86,7 @@
         }
             $.ajax({
               url: "@Url.Action("ClaimsManage", "Manage")",
-              data: { id: $("#listaRolesUpd").val() },
+                data: { roleId: $("#listaRolesUpd").val() },
               type: "post",
                 success: function (data) {
                     $("#claims").html(data);

@@ -11,12 +11,17 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Services
         List<PolicyItem> _policies = new List<PolicyItem>();
         public PoliciesManager()
         {
-            _policies.Add(new PolicyItem { Id = _policies.Count, PolicyName = "UsersManager", PolicyDesiption = "Gestión de Usuarios", });
-            _policies.Add(new PolicyItem { Id = _policies.Count, PolicyName = "RolesManager", PolicyDesiption = "Gestión de Permisos", });
+            _policies.Add(new PolicyItem { Id = 0, PolicyName = "UsersManager", PolicyDesiption = "Gestión de Usuarios", });
+            _policies.Add(new PolicyItem { Id = 1, PolicyName = "RolesManager", PolicyDesiption = "Gestión de Permisos", });
         }
         public IEnumerable<PolicyItem> GetPolicies()
         {
             return _policies;
+        }
+
+        public PolicyItem GetPolicyId(int Id)
+        {
+            return _policies.Where(x => x.Id == Id).FirstOrDefault();
         }
     }
 }

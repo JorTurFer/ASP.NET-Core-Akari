@@ -9,5 +9,6 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Services
     public interface IPoliciesManager
     {
         IEnumerable<PolicyItem> GetPolicies();
+        PolicyItem GetPolicyId(int Id);
     }
 }

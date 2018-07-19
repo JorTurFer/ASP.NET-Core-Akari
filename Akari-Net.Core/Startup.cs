@@ -84,7 +84,7 @@ namespace Akari_Net.Core
             services.AddResponseCompression();
 
             services.AddSingleton<IEmailSender, EmailSender>();
-            services.AddTransient<IPoliciesManager, PoliciesManager>();
+            services.AddSingleton<IPoliciesManager, PoliciesManager>();
 
         }
 
