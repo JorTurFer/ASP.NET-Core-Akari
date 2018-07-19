@@ -46,7 +46,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             //Si no existe lo creo
             IdentityRole role = new IdentityRole();
             role.Name = roleName;
-            var res = await _roleManager.CreateAsync(role);
+            await _roleManager.CreateAsync(role);
             return Json(role.Id);
         }
 
