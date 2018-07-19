@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Akari_Net.Core.Areas.Usuarios.Models.Helpers;
+using Akari_Net.Core.Areas.Usuarios.Models.Services;
+using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +17,12 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
     public class ManageController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
+        IPoliciesManager _policiesManager;
 
-        public ManageController(RoleManager<IdentityRole> roleManager)
+        public ManageController(RoleManager<IdentityRole> roleManager, IPoliciesManager policiesManager)
         {
             _roleManager = roleManager;
+            _policiesManager = policiesManager;
         }
         public IActionResult Index()
         {
@@ -61,6 +66,16 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             return Json(res.Succeeded);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ClaimsManage(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+                return Json(false);
+            var claims = await _roleManager.GetClaimsAsync(role);
+            ClaimsManageViewModel model = ClaimsManageHelper.GetClaimsManageViewModel(claims,role, _policiesManager);
+           
+            return View(model);
+        }
     }
-
 }

@@ -15,7 +15,7 @@
             <input type="text" class="form-control" id="roleName" />
         </div>
         <div class="col-md-2">
-            <button class="btn-primary form-control" id="newRole" onclick="SaveNewRole()">Guardar</button>
+            <button class="btn-primary form-control" id="newRole" onclick="saveNewRole()">Guardar</button>
         </div>
     </div>
 </div>
@@ -27,40 +27,40 @@
             @{
                 var listRoles = RoleManager.Roles.OrderBy(x => x.Name).ToList();
             }
-            @Html.DropDownList("listaRolesAdd", new SelectList(listRoles, "Id", "Name"),"Seleccione un Rol..", new { @class = "form-control dropdown desplegables" })
+            @Html.DropDownList("listaRolesUpd", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables", @onchange = "getClaims()" })
         </div>
         <div class="col-md-2">
             <button class="btn-primary form-control" id="updateRole">Guardar</button>
         </div>
     </div>
 </div>
+<div id="claims">
+    <!-- AQUI SE INTRODUCIRAN LOS CLAIMS-->
+</div>
 <hr class="col-md-offset-2" />
 <h5 style="text-align:center">Borrar un Rol</h5>
-<div class="container">
-    <div class="row">
-        @*Asignacion de roles*@
-    </div>
-</div>
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-1">
             @Html.DropDownList("listaRolesDel", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables" })
         </div>
         <div class="col-md-2">
-            <button class="btn-primary form-control" id="delRole" onclick="RemoveRole()">Borrar</button>
+            <button class="btn-primary form-control" id="delRole" onclick="removeRole()">Borrar</button>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    function SaveNewRole() {
-        if (!$("#roleName").val())
+    function saveNewRole() {
+        if (!$("#roleName").val()) {
+            alert("Introduce un nombre para el rol");
             return;
+        }
             $.ajax({
               url: "@Url.Action("AddNewRole", "Manage")",
-                data: { roleName: $("#roleName").val() },
+              data: { roleName: $("#roleName").val() },
               type: "post",
-                success: function (data) {
-                    $("#listaRolesAdd").append(new Option($("#roleName").val(), data, false, true));
+              success: function (data) {
+                    $("#listaRolesUpd").append(new Option($("#roleName").val(), data, false, true));
                     $("#listaRolesDel").append(new Option($("#roleName").val(), data, false, true));
                 },
               error: function() {
@@ -68,19 +68,38 @@
               }
             });
         }
-    function RemoveRole() {
-        if (!$("#listaRolesDel").val())
+    function removeRole() {
+        if (!$("#listaRolesDel").val()) {
+            alert("Para poder borrar un rol primero tienes que seleccionarlo");
             return;
+        }
             $.ajax({
               url: "@Url.Action("RemoveRole", "Manage")",
-                data: { id: $("#listaRolesDel").val() },
+              data: { id: $("#listaRolesDel").val() },
               type: "post",
-                success: function (data) {
+              success: function (data) {
                     $(".desplegables option[value=" + $("#listaRolesDel").val()+"]").remove()
                 },
               error: function() {
                 alert("Oops, hemos tenido un problema...");
               }
             });
+    }
+    function getClaims() {
+        if (!$("#listaRolesUpd").val()) {
+            $("#claims").html("");
+            return;
         }
+            $.ajax({
+              url: "@Url.Action("ClaimsManage", "Manage")",
+              data: { id: $("#listaRolesUpd").val() },
+              type: "post",
+                success: function (data) {
+                    $("#claims").html(data);
+                },
+              error: function() {
+                alert("Oops, hemos tenido un problema...");
+              }
+            });
+    }
 </script>
