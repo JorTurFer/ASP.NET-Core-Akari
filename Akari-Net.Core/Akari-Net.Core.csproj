@@ -18,7 +18,7 @@
     <Folder Include="Areas\Usuarios\Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Areas\Usuarios\Views\Manage\_Layout.cshtml">
+    <Content Update="Areas\Usuarios\Views\Manage\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Usuarios\Views\Manage\_StatusMessage.cshtml">

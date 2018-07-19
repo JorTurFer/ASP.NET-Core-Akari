@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Administración de Accesos</h2>
+
+<div>
+    <h4>Administración de Accesos</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active" id="btnUsers">
+                    <a onclick="GetUsers()">Usuarios</a>
+                </li>
+                <li class="null"id="btnRoles">
+                    <a onclick="GetRoles()">Permisos</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9" id="content">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+        function GetUsers() {
+            $.ajax({
+              url: "@Url.Action("ManageUsers", "Manage", new { area = "Usuarios" })",
+              //data: { },
+              type: "post",
+              success: function (data) {
+                  $("#content").html(data);
+                  $("#btnUsers").addClass("active")
+                  $("#btnRoles").removeClass("active")
+              },
+              error: function() {
+                alert("Oops, hemos tenido un problema...");
+              }
+            });
+        }
+          function GetRoles() {
+            $.ajax({
+              url: "@Url.Action("ManageRoles", "Manage", new { area = "Usuarios" })",
+              //data: { },
+              type: "post",
+              success: function (data) {
+                  $("#content").html(data);
+                  $("#btnUsers").removeClass("active")
+                  $("#btnRoles").addClass("active")
+              },
+              error: function() {
+                alert("Oops, hemos tenido un problema...");
+              }
+            });
+        }
+</script>
+}

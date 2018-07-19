@@ -7,14 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
+    [Area("Usuarios")]
+    //[Authorize]
+    [Route("[area]/[controller]/[action]")]
     public class ManageController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult ManageAccess()
+        [HttpPost]
+        public IActionResult ManageRoles()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ManageUsers()
         {
             return View();
         }
