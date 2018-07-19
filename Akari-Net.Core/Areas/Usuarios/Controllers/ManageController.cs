@@ -106,8 +106,6 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 var res = await _roleManager.RemoveClaimAsync(role, new Claim(policyItem.PolicyName, policyItem.PolicyName));
                 return Json(res.Succeeded);
             }
-
-            return Json(true);
         }
     }
 }
