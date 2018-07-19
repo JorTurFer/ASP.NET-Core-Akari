@@ -70,7 +70,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
-                {                   
+                {
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -454,7 +454,17 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CheckEmailIsAvailable(string email)
         {
-            var available = await _userManager.IsEmailAvalilable(email);
+            var user = await _userManager.GetUserAsync(User);
+            bool available = true;
+            if (user != null)
+            {
+                if (string.Compare(email,user.Email,true) != 0)
+                    available = await _userManager.IsEmailAvalilable(email);
+            }
+            else
+            {
+                available = await _userManager.IsEmailAvalilable(email);
+            }
             if (available)
                 return Json(data: true);
             else
