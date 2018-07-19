@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Extensions;
 using Akari_Net.Core.Models.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -62,7 +63,7 @@ namespace Akari_Net.Core
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicies();
+                options.AddPolicies(new PoliciesManager());
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -83,6 +84,8 @@ namespace Akari_Net.Core
             services.AddResponseCompression();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddTransient<IPoliciesManager, PoliciesManager>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

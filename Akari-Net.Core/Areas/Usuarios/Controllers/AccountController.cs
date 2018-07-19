@@ -70,7 +70,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
-                {
+                {                   
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -366,7 +366,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult AccessDenied()
         {

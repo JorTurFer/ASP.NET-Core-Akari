@@ -7,12 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
-    [Authorize(Policy = "UsersManager")]
     public class ManageController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
+
+        public IActionResult ManageAccess()
+        {
+            return View();
+        }
+
     }
+
 }

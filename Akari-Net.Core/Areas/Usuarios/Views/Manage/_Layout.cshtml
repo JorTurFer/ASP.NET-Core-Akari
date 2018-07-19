@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Administración de Accesos</h2>
+
+<div>
+    <h4>Administración de Accesos</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="@ManageNavPages.UsersNavClass(ViewContext)">
+                    <button onclick="">Usuarios</button>
+                </li>
+                <li class="@ManageNavPages.RolesPasswordNavClass(ViewContext)">
+                    <a asp-action="ManageAccess">Permisos</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9" id="ventana">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function CallUsers() {
+            $.ajax()
+        }
+    </script>
