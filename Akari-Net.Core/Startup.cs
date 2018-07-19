@@ -89,7 +89,7 @@ namespace Akari_Net.Core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -116,34 +116,6 @@ namespace Akari_Net.Core
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            CreateRoles(serviceProvider, loggerFactory);
-        }
-
-        private void CreateRoles(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
-        {
-            //initializing custom roles 
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "WebMaster", "Podólogo", "Administracion","Usuario" };
-
-            try
-            {
-                foreach (var roleName in roleNames)
-                {
-                    var roleExist = RoleManager.RoleExistsAsync(roleName);
-                    roleExist.Wait();
-                    if (!roleExist.Result)
-                    {
-                        //create the roles and seed them to the database: Question 1
-                        RoleManager.CreateAsync(new IdentityRole(roleName)).Wait();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                var logger = loggerFactory.CreateLogger("RoleCreation");
-                logger.LogCritical(ex, "Error al crear los roles");
-            }
         }
     }
 }
