@@ -1,3 +1,26 @@
-﻿@{ 
+﻿@inject RoleManager<IdentityRole> RoleManager
+
+@{
     Layout = null;
 }
+
+
+<h5 style="text-align:center">Gestion de Permisos</h5>
+
+<div class="row">
+    <label class="col-md-2 label-default">Nuevo Rol:</label>
+    <input type="text" class="form-control col-md-offset-2 col-3" id="nombreRol" />
+    <button class="col-md-2 col-md-offset-5 btn" id="guardarRol">Guardar</button>
+</div>
+
+<hr class="col-md-offset-2"/>
+
+<div class="row">
+    @{
+        var Roles = RoleManager.Roles.Select(x => x.Name).OrderBy(x=>x).ToList();
+        Roles.Add("NUEVO ROL");
+        @Html.DropDownList("ListaRoles",new SelectList(Roles) ,new { @class = "form-control dropdown", @placeholder ="Seleccione un rol" })
+    }
+</div>
+
+

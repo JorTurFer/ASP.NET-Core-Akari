@@ -13,7 +13,7 @@
                 <li class="active" id="btnUsers">
                     <a onclick="GetUsers()">Usuarios</a>
                 </li>
-                <li class="null"id="btnRoles">
+                <li class="null" id="btnRoles">
                     <a onclick="GetRoles()">Permisos</a>
                 </li>
             </ul>
@@ -24,10 +24,14 @@
 </div>
 
 @section Scripts {
-<script type="text/javascript">
+    <script type="text/javascript">
+        //Cargo la pagina de usuarios cuando acaba de cargar el DOM
+        $(document).ready(GetUsers());
+
+        //Lanzo la llamada para obtener usuarios
         function GetUsers() {
             $.ajax({
-              url: "@Url.Action("ManageUsers", "Manage", new { area = "Usuarios" })",
+              url: "@Url.Action("ManageUsers", "Manage")",
               //data: { },
               type: "post",
               success: function (data) {
@@ -40,9 +44,11 @@
               }
             });
         }
+
+        //Lanzo la llamada para obtener los roles
           function GetRoles() {
             $.ajax({
-              url: "@Url.Action("ManageRoles", "Manage", new { area = "Usuarios" })",
+              url: "@Url.Action("ManageRoles", "Manage")",
               //data: { },
               type: "post",
               success: function (data) {
@@ -55,5 +61,5 @@
               }
             });
         }
-</script>
+    </script>
 }

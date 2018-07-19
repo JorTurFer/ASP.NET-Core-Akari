@@ -17,13 +17,15 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult ManageRoles()
+        public IActionResult ManageUsers()
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult ManageUsers()
+        public IActionResult ManageRoles()
         {
             return View();
         }
