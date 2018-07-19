@@ -6,27 +6,26 @@
 
 
 <h5 style="text-align:center">Gestion de Permisos</h5>
-
-<div class="row">
-    <div class="col-md-3">
-        <label class="form-control">Nuevo Rol:</label>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <label class="form-control">Nuevo Rol:</label>
+        </div>
+        <div class="col-md-5">
+            <input type="text" class="form-control" id="nombreRol" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn-primary form-control" id="guardarRol">Guardar</button>
+        </div>
     </div>
-    <div class="col-md-6">
-        <input type="text" class="form-control" id="nombreRol" />
-    </div>
-    <div class="col-md-3">
-        <button class="btn-primary form-control" id="guardarRol">Guardar</button>
-    </div>
-   
 </div>
-
-<hr class="col-md-offset-2"/>
+<hr class="col-md-offset-2" />
 
 <div class="row">
     @{
-        var Roles = RoleManager.Roles.Select(x => x.Name).OrderBy(x=>x).ToList();
+        var Roles = RoleManager.Roles.Select(x => x.Name).OrderBy(x => x).ToList();
         Roles.Add("NUEVO ROL");
-        @Html.DropDownList("ListaRoles",new SelectList(Roles) ,new { @class = "form-control dropdown", @placeholder ="Seleccione un rol" })
+        @Html.DropDownList("ListaRoles", new SelectList(Roles), new { @class = "form-control dropdown", @placeholder = "Seleccione un rol" })
     }
 </div>
 
