@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+using Akari_Net.Core.Extensions;
 using Akari_Net.Core.Models.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -59,7 +60,10 @@ namespace Akari_Net.Core
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultTokenProviders();
 
-            services.AddAuthentication();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicies();
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                              .AddRazorPagesOptions(options =>
@@ -117,7 +121,7 @@ namespace Akari_Net.Core
             //initializing custom roles 
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "WebMaster", "Podologo", "Administracion" };
+            string[] roleNames = { "WebMaster", "Podólogo", "Administracion","Usuario" };
 
             try
             {
