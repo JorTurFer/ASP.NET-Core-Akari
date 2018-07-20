@@ -21,12 +21,6 @@
     <Content Update="Areas\Usuarios\Views\Manage\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Usuarios\Views\Manage\_StatusMessage.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Usuarios\Views\Manage\_ViewImports.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Areas\Usuarios\Views\Shared\Error.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
