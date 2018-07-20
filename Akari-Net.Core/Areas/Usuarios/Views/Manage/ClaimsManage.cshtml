@@ -11,7 +11,7 @@
     <div class="row">
         @foreach (var item in Model.policyItems)
         {
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="@item.Id" checked="@item.IsActive">
                     <label class="custom-control-label" for="@item.Id">@item.PolicyDesiption</label>
