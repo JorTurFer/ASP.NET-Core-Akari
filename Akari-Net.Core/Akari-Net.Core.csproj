@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Usuarios\Data\" />
+    <Folder Include="wwwroot\js\min\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Areas\Usuarios\Views\Manage\Index.cshtml">

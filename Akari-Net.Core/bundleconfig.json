@@ -6,7 +6,7 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/site.min.js",
+    "outputFileName": "wwwroot/js/min/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js"
     ],
@@ -17,9 +17,10 @@
     "sourceMap": false
   },
   {
-    "outputFileName": "wwwroot/js/usuarios.manage.min.js",
+    "outputFileName": "wwwroot/js/min/usuarios.manage.min.js",
     "inputFiles": [
-      "wwwroot/js/usuarios.manage.js"
+      "wwwroot/js/usuarios.manage.roles.js",
+      "wwwroot/js/usuarios.manage.usuarios.js"
     ],
     "minify": {
       "enabled": true,

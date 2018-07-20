@@ -262,3 +262,6 @@ __pycache__/
 
 #Migraciones
 */Migrations
+
+#Scripts js min
+**/js/min/*
