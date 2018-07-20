@@ -26,22 +26,7 @@
     $(document).ready(function () {
         $(":checkbox").change(function (){
             var id = $(event.target).attr('id');
-            $.ajax({
-              url: "@Url.Action("UpdateRoleClaims", "Manage")",
-                data: {
-                    roleId: $("#roleId").val(),
-                    policyId: id,
-                    set: $("#" + id).is(':checked')
-                },
-              type: "post",
-                //success: function (data) {
-
-                //},
-                error: function () {
-                    $("#" + id).checked = !$("#" + id).is(':checked');
-                alert("Oops, hemos tenido un problema...");
-              }
-            });
+            updateClaims('@Url.Action("UpdateRoleClaims", "Manage")', id);
     });
-    });
+    });    
 </script>

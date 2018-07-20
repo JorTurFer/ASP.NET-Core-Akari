@@ -15,5 +15,16 @@
       "renameLocals": true
     },
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/usuarios.manage.min.js",
+    "inputFiles": [
+      "wwwroot/js/usuarios.manage.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
   }
 ]

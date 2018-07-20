@@ -11,10 +11,10 @@
         <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
                 <li class="active" id="btnUsers">
-                    <a onclick="GetUsers()">Usuarios</a>
+                    <a onclick="GetUsers('@Url.Action("ManageUsers", "Manage")')">Usuarios</a>
                 </li>
                 <li class="null" id="btnRoles">
-                    <a onclick="GetRoles()">Permisos</a>
+                    <a onclick="GetRoles('@Url.Action("ManageRoles", "Manage")')">Permisos</a>
                 </li>
             </ul>
         </div>
@@ -24,42 +24,14 @@
 </div>
 
 @section Scripts {
+    <environment Names="Development">
+        <script src="~/js/Usuarios.Manage.js" asp-append-version="true"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script src="~~/js/Usuarios.Manage.min.js" asp-append-version="true"></script>
+    </environment>
     <script type="text/javascript">
         //Cargo la pagina de usuarios cuando acaba de cargar el DOM
-        $(document).ready(GetUsers());
-
-        //Lanzo la llamada para obtener usuarios
-        function GetUsers() {
-            $.ajax({
-              url: "@Url.Action("ManageUsers", "Manage")",
-              //data: { },
-              type: "post",
-              success: function (data) {
-                  $("#content").html(data);
-                  $("#btnUsers").addClass("active")
-                  $("#btnRoles").removeClass("active")
-              },
-              error: function() {
-                alert("Oops, hemos tenido un problema...");
-              }
-            });
-        }
-
-        //Lanzo la llamada para obtener los roles
-          function GetRoles() {
-            $.ajax({
-              url: "@Url.Action("ManageRoles", "Manage")",
-              //data: { },
-              type: "post",
-              success: function (data) {
-                  $("#content").html(data);
-                  $("#btnUsers").removeClass("active")
-                  $("#btnRoles").addClass("active")
-              },
-              error: function() {
-                alert("Oops, hemos tenido un problema...");
-              }
-            });
-        }
+        $(document).ready(GetUsers('@Url.Action("ManageUsers", "Manage")'));
     </script>
 }

@@ -12,7 +12,7 @@
             <input type="text" class="form-control" id="roleName" />
         </div>
         <div class="col-md-2">
-            <button class="btn-primary form-control" id="newRole" onclick="saveNewRole()">Guardar</button>
+            <button class="btn-primary form-control" id="newRole" onclick="saveNewRole('@Url.Action("AddNewRole", "Manage")','@Url.Action("ClaimsManage", "Manage")')">Guardar</button>
         </div>
     </div>
 </div>
@@ -24,7 +24,7 @@
             @{
                 var listRoles = RoleManager.Roles.OrderBy(x => x.Name).ToList();
             }
-            @Html.DropDownList("listaRolesUpd", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables", @onchange = "getClaims()" })
+            @Html.DropDownList("listaRolesUpd", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables", @onchange = "getClaims('"+@Url.Action("ClaimsManage", "Manage")+"')" })
         </div>
     </div>
 </div>
@@ -39,63 +39,7 @@
             @Html.DropDownList("listaRolesDel", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables" })
         </div>
         <div class="col-md-2">
-            <button class="btn-primary form-control" id="delRole" onclick="removeRole()">Borrar</button>
+            <button class="btn-primary form-control" id="delRole" onclick="removeRole('@Url.Action("RemoveRole", "Manage")','@Url.Action("ClaimsManage", "Manage")')">Borrar</button>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function saveNewRole() {
-        if (!$("#roleName").val()) {
-            alert("Introduce un nombre para el rol");
-            return;
-        }
-            $.ajax({
-              url: "@Url.Action("AddNewRole", "Manage")",
-              data: { roleName: $("#roleName").val() },
-              type: "post",
-              success: function (data) {
-                    $("#listaRolesUpd").append(new Option($("#roleName").val(), data, false, true));
-                  $("#listaRolesDel").append(new Option($("#roleName").val(), data, false, true));
-                  getClaims();
-                },
-              error: function() {
-                alert("Oops, hemos tenido un problema...");
-              }
-            });
-        }
-    function removeRole() {
-        if (!$("#listaRolesDel").val()) {
-            alert("Para poder borrar un rol primero tienes que seleccionarlo");
-            return;
-        }
-            $.ajax({
-              url: "@Url.Action("RemoveRole", "Manage")",
-                data: { roleId: $("#listaRolesDel").val() },
-              type: "post",
-              success: function (data) {
-                  $(".desplegables option[value=" + $("#listaRolesDel").val() + "]").remove();
-                  getClaims();
-                },
-              error: function() {
-                alert("Oops, hemos tenido un problema...");
-              }
-            });
-    }
-    function getClaims() {
-        if (!$("#listaRolesUpd").val()) {
-            $("#claims").html("");
-            return;
-        }
-            $.ajax({
-              url: "@Url.Action("ClaimsManage", "Manage")",
-                data: { roleId: $("#listaRolesUpd").val() },
-              type: "post",
-                success: function (data) {
-                    $("#claims").html(data);
-                },
-              error: function() {
-                alert("Oops, hemos tenido un problema...");
-              }
-            });
-    }
-</script>
