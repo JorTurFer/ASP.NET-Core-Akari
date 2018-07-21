@@ -16,9 +16,9 @@
 <script>
     var pageSize = 2;
     $(document).ready(function () {
-        GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', true, 1, pageSize);
+        getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', true, 1, pageSize);
         $(searchInput).on('input',(function (){ 
-            GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', true, 1, pageSize);
+            getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', true, 1, pageSize);
         }));
     });
 </script>
