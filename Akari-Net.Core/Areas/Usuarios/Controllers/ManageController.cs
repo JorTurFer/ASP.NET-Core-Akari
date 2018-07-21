@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Akari_Net.Core.Areas.Usuarios.Extensions;
+using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Helpers;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels;
@@ -19,11 +21,13 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
     {
         RoleManager<IdentityRole> _roleManager;
         IPoliciesManager _policiesManager;
+        UserManager<ApplicationUser> _userManager;
 
-        public ManageController(RoleManager<IdentityRole> roleManager, IPoliciesManager policiesManager)
+        public ManageController(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager, IPoliciesManager policiesManager)
         {
             _roleManager = roleManager;
             _policiesManager = policiesManager;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -34,6 +38,15 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         public IActionResult ManageUsers()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult GetUsersGrid(GridUsersViewModel vm)
+        {
+            var pageData = _userManager.GetUserPageAsync(vm.Text, vm.Page, vm.PageSize, vm.Sort, vm.Ascending);
+            vm.TotalUsers = pageData.TotalUsers;
+            vm.Users = pageData.Users;
+            return View(vm);
         }
 
         [HttpPost]

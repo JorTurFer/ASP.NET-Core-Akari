@@ -6,8 +6,8 @@ function GetUsers(url) {
         type: "post",
         success: function (data) {
             $("#content").html(data);
-            $("#btnUsers").addClass("active")
-            $("#btnRoles").removeClass("active")
+            $("#btnUsers").addClass("active");
+            $("#btnRoles").removeClass("active");
         },
         error: function () {
             alert("Oops, hemos tenido un problema...");
@@ -23,8 +23,8 @@ function GetRoles(url) {
         type: "post",
         success: function (data) {
             $("#content").html(data);
-            $("#btnUsers").removeClass("active")
-            $("#btnRoles").addClass("active")
+            $("#btnUsers").removeClass("active");
+            $("#btnRoles").addClass("active");
         },
         error: function () {
             alert("Oops, hemos tenido un problema...");

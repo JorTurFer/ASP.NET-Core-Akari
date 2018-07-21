@@ -1,0 +1,57 @@
+﻿@model GridUsersViewModel
+@{
+    Layout = null;
+}
+
+@if (!Model.Users.Any())
+{
+    <div class="alert alert-warning">No users found.</div>
+}
+else
+{
+    <p>Mostrando @Model.Users.Count() de @Model.TotalUsers:</p>
+
+    <table class="table table-striped table-hover site-user-list">
+        <thead>
+            <tr>
+                <th></th>
+                <th>
+                    <a id="user">
+                        Usuario
+                    </a>
+                </th>
+                <th>
+                    <a id="email">
+                        Email
+                    </a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td><img src="@GravatarHelper.GetImage(user.Email)" class="img-circle" /></td>
+                    <td>@user.UserName</td>
+                    <td><a href="mailto:@user.Email">@user.Email</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.TotalUsers > Model.Users.Count())
+    {
+        var lastPage = (int)Math.Ceiling((decimal)Model.TotalUsers / Model.PageSize);
+
+    <div class="row">
+        <div class="col-md-offset-3">
+            <a id="first" class="btn btn-primary"><span class="glyphicon glyphicon-step-backward"></span></a>
+            <a id="prev" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <span style="margin: 10px">Página @Model.Page de @lastPage</span>
+            <a id="next" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a id="last" class="btn btn-primary"><span class="glyphicon glyphicon-step-forward"></span></a>
+        </div>
+    </div>
+    }
+}

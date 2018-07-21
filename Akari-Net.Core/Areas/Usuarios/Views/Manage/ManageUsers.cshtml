@@ -1,3 +1,43 @@
 ﻿@{
     Layout = null;
 }
+<h5 style="text-align:center">Crear un nuevo Rol</h5>
+<div class="well row">
+    <div class="col-md-8">
+        <div class="form-group">
+            <label>Buscar:</label>
+            <input type="text" class="form-control" />
+        </div>
+    </div>
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+    </div>
+</div>
+<hr />
+<div id="usuarios">
+
+</div>
+<script>
+    $(document).ready(GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', '','username',true,1,1));
+
+    function GetUsersGrid(url, search, sort, ascending,page,pageSize,) {
+        $.ajax({
+            url: url,
+            data: {
+                Text: search,
+                Sort: sort,
+                Ascending: ascending,
+                Page: page,
+                PageSize: pageSize
+              },
+            type: "post",
+            success: function (data) {
+                $("#usuarios").html(data);               
+            },
+            error: function () {
+                alert("Oops, hemos tenido un problema...");
+            }
+        });
+    }
+
+</script>
