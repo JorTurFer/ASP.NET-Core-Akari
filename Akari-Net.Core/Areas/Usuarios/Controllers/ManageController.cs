@@ -29,6 +29,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             _policiesManager = policiesManager;
             _userManager = userManager;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -60,6 +61,28 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 return NotFound();
             await _userManager.DeleteAsync(user);
             return Ok();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUserRole(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            EditUserRoleViewModel vm = new EditUserRoleViewModel
+            {
+                Id = id,
+                Roles = _roleManager.Roles.Select(x=>new UserRolesViewModel {
+                    RoleName = x.Name,
+                    IsActive = userRoles.Contains(x.Name)
+                }),
+               
+            };
+            return View();
         }
 
         [HttpPost]
