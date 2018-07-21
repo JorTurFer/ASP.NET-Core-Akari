@@ -65,7 +65,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUserRole(string id)
+        public async Task<IActionResult> UserRolesManage(string id, GridUsersViewModel vmPrevious)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -73,16 +73,34 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            EditUserRoleViewModel vm = new EditUserRoleViewModel
+            UserRolesManageViewModel vm = new UserRolesManageViewModel
             {
-                Id = id,
-                Roles = _roleManager.Roles.Select(x=>new UserRolesViewModel {
+                UserId = id,
+                Roles = _roleManager.Roles.Select(x => new UserRolesViewModel
+                {
                     RoleName = x.Name,
                     IsActive = userRoles.Contains(x.Name)
                 }),
-               
+                VmPrevious = vmPrevious
             };
-            return View();
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateUserRole(string id, string roleName,bool set)
+        {
+            //Busco el usuario
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+            //En funcione del check, lo añado o lo remuevo
+            if (set)
+                await _userManager.AddToRoleAsync(user, roleName);
+            else
+                await _userManager.RemoveFromRoleAsync(user, roleName);
+
+            return Ok();
         }
 
         [HttpPost]
