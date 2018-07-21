@@ -29,25 +29,13 @@ namespace Akari_Net.Core.Controllers
         {
             return View();
         }
-
+        [Authorize(Policy = "CitasManager")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
-
-
-        [Authorize]
-        public async Task<IActionResult> AddRole()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user != null && user.UserName == "kabestrus")
-                await _userManager.AddToRoleAsync(user,"UsersManager");
-
-            return View(nameof(HomeController.Index));
-        }
-
         public IActionResult Privacy()
         {
             return View();
