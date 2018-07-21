@@ -13,7 +13,7 @@ namespace Akari_Net.Core.Extensions
         {
             foreach (var policyItem in manager.GetPolicies())
             {
-                options.AddPolicy(policyItem.PolicyName, policy => policy.RequireClaim(policyItem.PolicyName, policyItem.PolicyName));
+                options.AddPolicy(policyItem.PolicyName, policy => policy.RequireClaim(policyItem.PolicyName, policyItem.PolicyName).Build());
             }
         }
     }
