@@ -2,14 +2,11 @@
     Layout = null;
 }
 <div class="well row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="form-group">
             <label>Buscar:</label>
             <input type="text" class="form-control" id="searchInput"/>
         </div>
-    </div>
-    <div class="col-md-1">
-        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
     </div>
 </div>
 <hr />
@@ -17,5 +14,11 @@
 
 </div>
 <script>
-    $(document).ready(GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(),'username',true,1,2));
+    var pageSize = 2;
+    $(document).ready(function () {
+        GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', true, 1, pageSize);
+        $(searchInput).on('input',(function (){ 
+            GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', true, 1, pageSize);
+        }));
+    });
 </script>
