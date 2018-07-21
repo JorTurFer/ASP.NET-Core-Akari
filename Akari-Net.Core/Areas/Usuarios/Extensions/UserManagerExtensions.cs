@@ -16,21 +16,21 @@ namespace Akari_Net.Core.Areas.Usuarios.Extensions
             var usersQuery = _manager.Users;
             switch (sort)
             {
-                //case "creationdate":
-                //    usersQuery = ascending
-                //        ? usersQuery.OrderBy(p => p.CreationDate)
-                //        : usersQuery.OrderByDescending(p => p.CreationDate);
-                //    break;
-                //case "email":
-                //    usersQuery = ascending
-                //        ? usersQuery.OrderBy(p => p.Email)
-                //        : usersQuery.OrderByDescending(p => p.Email);
-                //    break;
-                //case "fullname":
-                //    usersQuery = ascending
-                //        ? usersQuery.OrderBy(p => p.FullName)
-                //        : usersQuery.OrderByDescending(p => p.FullName);
-                //    break;
+                case "username":
+                    usersQuery = ascending
+                        ? usersQuery.OrderBy(p => p.UserName)
+                        : usersQuery.OrderByDescending(p => p.UserName);
+                    break;
+                case "email":
+                    usersQuery = ascending
+                        ? usersQuery.OrderBy(p => p.Email)
+                        : usersQuery.OrderByDescending(p => p.Email);
+                    break;
+                case "name":
+                    usersQuery = ascending
+                        ? usersQuery.OrderBy(p => p.NombreCompleto)
+                        : usersQuery.OrderByDescending(p => p.NombreCompleto);
+                    break;
                 default:
                     usersQuery = ascending
                         ? usersQuery.OrderBy(p => p.UserName)
@@ -46,6 +46,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Extensions
             var data = usersQuery.Skip((page - 1) * pageSize).Take(pageSize).Select(x => new UserViewModel
             {
                 UserName = x.UserName,
+                Name = x.NombreCompleto,
                 Email = x.Email,
             }).ToList();
             var result = new UsersPageDataViewModel()

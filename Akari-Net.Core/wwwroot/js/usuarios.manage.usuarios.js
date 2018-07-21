@@ -1,5 +1,22 @@
-﻿//Obtiene el grid de usuarios
-function GetUsersGrid(url, search, sort, ascending, page, pageSize, ) {
+﻿//Lanzo la llamada para obtener usuarios
+function GetUsers(url) {
+    $.ajax({
+        url: url,
+        //data: { },
+        type: "post",
+        success: function (data) {
+            $("#content").html(data);
+            $("#btnUsers").addClass("active");
+            $("#btnRoles").removeClass("active");
+        },
+        error: function () {
+            alert("Oops, hemos tenido un problema...");
+        }
+    });
+}
+
+//Obtiene el grid de usuarios
+function GetUsersGrid(url, search, sort, ascending, page, pageSize) {
     $.ajax({
         url: url,
         data: {

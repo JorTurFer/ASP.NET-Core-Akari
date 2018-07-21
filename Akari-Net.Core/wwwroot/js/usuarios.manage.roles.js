@@ -1,21 +1,4 @@
-﻿//Lanzo la llamada para obtener usuarios
-function GetUsers(url) {
-    $.ajax({
-        url: url,
-        //data: { },
-        type: "post",
-        success: function (data) {
-            $("#content").html(data);
-            $("#btnUsers").addClass("active");
-            $("#btnRoles").removeClass("active");
-        },
-        error: function () {
-            alert("Oops, hemos tenido un problema...");
-        }
-    });
-}
-
-//Lanzo la llamada para obtener los roles
+﻿//Lanzo la llamada para obtener los roles
 function GetRoles(url) {
     $.ajax({
         url: url,
