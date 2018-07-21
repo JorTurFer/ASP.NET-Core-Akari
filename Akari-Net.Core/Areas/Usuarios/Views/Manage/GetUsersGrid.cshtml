@@ -42,16 +42,15 @@ else
                     <td>@user.UserName</td>
                     <td>@user.Name</td>
                     <td><a href="mailto:@user.Email">@user.Email</a></td>
-                    @{ 
-                        var hide = user.Id != User.GetUserId()? "":"hidden";
+                    @{
+                        var hide = user.Id != User.GetUserId() ? "" : "hidden";
                     }
                     <td>
-                        <a class="btn btn-sm btn-info @hide" data-targetid="@user.Id" data-modal="#confirm-remove-user">Editar</a>
+                        <a class="btn btn-sm btn-info editarRoles @hide" id="@user.Id">Editar</a>
                     </td>
                     <td>
                         <a class="btn btn-sm btn-danger @hide" data-targetid="@user.Id" data-modal="#confirm-remove-user">Eliminar</a>
                     </td>
-
                 </tr>
             }
         </tbody>
@@ -96,13 +95,16 @@ else
     @{
         var last = (int)Math.Ceiling((decimal)Model.TotalUsers / Model.PageSize);
     }
-    $('#first').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '1', $("#pageSize").val()); });
-    $('#prev').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(),'@Model.Sort','@Model.Ascending', '@Math.Max(1, Model.Page - 1)', $("#pageSize").val()); });
-    $('#next').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(),'@Model.Sort','@Model.Ascending', '@Math.Min(last, Model.Page + 1)', $("#pageSize").val()); });
-    $('#last').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '@last', $("#pageSize").val()); });
-    $('#user').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
-    $('#name').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'name', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
-    $('#email').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'email', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
+    $('#first').click(function () { getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '1', $("#pageSize").val()); });
+    $('#prev').click(function () { getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(),'@Model.Sort','@Model.Ascending', '@Math.Max(1, Model.Page - 1)', $("#pageSize").val()); });
+    $('#next').click(function () { getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(),'@Model.Sort','@Model.Ascending', '@Math.Min(last, Model.Page + 1)', $("#pageSize").val()); });
+    $('#last').click(function () { getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '@last', $("#pageSize").val()); });
+    $('#user').click(function () { getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
+    $('#name').click(function () { getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'name', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
+    $('#email').click(function () { getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'email', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
+
+    $('.editarRoles').click(function () { getUserRoles('@Url.Action("UserRolesManage", "Manage")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '@Model.Page', $("#pageSize").val(), $(this).attr('id')); });
+
 
     $("a[data-modal]").click(function () {
         var targetId = $(this).data("targetid");
@@ -120,5 +122,4 @@ else
                 .fail(function () { alert("Oops, hemos tenido un problema..."); });
         });
     });
-
 </script>
