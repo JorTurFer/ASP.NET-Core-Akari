@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels
 {
-    public class EditUserRoleViewModel
+    public class UserRolesManageViewModel
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
 
         public IEnumerable<UserRolesViewModel> Roles { get; set; }
+
+        public GridUsersViewModel VmPrevious { get; set; }
     }
 }
