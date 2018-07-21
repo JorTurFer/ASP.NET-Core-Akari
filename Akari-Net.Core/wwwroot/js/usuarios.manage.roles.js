@@ -2,7 +2,7 @@
 function GetRoles(url) {
     $.ajax({
         url: url,
-        //data: { },
+        data: { __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val() },
         type: "post",
         success: function (data) {
             $("#content").html(data);
@@ -22,7 +22,10 @@ function saveNewRole(url, claims) {
     }
     $.ajax({
         url: url,
-        data: { roleName: $("#roleName").val() },
+        data: {
+            roleName: $("#roleName").val(),
+            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
+        },
         type: "post",
         success: function (data) {
             $("#listaRolesUpd").append(new Option($("#roleName").val(), data, false, true));
@@ -42,7 +45,10 @@ function removeRole(url, claims) {
     }
     $.ajax({
         url: url,
-        data: { roleId: $("#listaRolesDel").val() },
+        data: {
+            roleId: $("#listaRolesDel").val(),
+            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
+        },
         type: "post",
         success: function (data) {
             $(".desplegables option[value=" + $("#listaRolesDel").val() + "]").remove();
@@ -61,7 +67,10 @@ function getClaims(url) {
     }
     $.ajax({
         url: url,
-        data: { roleId: $("#listaRolesUpd").val() },
+        data: {
+            roleId: $("#listaRolesUpd").val(),
+            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
+        },
         type: "post",
         success: function (data) {
             $("#claims").html(data);
@@ -78,7 +87,8 @@ function updateClaims(url, id) {
         data: {
             roleId: $("#roleId").val(),
             policyId: id,
-            set: $("#" + id).is(':checked')
+            set: $("#" + id).is(':checked'),
+            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
         },
         type: "post",
         //success: function (data) {

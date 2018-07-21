@@ -1,4 +1,5 @@
-﻿@model GridUsersViewModel
+﻿@using Akari_Net.Core.Areas.Usuarios.Extensions
+@model GridUsersViewModel
 @{
     Layout = null;
 }
@@ -30,6 +31,7 @@ else
                     </a>
                 </th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +42,16 @@ else
                     <td>@user.UserName</td>
                     <td>@user.Name</td>
                     <td><a href="mailto:@user.Email">@user.Email</a></td>
+                    @{ 
+                        var hide = user.Id != User.GetUserId()? "":"hidden";
+                    }
+                    <td>
+                        <a class="btn btn-sm btn-info @hide" data-targetid="@user.Id" data-modal="#confirm-remove-user">Editar</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-danger @hide" data-targetid="@user.Id" data-modal="#confirm-remove-user">Eliminar</a>
+                    </td>
+
                 </tr>
             }
         </tbody>
@@ -60,6 +72,26 @@ else
         </div>
     }
 }
+<div class="modal fade site-modal-remove" id="confirm-remove-user" data-url="@Url.Action("RemoveUser")">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Borrar usuario</h4>
+            </div>
+            <div class="modal-body">
+                <p>El usuario será borrado permanentemente.</p>
+                <p>¿Desea continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Eliminar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     @{
         var last = (int)Math.Ceiling((decimal)Model.TotalUsers / Model.PageSize);
@@ -71,5 +103,22 @@ else
     $('#user').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
     $('#name').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'name', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
     $('#email').click(function () { GetUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'email', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
+
+    $("a[data-modal]").click(function () {
+        var targetId = $(this).data("targetid");
+        var modal = $(this).data("modal");
+        $(modal).data("targetid", targetId)
+            .modal({ show: true, backdrop: "static" });
+        return false;
+    });
+    $(".site-modal-remove").each(function (index, element) {
+        var destinationUrl = $(element).data("url");
+        $(".btn-primary", $(element)).click(function () {
+            var targetId = $(element).data("targetid");
+            $.post(destinationUrl, { id: targetId, __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val() })
+                .done(function () { location.reload(); })
+                .fail(function () { alert("Oops, hemos tenido un problema..."); });
+        });
+    });
 
 </script>

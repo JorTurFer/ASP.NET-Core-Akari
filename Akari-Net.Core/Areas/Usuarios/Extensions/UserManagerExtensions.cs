@@ -39,7 +39,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Extensions
             }
 
             if (!string.IsNullOrWhiteSpace(text))
-                usersQuery = usersQuery.Where(u => u.UserName.Contains(text) || u.Email.Contains(text) || u.PhoneNumber.Contains(text));
+                usersQuery = usersQuery.Where(u => u.UserName.Contains(text) || u.NombreCompleto.Contains(text) || u.Email.Contains(text) || u.PhoneNumber.Contains(text));
 
             var count = usersQuery.Count();
 
@@ -48,6 +48,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Extensions
                 UserName = x.UserName,
                 Name = x.NombreCompleto,
                 Email = x.Email,
+                Id = x.Id
             }).ToList();
             var result = new UsersPageDataViewModel()
             {

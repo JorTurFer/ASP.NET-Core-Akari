@@ -2,7 +2,7 @@
 function GetUsers(url) {
     $.ajax({
         url: url,
-        //data: { },
+        data: { __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val() },
         type: "post",
         success: function (data) {
             $("#content").html(data);
@@ -20,6 +20,7 @@ function GetUsersGrid(url, search, sort, ascending, page, pageSize) {
     $.ajax({
         url: url,
         data: {
+            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val(),
             Text: search,
             Sort: sort,
             Ascending: ascending,

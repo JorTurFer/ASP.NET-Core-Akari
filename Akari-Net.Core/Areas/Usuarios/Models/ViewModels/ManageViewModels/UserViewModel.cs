@@ -13,5 +13,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels
         public string Name { get; set; }
 
         public string Email { get; set; }
+
+        public string Id { get; set; }
     }
 }

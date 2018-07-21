@@ -35,12 +35,14 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ManageUsers()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult GetUsersGrid(GridUsersViewModel vm)
         {
             var pageData = _userManager.GetUserPageAsync(vm.Text, vm.Page, vm.PageSize, vm.Sort, vm.Ascending);
@@ -50,12 +52,25 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+            await _userManager.DeleteAsync(user);
+            return Ok();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ManageRoles()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNewRole(string roleName)
         {
             //Compruebo que no exista
@@ -70,6 +85,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveRole(string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
@@ -81,6 +97,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClaimsManage(string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
@@ -93,6 +110,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateRoleClaims(string roleId, int policyId, bool set)
         {
             //Obtengo el rol
