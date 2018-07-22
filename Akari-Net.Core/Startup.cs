@@ -85,7 +85,6 @@ namespace Akari_Net.Core
 
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<IPoliciesManager, PoliciesManager>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

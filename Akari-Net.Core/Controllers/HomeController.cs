@@ -24,7 +24,6 @@ namespace Akari_Net.Core.Controllers
             _signInManager = signInManager;
         }
 
-
         public IActionResult Index()
         {
             return View();
