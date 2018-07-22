@@ -12,10 +12,10 @@
                 <img src="@GravatarHelper.GetImage(UserManager.GetEmail(User))" class="img-circle hidden-xs" data-toggle="tooltip"
                      data-placement="bottom" title="Gravatar" onclick="openInNewTab('https://es.gravatar.com/')" />
             </li>
-            @if ((await AuthorizationService.AuthorizeAsync(User, "UsersManager")).Succeeded)
+            @if ((await AuthorizationService.AuthorizeAsync(User, "Administracion")).Succeeded)
             {
                 <li>
-                    <a asp-area="Usuarios" asp-controller="Manage" asp-action="Index" title="Administración">Administrar Usuarios </a>
+                    <a asp-area="Usuarios" asp-controller="Manage" asp-action="Index" title="Administración">Administración</a>
                 </li>
             }
             <li>

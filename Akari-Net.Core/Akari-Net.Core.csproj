@@ -15,6 +15,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Citas\Data\" />
+    <Folder Include="Areas\Citas\Models\" />
+    <Folder Include="Areas\Citas\Views\" />
     <Folder Include="Areas\Usuarios\Data\" />
     <Folder Include="wwwroot\js\min\" />
   </ItemGroup>
