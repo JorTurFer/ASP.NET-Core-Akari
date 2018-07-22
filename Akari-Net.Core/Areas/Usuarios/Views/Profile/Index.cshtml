@@ -26,7 +26,7 @@
                     else
                     {
                         <input asp-for="Email" class="form-control" />
-                        <a id="confirmEmail" class="btn btn-link">Enviar correo electrónico de verificación</a>                        
+                        <a id="confirmEmail" class="btn btn-link">Enviar correo electrónico de verificación</a>
                     }
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
@@ -43,21 +43,8 @@
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
     <script type="text/javascript">
-    $("#confirmEmail").click(function () {
-        $.ajax({
-            url: "@Url.Action("SendVerificationEmail","Profile")",
-            data: {
-                __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val(),
-                Email: $("#Email").val(),
-            },
-            type: "post",
-            success: function (data) {
-                $("body").html(data);
-            },
-            error: function () {
-                alert("Oops, hemos tenido un problema...");
-            }
-        });
+        $("#confirmEmail").click(function () {
+            sendVerificationMail("@Url.Action("SendVerificationEmail","Profile")");
     });
     </script>
 }
