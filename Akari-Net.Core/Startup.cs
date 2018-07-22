@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Akari_Net.Core.Areas.Citas.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Extensions;
@@ -41,6 +42,9 @@ namespace Akari_Net.Core
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<CitasDbContext>(options =>
+              options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
              {
                  // Password settings
@@ -52,7 +56,7 @@ namespace Akari_Net.Core
                  options.Password.RequireLowercase = passSettings.GetValue<bool>("RequireLowercase");
                  options.Password.RequireNonAlphanumeric = passSettings.GetValue<bool>("RequireNonAlphanumeric");
                  options.Password.RequireUppercase = passSettings.GetValue<bool>("RequireUppercase");
-                 
+
                  //Lockout settings
                  var lockoutSettings = Configuration.GetSection("Lockout");
                  options.Lockout.MaxFailedAccessAttempts = lockoutSettings.GetValue<int>("MaxFailedAccessAttempts");
