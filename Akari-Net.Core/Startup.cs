@@ -61,6 +61,9 @@ namespace Akari_Net.Core
                  var lockoutSettings = Configuration.GetSection("Lockout");
                  options.Lockout.MaxFailedAccessAttempts = lockoutSettings.GetValue<int>("MaxFailedAccessAttempts");
                  options.Lockout.DefaultLockoutTimeSpan = lockoutSettings.GetValue<TimeSpan>("DefaultLockoutTimeSpan");
+
+                 //Confirmacion de correo electronico
+                 options.SignIn.RequireConfirmedEmail = false;
              })
            .AddEntityFrameworkStores<ApplicationDbContext>()
            .AddDefaultTokenProviders();
@@ -88,6 +91,7 @@ namespace Akari_Net.Core
             services.AddResponseCompression();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddSingleton<IPoliciesManager, PoliciesManager>();
         }
 
