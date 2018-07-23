@@ -12,6 +12,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
     [Area("Pacientes")]
     [Authorize(Policy = "PacientesManager")]
+    [Route("[area]/[controller]/[action]")]
     public class PacientesController : Controller
     {
         private readonly PacientesDbContext _context;

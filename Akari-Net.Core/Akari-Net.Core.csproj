@@ -16,10 +16,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Pacientes\Data\" />
+    <Folder Include="Areas\Pacientes\Views\Shared\" />
     <Folder Include="Areas\Usuarios\Data\" />
     <Folder Include="wwwroot\js\min\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Areas\Pacientes\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Pacientes\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Usuarios\Views\Manage\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
