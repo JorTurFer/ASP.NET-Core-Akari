@@ -11,8 +11,9 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Services
         List<PolicyItem> _policies = new List<PolicyItem>();
         public PoliciesManager()
         {
-            _policies.Add(new PolicyItem { Id = 1, PolicyName = "Administracion", PolicyDesiption = "Administración de Accesos", });
-            _policies.Add(new PolicyItem { Id = 2, PolicyName = "CitasManager", PolicyDesiption = "Gestión de Citas", });
+            _policies.Add(new PolicyItem { Id = 0, PolicyName = "Administracion", PolicyDesiption = "Administración de Accesos", });
+            _policies.Add(new PolicyItem { Id = 1, PolicyName = "CitasManager", PolicyDesiption = "Gestión de Citas", });
+            _policies.Add(new PolicyItem { Id = 2, PolicyName = "PacientesManager", PolicyDesiption = "Gestión de Pacientes", });            
         }
         public IEnumerable<PolicyItem> GetPolicies()
         {

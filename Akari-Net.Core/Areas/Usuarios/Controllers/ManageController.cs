@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
     [Area("Usuarios")]
-    [Authorize(Policy = "Administracion")]
+    //[Authorize(Policy = "Administracion")]
     [Route("[area]/[controller]/[action]")]
     public class ManageController : Controller
     {

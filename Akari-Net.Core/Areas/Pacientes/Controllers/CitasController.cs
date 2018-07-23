@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Akari_Net.Core.Areas.Citas.Controllers
 {
-    [Area("Citas")]
+    [Area("Pacientes")]
     [Authorize(Policy = "CitasManager")]
     public class CitasController : Controller
     {

@@ -22,12 +22,10 @@ namespace Akari_Net.Core.Areas.Citas.Models.Entities
 
         [EmailAddress(ErrorMessage = "El campo '{0}' debe ser un correo electrónico válido")]
         [Display(Name = "Correo electrónico")]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
         [Display(Name = "Teléfono de contacto")]
-        [DataType(DataType.PhoneNumber)]
         public string Telefono { get; set; }
 
         //Entity Framework

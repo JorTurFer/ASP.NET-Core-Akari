@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Citas.Models.Entities
 {
-    public class CitasDbContext : DbContext
+    public class PacientesDbContext : DbContext
     {
-        public CitasDbContext(DbContextOptions<CitasDbContext> options)
+        public PacientesDbContext(DbContextOptions<PacientesDbContext> options)
         : base(options)
         {
         }

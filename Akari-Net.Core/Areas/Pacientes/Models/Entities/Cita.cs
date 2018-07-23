@@ -11,12 +11,16 @@ namespace Akari_Net.Core.Areas.Citas.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public int IdPaciente { get; set; }
+
         [Required]
         public DateTime Inicio { get; set; }
+
         [Required]
         public int Duracion { get; set; }
+
         public string Descripcion { get; set; }
 
         [ForeignKey("IdPaciente")]

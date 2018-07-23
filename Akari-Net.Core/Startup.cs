@@ -42,7 +42,7 @@ namespace Akari_Net.Core
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<CitasDbContext>(options =>
+            services.AddDbContext<PacientesDbContext>(options =>
               options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
