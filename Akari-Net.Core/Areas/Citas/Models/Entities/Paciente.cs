@@ -10,11 +10,39 @@ namespace Akari_Net.Core.Areas.Citas.Models.Entities
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "El campo '{0}' es necesario")]
+        [Display(Name = "Nombre Completo")]
         public string Nombre { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "El campo '{0}' es necesario")]
+        [Display(Name = "Fecha de nacimiento")]
+        [DataType(DataType.Date)]
         public DateTime Nacimiento { get; set; }
+
+        [EmailAddress(ErrorMessage = "El campo '{0}' debe ser un correo electrónico válido")]
+        [Display(Name = "Correo electrónico")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
+        [Display(Name = "Teléfono de contacto")]
+        [DataType(DataType.PhoneNumber)]
         public string Telefono { get; set; }
+
+        //Entity Framework
+        public virtual IEnumerable<Cita> Citas { get; set; }
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (string.IsNullOrWhiteSpace(Telefono) && string.IsNullOrWhiteSpace(Email))
+            {
+                yield return new ValidationResult(
+                    "Es necesario indicar un método de contacto",       // Error message
+                    new[] { "Telefono", "Email" });                     // Array with invalid properties
+            }
+        }
+
     }
 }
