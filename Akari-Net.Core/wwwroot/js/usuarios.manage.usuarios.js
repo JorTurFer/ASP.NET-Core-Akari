@@ -17,7 +17,6 @@ function GetUsers(url) {
 
 //Obtiene el grid de usuarios
 function getUsersGrid(url, search, sort, ascending, page, pageSize) {
-    $("#usuarios").hide("fast");
     $.ajax({
         url: url,
         data: {
@@ -31,7 +30,6 @@ function getUsersGrid(url, search, sort, ascending, page, pageSize) {
         type: "post",
         success: function (data) {
             $("#usuarios").html(data);
-            $("#usuarios").show("fast");
         },
         error: function () {
             alert("Oops, hemos tenido un problema...");
