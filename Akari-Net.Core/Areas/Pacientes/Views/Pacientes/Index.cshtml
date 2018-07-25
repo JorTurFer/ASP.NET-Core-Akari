@@ -3,15 +3,14 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h2>Index</h2>
-
+<br />
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Nuevo paciente</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -28,26 +27,55 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nacimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img src="@GravatarHelper.GetImage(item.Email)" class="img-circle" /></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nacimiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-sm btn-danger" data-targetid="@item.Id" data-modal="#confirm-remove-user">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@Html.AntiForgeryToken()
+
+<div class="modal fade site-modal-remove" id="confirm-remove-user" data-url="@Url.Action("Delete")">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Borrar paciente</h4>
+            </div>
+            <div class="modal-body">
+                <p>El paciente será borrado permanentemente.</p>
+                <p>¿Desea continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Eliminar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script type="text/javascript">
+    activateModalActions();
+</script>
+}
+

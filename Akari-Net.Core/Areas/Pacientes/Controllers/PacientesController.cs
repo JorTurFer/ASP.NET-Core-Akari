@@ -119,28 +119,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             return View(paciente);
         }
 
-        // GET: Pacientes/Pacientes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var paciente = await _context.Pacientes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (paciente == null)
-            {
-                return NotFound();
-            }
-
-            return View(paciente);
-        }
-
-        // POST: Pacientes/Pacientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var paciente = await _context.Pacientes.FindAsync(id);
             _context.Pacientes.Remove(paciente);
