@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Citas.Models.Entities
 {
-    public class Paciente
+    public class Paciente : IValidatableObject
     {
         [Key]
         public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace Akari_Net.Core.Areas.Citas.Models.Entities
         [Required(ErrorMessage = "El campo '{0}' es necesario")]
         [Display(Name = "Fecha de nacimiento")]
         [DataType(DataType.Date)]
-        public DateTime Nacimiento { get; set; }
+        public DateTime? Nacimiento { get; set; }
 
         [EmailAddress(ErrorMessage = "El campo '{0}' debe ser un correo electrónico válido")]
         [Display(Name = "Correo electrónico")]
