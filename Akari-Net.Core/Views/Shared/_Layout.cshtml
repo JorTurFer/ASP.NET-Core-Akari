@@ -56,9 +56,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2018 - Akari_Net.Core</p>
-        </footer>
+        @await Html.PartialAsync("_Footer")
     </div>
 
     <environment include="Development">
