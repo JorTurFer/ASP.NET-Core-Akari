@@ -31,7 +31,6 @@ namespace Akari_Net.Core.Areas.Citas.Models.Entities
         //Entity Framework
         public virtual IEnumerable<Cita> Citas { get; set; }
 
-
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (string.IsNullOrWhiteSpace(Telefono) && string.IsNullOrWhiteSpace(Email))
@@ -41,6 +40,5 @@ namespace Akari_Net.Core.Areas.Citas.Models.Entities
                     new[] { "Telefono", "Email" });                     // Array with invalid properties
             }
         }
-
     }
 }
