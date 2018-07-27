@@ -8,7 +8,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Services
 {
     public class PoliciesManager : IPoliciesManager
     {
-        List<PolicyItem> _policies = new List<PolicyItem>();
+        readonly List<PolicyItem> _policies = new List<PolicyItem>();
         public PoliciesManager()
         {
             _policies.Add(new PolicyItem { Id = 0, PolicyName = "Administracion", PolicyDesiption = "Administración de Accesos", });

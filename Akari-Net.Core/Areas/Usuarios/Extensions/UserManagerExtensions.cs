@@ -12,15 +12,9 @@ namespace Akari_Net.Core.Areas.Usuarios.Extensions
     {
         public static UsersPageDataViewModel GetUserPageAsync(this UserManager<ApplicationUser> _manager, string text, int page, int pageSize, string sort, bool @ascending)
         {
-            sort = sort.ToLower();
             var usersQuery = _manager.Users;
-            switch (sort)
+            switch (sort.ToLower())
             {
-                case "username":
-                    usersQuery = ascending
-                        ? usersQuery.OrderBy(p => p.UserName)
-                        : usersQuery.OrderByDescending(p => p.UserName);
-                    break;
                 case "email":
                     usersQuery = ascending
                         ? usersQuery.OrderBy(p => p.Email)
@@ -50,7 +44,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Extensions
                 Email = x.Email,
                 Id = x.Id
             }).ToList();
-            var result = new UsersPageDataViewModel()
+            var result = new UsersPageDataViewModel
             {
                 TotalUsers = count,
                 Users = data,

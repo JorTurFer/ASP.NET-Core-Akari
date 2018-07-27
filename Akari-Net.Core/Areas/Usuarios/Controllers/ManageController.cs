@@ -19,9 +19,9 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
     [Route("[area]/[controller]/[action]")]
     public class ManageController : Controller
     {
-        RoleManager<IdentityRole> _roleManager;
-        IPoliciesManager _policiesManager;
-        UserManager<ApplicationUser> _userManager;
+        readonly RoleManager<IdentityRole> _roleManager;
+        readonly IPoliciesManager _policiesManager;
+        readonly UserManager<ApplicationUser> _userManager;
 
         public ManageController(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager, IPoliciesManager policiesManager)
         {
