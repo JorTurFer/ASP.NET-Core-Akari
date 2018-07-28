@@ -25,7 +25,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         // GET: Pacientes/Pacientes
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
