@@ -49,41 +49,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             return _context.Pacientes.ToListAsync();
         }
 
-        public PacientesPageDataViewModel GetPacientesPageAsync(string text, int page, int pageSize, string sort, bool ascending)
-        {
-            IQueryable<Paciente> usersQuery = _context.Pacientes;
-            switch (sort.ToLower())
-            {
-                case "birthdate":
-                    usersQuery = ascending
-                       ? usersQuery.OrderBy(p => p.Nacimiento)
-                       : usersQuery.OrderByDescending(p => p.Nacimiento);
-                    break;
-                default:
-                    usersQuery = ascending
-                       ? usersQuery.OrderBy(p => p.Nombre)
-                       : usersQuery.OrderByDescending(p => p.Nombre);
-                    break;
-            }
-
-            if (!string.IsNullOrWhiteSpace(text))
-                usersQuery = usersQuery.Where(u => u.Nombre.Contains(text));
-
-            var count = usersQuery.Count();
-
-            var data = usersQuery.Skip((page - 1) * pageSize).Take(pageSize).Select(x => new PacienteViewModel
-            {
-                Name = x.Nombre,
-                Id = x.Id.ToString()
-            }).ToList();
-            var result = new PacientesPageDataViewModel
-            {
-                TotalPacientes = count,
-                Pacientes = data,
-            };
-            return result;
-        }
-
         public bool PacienteExists(int id)
         {
             return _context.Pacientes.Any(e => e.Id == id);
@@ -122,5 +87,42 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             _context.Update(paciente);
             return _context.SaveChangesAsync();
         }
+
+        public PacientesPageDataViewModel GetPacientesPageAsync(string text, int page, int pageSize, string sort, bool ascending)
+        {
+            IQueryable<Paciente> usersQuery = _context.Pacientes;
+            switch (sort.ToLower())
+            {
+                case "birthdate":
+                    usersQuery = ascending
+                       ? usersQuery.OrderBy(p => p.Nacimiento)
+                       : usersQuery.OrderByDescending(p => p.Nacimiento);
+                    break;
+                default:
+                    usersQuery = ascending
+                       ? usersQuery.OrderBy(p => p.Nombre)
+                       : usersQuery.OrderByDescending(p => p.Nombre);
+                    break;
+            }
+
+            if (!string.IsNullOrWhiteSpace(text))
+                usersQuery = usersQuery.Where(u => u.Nombre.Contains(text));
+
+            var count = usersQuery.Count();
+
+            var data = usersQuery.Skip((page - 1) * pageSize).Take(pageSize).Select(x => new PacienteViewModel
+            {
+                Name = x.Nombre,
+                Email = x.Email,
+                Id = x.Id.ToString()
+            }).ToList();
+            var result = new PacientesPageDataViewModel
+            {
+                TotalPacientes = count,
+                Pacientes = data,
+            };
+            return result;
+        }
+
     }
 }

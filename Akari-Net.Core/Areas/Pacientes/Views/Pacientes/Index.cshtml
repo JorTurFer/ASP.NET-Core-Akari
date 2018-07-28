@@ -1,81 +1,45 @@
-﻿@model IEnumerable<Akari_Net.Core.Areas.Citas.Models.Entities.Paciente>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 <br />
 <p>
     <a asp-action="Create" class="btn btn-primary">Nuevo paciente</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nacimiento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td><img src="@GravatarHelper.GetImage(item.Email)" class="img-circle" /></td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nacimiento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a> 
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-                    <a class="btn btn-sm btn-danger" data-targetid="@item.Id" data-modal="#confirm-remove-user">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="well row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Buscar:</label>
+            <input type="text" class="form-control" id="searchInput" />  
+        </div>
+    </div>
+    <div class="col-md-1">
+        
+    </div>
+</div>
+
+<div id="pacientes">
+
+</div>
 
 @Html.AntiForgeryToken()
 
-<div class="modal fade site-modal-remove" id="confirm-remove-user" data-url="@Url.Action("Delete")">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Borrar paciente</h4>
-            </div>
-            <div class="modal-body">
-                <p>El paciente será borrado permanentemente.</p>
-                <p>¿Desea continuar?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Eliminar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
 @section Scripts {
-<script type="text/javascript">
-    activateModalActions();
-</script>
+    <environment Names="Development">
+        <script src="~/js/pacientes.pacientes.js" asp-append-version="true"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script src="~/js/min/pacientes.pacientes.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script type="text/javascript">
+    var pageSize = 2;
+    $(document).ready(function () {
+        getPacientesGrid('@Url.Action("GetPacientesGrid", "Pacientes")', $("#searchInput").val(), 'name', true, 1, pageSize);
+        $(searchInput).on('input',(function (){
+            getPacientesGrid('@Url.Action("GetPacientesGrid", "Pacientes")', $("#searchInput").val(), 'name', true, 1, pageSize);
+        }));
+    });
+    </script>
 }
 
