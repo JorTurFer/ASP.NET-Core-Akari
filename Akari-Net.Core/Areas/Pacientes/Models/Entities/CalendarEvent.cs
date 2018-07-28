@@ -13,19 +13,19 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
         [Key]
         public int EventID { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatiorio")]
         [StringLength(100,ErrorMessage = "La longitud máxima es {1}")]
         [Display(Name = "Cabecera")]
         public string Subject { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatiorio")]
         [StringLength(300, ErrorMessage = "La longitud máxima es {1}")]
         [Display(Name = "Descripción")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatiorio")]
         [Display(Name = "Inicio")]
         public DateTime Start { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatiorio")]
         [Display(Name = "Fin")]
         public DateTime End { get; set; }
 
