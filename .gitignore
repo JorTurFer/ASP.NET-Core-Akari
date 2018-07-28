@@ -265,3 +265,6 @@ __pycache__/
 
 #Scripts js min
 **/js/min/*
+
+#Contenido de bower
+*/wwwroot/lib/*
