@@ -9,6 +9,7 @@ namespace Akari_Net.Core.Areas.Citas.Controllers
 {
     [Area("Pacientes")]
     [Authorize(Policy = "CitasManager")]
+    [Route("[area]/[controller]/[action]")]
     public class CitasController : Controller
     {
         public IActionResult Index()

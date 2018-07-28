@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
   </ItemGroup>
@@ -16,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Pacientes\Data\" />
+    <Folder Include="Areas\Pacientes\Views\Citas\" />
     <Folder Include="Areas\Pacientes\Views\Shared\" />
     <Folder Include="Areas\Usuarios\Data\" />
     <Folder Include="wwwroot\js\min\" />
