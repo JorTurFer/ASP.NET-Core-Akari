@@ -33,17 +33,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Save Event</h4>
+                <h4 class="modal-title">Guardar evento</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="margin:10px">
                 <form class="form-horizontal">
                     <input type="hidden" id="hdEventID" value="0" />
                     <div class="form-group">
-                        <label>Subject</label>
+                        <label>Cabecera</label>
                         <input type="text" id="txtSubject" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label>Start</label>
+                        <label>Inicio</label>
                         <div class="input-group date" id="dtp1">
                             <input type="text" id="txtStart" class="form-control" />
                             <span class="input-group-addon">
@@ -53,11 +53,11 @@
                     </div>
                     <div class="form-group">
                         <div class="checkbox">
-                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
+                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  ¿Todo el día?</label>
                         </div>
                     </div>
                     <div class="form-group" id="divEndDate" style="display:none">
-                        <label>End</label>
+                        <label>Fin</label>
                         <div class="input-group date" id="dtp2">
                             <input type="text" id="txtEnd" class="form-control" />
                             <span class="input-group-addon">
@@ -66,21 +66,20 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
+                        <label>Descripción</label>
                         <textarea id="txtDescription" rows="3" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Theme Color</label>
+                        <label>Prioridad</label>
                         <select id="ddThemeColor" class="form-control">
                             <option value="">Default</option>
-                            <option value="red">Red</option>
-                            <option value="blue">Blue</option>
-                            <option value="black">Black</option>
-                            <option value="green">Green</option>
+                            <option value="green">Baja</option>
+                            <option value="blue">Normal</option>
+                            <option value="red">Alta</option>
                         </select>
                     </div>
-                    <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSave" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </form>
             </div>
         </div>
@@ -254,22 +253,22 @@
             $('#btnSave').click(function () {
                 //Validation/
                 if ($('#txtSubject').val().trim() == "") {
-                    alert('Subject required');
+                    alert('Cabecera necesaria');
                     return;
                 }
                 if ($('#txtStart').val().trim() == "") {
-                    alert('Start date required');
+                    alert('Inicio necesario');
                     return;
                 }
                 if ($('#chkIsFullDay').is(':checked') == false && $('#txtEnd').val().trim() == "") {
-                    alert('End date required');
+                    alert('Fin necesario');
                     return;
                 }
                 else {
                     var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
                     var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
                     if (startDate > endDate) {
-                        alert('Invalid end date');
+                        alert('Fin invalido');
                         return;
                     }
                 }
