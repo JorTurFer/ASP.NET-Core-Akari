@@ -17,10 +17,32 @@
     "sourceMap": false
   },
   {
-    "outputFileName": "wwwroot/js/min/usuarios.manage.min.js",
+    "outputFileName": "wwwroot/js/min/usuarios/usuarios.manage.min.js",
     "inputFiles": [
-      "wwwroot/js/usuarios.manage.roles.js",
-      "wwwroot/js/usuarios.manage.usuarios.js"
+      "wwwroot/js/usuarios/usuarios.manage.roles.js",
+      "wwwroot/js/usuarios/usuarios.manage.usuarios.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/min/pacientes/pacientes.pacientes.min.js",
+    "inputFiles": [
+      "wwwroot/js/pacientes/pacientes.pacientes.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/min/pacientes/pacientes.citas.min.js",
+    "inputFiles": [
+      "wwwroot/js/pacientes/pacientes.citas.js"
     ],
     "minify": {
       "enabled": true,

@@ -13,7 +13,7 @@ function sendVerificationMail(url) {
         url: url,
         data: {
             __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val(),
-            Email: $("#Email").val(),
+            Email: $("#Email").val()
         },
         type: "post",
         success: function (data) {

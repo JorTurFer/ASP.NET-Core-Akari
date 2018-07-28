@@ -20,7 +20,8 @@
     <Folder Include="Areas\Pacientes\Data\" />
     <Folder Include="Areas\Pacientes\Views\Shared\" />
     <Folder Include="Areas\Usuarios\Data\" />
-    <Folder Include="wwwroot\js\min\" />
+    <Folder Include="wwwroot\js\min\pacientes\" />
+    <Folder Include="wwwroot\js\min\usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Areas\Pacientes\Views\_ViewImports.cshtml">
@@ -45,6 +46,6 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="true" wwwroot_4lib_4jquery_4_1bower_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties bundleconfig_1json__JSONSchema="" appsettings_1json__JSONSchema="true" wwwroot_4lib_4jquery_4_1bower_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
