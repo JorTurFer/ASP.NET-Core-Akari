@@ -30,6 +30,16 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         public JsonResult GetEvents()
         {
             var events = _context.CalendarEvents.ToList();
+            var test = new CalendarEvent
+            {
+                EventID = 1,
+                IdPaciente = null,
+                Start =DateTime.Now,
+                End = DateTime.Now.AddHours(2),
+                IsFullDay = false,
+                Subject = "Cabecera",
+            };
+            events.Add(test);
             return new JsonResult(events);
         }
     }
