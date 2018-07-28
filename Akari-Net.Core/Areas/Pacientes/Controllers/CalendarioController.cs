@@ -30,17 +30,51 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         public JsonResult GetEvents()
         {
             var events = _context.CalendarEvents.ToList();
-            var test = new CalendarEvent
-            {
-                EventID = 1,
-                IdPaciente = null,
-                Start =DateTime.Now,
-                End = DateTime.Now.AddHours(2),
-                IsFullDay = false,
-                Subject = "Cabecera",
-            };
-            events.Add(test);
             return new JsonResult(events);
+        }
+
+        [HttpPost]
+        public JsonResult SaveEvent(CalendarEvent e)
+        {
+            var status = false;
+            if (e.EventID > 0)
+            {
+                //Update the event
+                var v = _context.CalendarEvents.Where(a => a.EventID == e.EventID).FirstOrDefault();
+                if (v != null)
+                {
+                    v.Subject = e.Subject;
+                    v.Start = e.Start;
+                    v.End = e.End;
+                    v.Description = e.Description;
+                    v.IsFullDay = e.IsFullDay;
+                    v.ThemeColor = e.ThemeColor;
+                    v.IdPaciente = e.IdPaciente;
+                }
+            }
+            else
+            {
+                _context.CalendarEvents.Add(e);
+            }
+            _context.SaveChanges();
+            status = true;
+            return Json(status);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteEvent(int eventID)
+        {
+            var status = false;
+
+            var v = _context.CalendarEvents.Where(a => a.EventID == eventID).FirstOrDefault();
+            if (v != null)
+            {
+                _context.CalendarEvents.Remove(v);
+                _context.SaveChanges();
+                status = true;
+            }
+
+            return Json(status);
         }
     }
 }

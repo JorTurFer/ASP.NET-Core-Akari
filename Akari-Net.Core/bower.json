@@ -15,6 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "fullcalendar": "v3.9.0"
+    "fullcalendar": "v3.9.0",
+    "eonasdan-bootstrap-datetimepicker": "4.17.47"
+  },
+  "resolutions": {
+    "bootstrap": "v3.3.7",
+    "jquery": "2 - 3"
   }
 }
