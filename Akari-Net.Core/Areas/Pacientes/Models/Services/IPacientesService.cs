@@ -1,4 +1,4 @@
-﻿using Akari_Net.Core.Areas.Citas.Models.Entities;
+﻿using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels;
 using System;
 using System.Collections.Generic;

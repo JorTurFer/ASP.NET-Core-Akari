@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Akari_Net.Core.Areas.Citas.Models.Entities
+namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
 {
     public class PacientesDbContext : DbContext
     {

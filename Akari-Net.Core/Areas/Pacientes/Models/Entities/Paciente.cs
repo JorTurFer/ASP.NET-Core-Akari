@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Akari_Net.Core.Areas.Pacientes.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Akari_Net.Core.Areas.Citas.Models.Entities
+namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
 {
     public class Paciente : IValidatableObject
     {
@@ -27,9 +28,6 @@ namespace Akari_Net.Core.Areas.Citas.Models.Entities
         [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
         [Display(Name = "Teléfono de contacto")]
         public string Telefono { get; set; }
-
-        //Entity Framework
-        public virtual IEnumerable<Cita> Citas { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

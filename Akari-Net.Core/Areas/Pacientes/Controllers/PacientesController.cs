@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Akari_Net.Core.Areas.Citas.Models.Entities;
+using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;

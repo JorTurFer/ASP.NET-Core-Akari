@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Pacientes\Data\" />
-    <Folder Include="Areas\Pacientes\Views\Citas\" />
     <Folder Include="Areas\Pacientes\Views\Shared\" />
     <Folder Include="Areas\Usuarios\Data\" />
     <Folder Include="wwwroot\js\min\" />
