@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Citas.Models.Entities;
+using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Extensions;
@@ -92,6 +93,7 @@ namespace Akari_Net.Core
 
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<IPoliciesManager, PoliciesManager>();
+            services.AddScoped<IPacientesService, PacientesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

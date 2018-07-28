@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Akari_Net.Core.Areas.Citas.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Akari_Net.Core.Areas.Pacientes.Models.ViewModels;
+using Akari_Net.Core.Areas.Pacientes.Models.Services;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
@@ -15,17 +17,17 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
     [Route("[area]/[controller]/[action]")]
     public class PacientesController : Controller
     {
-        private readonly PacientesDbContext _context;
+        private readonly IPacientesService _pacientesService;
 
-        public PacientesController(PacientesDbContext context)
+        public PacientesController(IPacientesService pacientesService)
         {
-            _context = context;
+            _pacientesService = pacientesService;
         }
 
         // GET: Pacientes/Pacientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pacientes.ToListAsync());
+            return View(await _pacientesService.GetPacientesAsync());
         }
 
         // GET: Pacientes/Pacientes/Details/5
@@ -36,8 +38,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var paciente = await _pacientesService.FindPacienteByIdAsync(id.Value);
             if (paciente == null)
             {
                 return NotFound();
@@ -61,8 +62,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(paciente);
-                await _context.SaveChangesAsync();
+                await _pacientesService.AddAsync(paciente);
                 return RedirectToAction(nameof(Index));
             }
             return View(paciente);
@@ -76,7 +76,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Pacientes.FindAsync(id);
+            var paciente = await _pacientesService.FindPacienteByIdAsync(id.Value);
             if (paciente == null)
             {
                 return NotFound();
@@ -100,12 +100,11 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             {
                 try
                 {
-                    _context.Update(paciente);
-                    await _context.SaveChangesAsync();
+                    await _pacientesService.UpdateAsync(paciente);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PacienteExists(paciente.Id))
+                    if (!_pacientesService.PacienteExists(paciente.Id))
                     {
                         return NotFound();
                     }
@@ -123,15 +122,19 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
-            _context.Pacientes.Remove(paciente);
-            await _context.SaveChangesAsync();
+            var paciente = await _pacientesService.FindPacienteByIdAsync(id);
+            await _pacientesService.RemoveAsync(paciente);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PacienteExists(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GetPacientesGrid(GridPacientesViewModel vm)
         {
-            return _context.Pacientes.Any(e => e.Id == id);
+            var pageData = _pacientesService.GetPacientesPageAsync(vm.Text, vm.Page, vm.PageSize, vm.Sort, vm.Ascending);
+            vm.TotalPacientes = pageData.TotalPacientes;
+            vm.Pacientes = pageData.Pacientes;
+            return View(vm);
         }
     }
 }
