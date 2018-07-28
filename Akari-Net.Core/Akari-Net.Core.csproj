@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Akari_Net.Core</RootNamespace>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,6 @@
     <Folder Include="Areas\Pacientes\Views\Shared\" />
     <Folder Include="Areas\Usuarios\Data\" />
     <Folder Include="wwwroot\js\min\" />
-    <Folder Include="wwwroot\lib\fullcallendar\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Areas\Pacientes\Views\_ViewImports.cshtml">

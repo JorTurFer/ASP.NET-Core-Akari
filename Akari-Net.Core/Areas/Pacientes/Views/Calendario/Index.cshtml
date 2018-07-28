@@ -2,8 +2,8 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<div id="calender"></div>
+</br>
+<div id="calendar"></div>
 
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -22,15 +22,33 @@
     </div>
 </div>
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+
+@*@section Scripts {
+<environment Names="Development">
+    <script src="~/lib/fullcallendar/dist/fullcalendar.js" asp-append-version="true"></script>
+    <script src="~/lib/fullcallendar/dist/locale/es.js" asp-append-version="true"></script>
+
+</environment>
+    <environment Names="Production,Staging">
+        <script src="~/js/min/usuarios.manage.min.js" asp-append-version="true"></script>
+
+    </environment>
+    <script type="text/javascript">
+        //Cargo la pagina de usuarios cuando acaba de cargar el DOM
+    </script>
+}*@
+
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 
     <script>
         $(document).ready(function () {
+
             var events = [];
             $.ajax({
                 type: "GET",
@@ -47,16 +65,17 @@
                         });
                     })
 
-                    GenerateCalender(events);
+                    GenerateCalendar(events);
                 },
                 error: function (error) {
                     alert('failed');
                 }
             })
 
-            function GenerateCalender(events) {
-                $('#calender').fullCalendar('destroy');
-                $('#calender').fullCalendar({
+            function GenerateCalendar(events) {
+                $('#calendar').fullCalendar('destroy');
+                $('#calendar').fullCalendar({
+                    locale: 'es',
                     contentHeight: 400,
                     defaultDate: new Date(),
                     timeFormat: 'h(:mm)a',

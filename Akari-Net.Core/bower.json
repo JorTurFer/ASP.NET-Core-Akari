@@ -1,0 +1,20 @@
+{
+  "name": "Akari-Net.Core",
+  "homepage": "https://github.com/JorTurFer/ASP.NET-Core-Akari",
+  "authors": [
+    "Jorge Turrado Ferrero <jorge_turrado@hotmail.es>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fullcalendar": "v3.9.0"
+  }
+}
