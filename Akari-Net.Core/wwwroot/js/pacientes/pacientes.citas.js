@@ -1,7 +1,7 @@
 ﻿function startCalendar(getUrl,saveUrl,delUrl) {
 	var events = [];
 	var selectedEvent = null;
-	FetchEventAndRenderCalendar(getUrl);
+    FetchEventAndRenderCalendar(getUrl, saveUrl);
 	generateHandlers(getUrl,saveUrl, delUrl);
 }
 
@@ -20,7 +20,7 @@ function generateHandlers(getUrl,saveUrl, delUrl) {
 				success: function (data) {
 					if (data) {
 						//Refresh the calender
-						FetchEventAndRenderCalendar(getUrl);
+                        FetchEventAndRenderCalendar(getUrl, saveUrl);
 						$('#myModal').modal('hide');
 					}
 				},
@@ -78,7 +78,7 @@ function generateHandlers(getUrl,saveUrl, delUrl) {
 	});
 }
 
-function FetchEventAndRenderCalendar(getUrl) {
+function FetchEventAndRenderCalendar(getUrl, saveUrl) {
 	$.ajax({
 		type: "GET",
 		url: getUrl,
@@ -96,7 +96,7 @@ function FetchEventAndRenderCalendar(getUrl) {
 					idPaciente: v.idPaciente
 				});
 			});
-			GenerateCalendar(events);
+            GenerateCalendar(getUrl, saveUrl, events);
 		},
 		error: function (error) {
 			alert("Oops, hemos tenido un problema...");
@@ -104,9 +104,10 @@ function FetchEventAndRenderCalendar(getUrl) {
 	});
 }
 
-function GenerateCalendar(events) {
+function GenerateCalendar(getUrl, saveUrl, events) {
 	$('#calendar').fullCalendar('destroy');
-	$('#calendar').fullCalendar({
+    $('#calendar').fullCalendar({
+        use24hours: true,
 		locale: 'es',
 		contentHeight: 400,
 		defaultDate: new Date(),
@@ -159,8 +160,8 @@ function GenerateCalendar(events) {
 				ThemeColor: event.color,
 				IsFullDay: event.allDay
 			};
-			SaveEvent(data);
-		}
+            SaveEvent(getUrl, saveUrl, data);
+        }
 	});
 }
 
@@ -187,7 +188,7 @@ function SaveEvent(getUrl,saveUrl,data) {
 		success: function (data) {
 			if (data) {
 				//Refresh the calender
-				FetchEventAndRenderCalendar(getUrl);
+                FetchEventAndRenderCalendar(getUrl, saveUrl);
 				$('#myModalSave').modal('hide');
 			}
 		},
