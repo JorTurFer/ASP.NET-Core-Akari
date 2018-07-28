@@ -28,7 +28,7 @@ namespace Akari_Net.Core.Controllers
         {
             return View();
         }
-        [Authorize(Policy = "CitasManager")]
+        [Authorize(Policy = "CalendarManager")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

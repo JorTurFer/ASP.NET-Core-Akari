@@ -34,10 +34,10 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    @if ((await AuthorizationService.AuthorizeAsync(User, "CitasManager")).Succeeded)
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "CalendarManager")).Succeeded)
                     {
                         <li>
-                            <a asp-area="Pacientes" asp-controller="Citas" asp-action="Index" title="Citas">Citas</a>
+                            <a asp-area="Pacientes" asp-controller="Calendario" asp-action="Index" title="Calendario">Calendario</a>
                         </li>
                     }
                     @if ((await AuthorizationService.AuthorizeAsync(User, "PacientesManager")).Succeeded)

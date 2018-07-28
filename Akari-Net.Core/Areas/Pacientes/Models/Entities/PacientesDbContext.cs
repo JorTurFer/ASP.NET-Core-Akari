@@ -18,7 +18,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
             base.OnModelCreating(builder);
         }
 
-        public DbSet<Cita> Citas { get; set; }
+        public DbSet<CalendarEvent> CalendarEvents { get; set; }
 
         public DbSet<Paciente> Pacientes { get; set; }
     }

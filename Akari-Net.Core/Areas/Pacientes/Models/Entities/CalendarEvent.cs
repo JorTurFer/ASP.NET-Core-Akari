@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
 {
-    public class Cita
+    public class CalendarEvent
     {
         [Key]
-        public int ID { get; set; }
+        public int EventID { get; set; }
 
         [StringLength(100,ErrorMessage = "La longitud máxima es {1}")]
         [Display(Name = "Cabecera")]
