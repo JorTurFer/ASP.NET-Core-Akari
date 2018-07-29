@@ -19,10 +19,10 @@
     "eonasdan-bootstrap-datetimepicker": "4.17.47",
     "jquery-validation": "1.17.0",
     "jquery-validation-unobtrusive": "v3.2.10",
-    "boostrap": "bootstrap#v4.1.3"
+    "bootstrap": "v3.3.7"
   },
   "resolutions": {
-    "bootstrap": "v3.3.7",
+    "bootstrap": "v4.0.0-alpha.6",
     "jquery": "2 - 3"
   }
 }
