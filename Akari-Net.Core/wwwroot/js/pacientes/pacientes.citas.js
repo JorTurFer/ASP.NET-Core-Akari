@@ -31,7 +31,7 @@ function generateHandlers(getUrl,saveUrl, delUrl) {
 		}
 	});
 	$('#dtp1,#dtp2').datetimepicker({
-		format: 'DD/MM/YYYY HH:mm A'
+		format: 'DD/MM/YYYY HH:mm'
 	});
 	$('#chkIsFullDay').change(function () {
 		if ($(this).is(':checked')) {
@@ -75,7 +75,7 @@ function generateHandlers(getUrl,saveUrl, delUrl) {
 		};
 		SaveEvent(getUrl, saveUrl, data);
 		// call function for submit data to the server 
-	});
+    });
 }
 
 function FetchEventAndRenderCalendar(getUrl, saveUrl) {
@@ -169,10 +169,10 @@ function openAddEditForm() {
 	if (selectedEvent !== null) {
 		$('#hdEventID').val(selectedEvent.eventID);
 		$('#txtSubject').val(selectedEvent.title);
-		$('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+		$('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm'));
 		$('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
 		$('#chkIsFullDay').change();
-		$('#txtEnd').val(selectedEvent.end !== null ? selectedEvent.end.format('DD/MM/YYYY HH:mm A') : '');
+		$('#txtEnd').val(selectedEvent.end !== null ? selectedEvent.end.format('DD/MM/YYYY HH:mm') : '');
 		$('#txtDescription').val(selectedEvent.description);
 		$('#ddThemeColor').val(selectedEvent.color);
 	}
