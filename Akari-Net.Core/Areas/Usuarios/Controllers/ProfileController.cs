@@ -133,7 +133,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             var email = user.Email;
             await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
-            StatusMessage = "Se ha enviado el correo de verificación. Por favor, revise su bandeja de entrada.";
+            StatusMessage = "Se ha enviado el correo de verificación. Por favor, revise su bandeja de entrada. Puede que tengas que revisar tambien la carpeta de spam";
             return RedirectToAction(nameof(Index));
         }
 

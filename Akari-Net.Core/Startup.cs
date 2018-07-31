@@ -92,6 +92,7 @@ namespace Akari_Net.Core
             services.AddResponseCompression();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddSingleton<IPoliciesManager, PoliciesManager>();
             services.AddScoped<IPacientesService, PacientesService>();
         }
