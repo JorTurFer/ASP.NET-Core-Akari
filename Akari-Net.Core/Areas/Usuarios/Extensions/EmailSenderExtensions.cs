@@ -1,4 +1,4 @@
-﻿using Akari_Net.Core.Models.Services;
+﻿using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

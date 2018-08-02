@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Akari_Net.Core.Models.Services
+namespace Akari_Net.Core.Areas.Usuarios.Models.Services
 {
     // This class is used by the application to send email for account confirmation and password reset.
     // For more details see https://go.microsoft.com/fwlink/?LinkID=532713
