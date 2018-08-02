@@ -6,16 +6,17 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels;
 using Akari_Net.Core.Controllers;
 using Akari_Net.Core.Extensions;
-using Akari_Net.Core.Models.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
@@ -29,19 +30,22 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
+        private readonly AccountConfirmationOptions _confirmationOptions;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IOptions<AccountConfirmationOptions> confirmationOptions)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _configuration = configuration;
+            _confirmationOptions = confirmationOptions.Value;
         }
 
         [TempData]
@@ -69,6 +73,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -85,6 +90,15 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 }
                 else
                 {
+                    // Require the user to have a confirmed email before they can log on.
+                    var user = await _userManager.FindByNameAsync(model.UserName);
+                    if (user != null)
+                    {
+                        if (!await _userManager.IsEmailConfirmedAsync(user))
+                        {
+                           return RedirectToAction(nameof(ReSendEmailConfirmation));
+                        }
+                    }
                     ModelState.AddModelError(string.Empty, "El usuario y/o la contraseña no son válidos");
                     return View(model);
                 }
@@ -92,6 +106,28 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ReSendEmailConfirmation()
+        {            
+            return View( new ReSendEmailConfirmationViewModel());
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ReSendEmailConfirmation(ReSendEmailConfirmationViewModel vm)
+        {
+            var user = await _userManager.FindByEmailAsync(vm.Email);
+            if(user != null)
+            {
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                await _emailSender.SendEmailConfirmationAsync(vm.Email, callbackUrl);
+            }
+            //Retorno siempre lo mismo para no dar lugar a rasterar correos validos
+            return RedirectToAction(nameof(ConfirmEmail));
         }
 
         [HttpGet]
@@ -246,15 +282,30 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    if (_confirmationOptions.EmailConfirmationRequired)
+                    {
+                        return RedirectToAction(nameof(RegisterEmailConfirmation));
+                    }
+                    else
+                    {
+
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
+                        return RedirectToLocal(returnUrl);
+                    }
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult RegisterEmailConfirmation()
+        {
+            return View();
         }
 
         [HttpPost]
