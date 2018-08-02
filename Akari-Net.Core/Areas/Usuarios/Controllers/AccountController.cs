@@ -127,7 +127,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 await _emailSender.SendEmailConfirmationAsync(vm.Email, callbackUrl);
             }
             //Retorno siempre lo mismo para no dar lugar a rasterar correos validos
-            return RedirectToAction(nameof(ConfirmEmail));
+            return RedirectToAction(nameof(RegisterEmailConfirmation));
         }
 
         [HttpGet]
