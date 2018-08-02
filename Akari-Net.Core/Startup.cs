@@ -7,7 +7,6 @@ using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Extensions;
-using Akari_Net.Core.Models.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 
 namespace Akari_Net.Core
 {
@@ -40,11 +40,27 @@ namespace Akari_Net.Core
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+            //Añado el contexto de usuarios
+            var builderUsers = new MySqlConnectionStringBuilder(
+            Configuration.GetConnectionString("Akari"));
+            builderUsers.Password = Configuration["ConnectionStringPassword"];
+            builderUsers.UserID = Configuration["ConnectionStringUser"];
+            builderUsers.Database = Configuration["UsuariosDB"];
+
+            services.AddDbContext<UsuariosDbContext>(options =>
+               options.UseMySql(builderUsers.ConnectionString));
+
+            //Añado el contexto de pacientes
+            var builderPacientes = new MySqlConnectionStringBuilder(
+            Configuration.GetConnectionString("Akari"));
+            builderPacientes.Password = Configuration["ConnectionStringPassword"];
+            builderPacientes.UserID = Configuration["ConnectionStringUser"];
+            builderPacientes.Database = Configuration["PacientesDB"];
+
 
             services.AddDbContext<PacientesDbContext>(options =>
-              options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+              options.UseMySql(builderPacientes.ConnectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
              {
@@ -64,9 +80,9 @@ namespace Akari_Net.Core
                  options.Lockout.DefaultLockoutTimeSpan = lockoutSettings.GetValue<TimeSpan>("DefaultLockoutTimeSpan");
 
                  //Confirmacion de correo electronico
-                 options.SignIn.RequireConfirmedEmail = false;
+                 options.SignIn.RequireConfirmedEmail = Configuration.GetValue<bool>("EmailConfirmationRequired");
              })
-           .AddEntityFrameworkStores<ApplicationDbContext>()
+           .AddEntityFrameworkStores<UsuariosDbContext>()
            .AddDefaultTokenProviders();
 
             services.AddAuthorization(options =>
@@ -93,6 +109,7 @@ namespace Akari_Net.Core
 
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.Configure<AccountConfirmationOptions>(Configuration);
             services.AddSingleton<IPoliciesManager, PoliciesManager>();
             services.AddScoped<IPacientesService, PacientesService>();
         }

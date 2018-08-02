@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Usuarios.Models.Entities
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class UsuariosDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public UsuariosDbContext(DbContextOptions<UsuariosDbContext> options)
             : base(options)
         {
         }

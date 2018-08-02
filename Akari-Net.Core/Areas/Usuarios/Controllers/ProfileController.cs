@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
-using Akari_Net.Core.Models.Services;
 using Akari_Net.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using System.Text;
 using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Akari_Net.Core.Areas.Usuarios.Models.Services;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
