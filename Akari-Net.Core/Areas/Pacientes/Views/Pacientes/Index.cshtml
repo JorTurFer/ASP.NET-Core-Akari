@@ -33,7 +33,7 @@
     </environment>
 
     <script type="text/javascript">
-    var pageSize = 2;
+    var pageSize = 10;
     $(document).ready(function () {
         getPacientesGrid('@Url.Action("GetPacientesGrid", "Pacientes")', $("#searchInput").val(), 'name', true, 1, pageSize);
         $(searchInput).on('input',(function (){

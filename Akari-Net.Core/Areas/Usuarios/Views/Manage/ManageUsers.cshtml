@@ -14,7 +14,7 @@
 
 </div>
 <script>
-    var pageSize = 2;
+    var pageSize = 10;
     $(document).ready(function () {
         getUsersGrid('@Url.Action("GetUsersGrid", "Manage")', $("#searchInput").val(), 'username', true, 1, pageSize);
         $(searchInput).on('input',(function (){ 
