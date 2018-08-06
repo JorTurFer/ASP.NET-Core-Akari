@@ -1,5 +1,5 @@
 ﻿function startCalendar(getUrl, saveUrl, delUrl) {
-    FetchEventAndRenderCalendar(getUrl, saveUrl);
+    fetchEventAndRenderCalendar(getUrl, saveUrl);
     generateHandlers(getUrl, saveUrl, delUrl);
 }
 
@@ -17,7 +17,7 @@ function generateHandlers(getUrl, saveUrl, delUrl) {
                 success: function (data) {
                     if (data) {
                         //Refresh the calender
-                        FetchEventAndRenderCalendar(getUrl, saveUrl);
+                        fetchEventAndRenderCalendar(getUrl, saveUrl);
                         $('#myModal').modal('hide');
                     }
                 },
@@ -70,12 +70,12 @@ function generateHandlers(getUrl, saveUrl, delUrl) {
             ThemeColor: $('#ddThemeColor').val(),
             IsFullDay: $('#chkIsFullDay').is(':checked')
         };
-        SaveEvent(getUrl, saveUrl, data);
+        saveEvent(getUrl, saveUrl, data);
         // call function for submit data to the server 
     });
 }
 
-function FetchEventAndRenderCalendar(getUrl, saveUrl) {
+function fetchEventAndRenderCalendar(getUrl, saveUrl) {
     var date = new Date().toISOString();
     var type = "week";
     var calendar = $('#calendar').html;
@@ -104,7 +104,7 @@ function FetchEventAndRenderCalendar(getUrl, saveUrl) {
                     idPaciente: v.idPaciente
                 });
             });
-            GenerateCalendar(getUrl, saveUrl, events);
+            generateCalendar(getUrl, saveUrl, events);
         },
         error: function (error) {
             alert("Oops, hemos tenido un problema...");
@@ -112,7 +112,7 @@ function FetchEventAndRenderCalendar(getUrl, saveUrl) {
     });
 }
 
-function GenerateCalendar(getUrl, saveUrl, events) {
+function generateCalendar(getUrl, saveUrl, events) {
     $('#calendar').fullCalendar('destroy');
     $('#calendar').fullCalendar({
         use24hours: true,
@@ -173,7 +173,7 @@ function GenerateCalendar(getUrl, saveUrl, events) {
                 ThemeColor: event.color,
                 IsFullDay: event.allDay
             };
-            SaveEvent(getUrl, saveUrl, data);
+            saveEvent(getUrl, saveUrl, data);
         }
     });
 }
@@ -193,7 +193,7 @@ function openAddEditForm() {
     $('#myModalSave').modal();
 }
 
-function SaveEvent(getUrl, saveUrl, data) {
+function saveEvent(getUrl, saveUrl, data) {
     $.ajax({
         type: "POST",
         url: saveUrl,
@@ -201,7 +201,7 @@ function SaveEvent(getUrl, saveUrl, data) {
         success: function (data) {
             if (data) {
                 //Refresh the calender
-                FetchEventAndRenderCalendar(getUrl, saveUrl);
+                fetchEventAndRenderCalendar(getUrl, saveUrl);
                 $('#myModalSave').modal('hide');
             }
         },
