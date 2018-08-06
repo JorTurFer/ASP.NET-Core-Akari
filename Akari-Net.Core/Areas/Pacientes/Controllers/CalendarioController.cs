@@ -29,7 +29,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 
         public async Task<JsonResult> GetEvents(DateTime Date , string Type)
         {
-            List<CalendarEvent> events = new List<CalendarEvent>();
+            List<CalendarEvent> events;
             if (Type.ToLower().Contains("month"))
             {
                 events = await _context.CalendarEvents.Where(x=> x.Start.Date > Date.Date.AddMonths(-1) && x.Start.Date < Date.Date.AddMonths(1)).ToListAsync();

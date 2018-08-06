@@ -1,6 +1,34 @@
-﻿function startCalendar(getUrl, saveUrl, delUrl) {
-    fetchEventAndRenderCalendar(getUrl, saveUrl);
-    generateHandlers(getUrl, saveUrl, delUrl);
+﻿function openAddEditForm() {
+    if (selectedEvent !== null) {
+        $("#hdEventID").val(selectedEvent.eventID);
+        $("#txtSubject").val(selectedEvent.title);
+        $("#txtStart").val(selectedEvent.start.format("DD/MM/YYYY HH:mm"));
+        $("#chkIsFullDay").prop("checked", selectedEvent.allDay || false);
+        $("#chkIsFullDay").change();
+        $("#txtEnd").val(selectedEvent.end !== null ? selectedEvent.end.format("DD/MM/YYYY HH:mm") : "");
+        $("#txtDescription").val(selectedEvent.description);
+        $("#ddThemeColor").val(selectedEvent.color);
+    }
+    $("#myModal").modal("hide");
+    $("#myModalSave").modal();
+}
+
+function saveEvent(getUrl, saveUrl, data) {
+    $.ajax({
+        type: "POST",
+        url: saveUrl,
+        data: data,
+        success: function (data) {
+            if (data) {
+                //Refresh the calender
+                fetchEventAndRenderCalendar(getUrl, saveUrl);
+                $("#myModalSave").modal("hide");
+            }
+        },
+        error: function () {
+            alert("Oops, hemos tenido un problema...");
+        }
+    });
 }
 
 function generateHandlers(getUrl, saveUrl, delUrl) {
@@ -75,43 +103,6 @@ function generateHandlers(getUrl, saveUrl, delUrl) {
     });
 }
 
-function fetchEventAndRenderCalendar(getUrl, saveUrl) {
-    var date = new Date().toISOString();
-    var type = "week";
-    var calendar = $("#calendar").html;
-    if($.trim($("#calendar").html()) !== "") {
-        date = $("#calendar").fullCalendar("getDate").toISOString();
-        type = $("#calendar").fullCalendar("getView").name;
-    }
-    $.ajax({
-        type: "GET",
-        url: getUrl,
-        data: {
-            Date: date,
-            Type: type
-        },
-        success: function (data) {
-            events = [];
-            $.each(data, function (i, v) {
-                events.push({
-                    eventID: v.eventID,
-                    title: v.subject,
-                    description: v.description,
-                    start: moment(v.start),
-                    end: v.end !== null ? moment(v.end) : null,
-                    color: v.themeColor,
-                    allDay: v.isFullDay,
-                    idPaciente: v.idPaciente
-                });
-            });
-            generateCalendar(getUrl, saveUrl, events);
-        },
-        error: function (error) {
-            alert("Oops, hemos tenido un problema...");
-        }
-    });
-}
-
 function generateCalendar(getUrl, saveUrl, events) {
     $("#calendar").fullCalendar("destroy");
     $("#calendar").fullCalendar({
@@ -178,35 +169,46 @@ function generateCalendar(getUrl, saveUrl, events) {
     });
 }
 
-function openAddEditForm() {
-    if (selectedEvent !== null) {
-        $("#hdEventID").val(selectedEvent.eventID);
-        $("#txtSubject").val(selectedEvent.title);
-        $("#txtStart").val(selectedEvent.start.format("DD/MM/YYYY HH:mm"));
-        $("#chkIsFullDay").prop("checked", selectedEvent.allDay || false);
-        $("#chkIsFullDay").change();
-        $("#txtEnd").val(selectedEvent.end !== null ? selectedEvent.end.format("DD/MM/YYYY HH:mm") : "");
-        $("#txtDescription").val(selectedEvent.description);
-        $("#ddThemeColor").val(selectedEvent.color);
+function fetchEventAndRenderCalendar(getUrl, saveUrl) {
+    var date = new Date().toISOString();
+    var type = "week";
+    var calendar = $("#calendar").html;
+    if($.trim($("#calendar").html()) !== "") {
+        date = $("#calendar").fullCalendar("getDate").toISOString();
+        type = $("#calendar").fullCalendar("getView").name;
     }
-    $("#myModal").modal("hide");
-    $("#myModalSave").modal();
-}
-
-function saveEvent(getUrl, saveUrl, data) {
     $.ajax({
-        type: "POST",
-        url: saveUrl,
-        data: data,
-        success: function (data) {
-            if (data) {
-                //Refresh the calender
-                fetchEventAndRenderCalendar(getUrl, saveUrl);
-                $("#myModalSave").modal("hide");
-            }
+        type: "GET",
+        url: getUrl,
+        data: {
+            Date: date,
+            Type: type
         },
-        error: function () {
+        success: function (data) {
+            events = [];
+            $.each(data, function (i, v) {
+                events.push({
+                    eventID: v.eventID,
+                    title: v.subject,
+                    description: v.description,
+                    start: moment(v.start),
+                    end: v.end !== null ? moment(v.end) : null,
+                    color: v.themeColor,
+                    allDay: v.isFullDay,
+                    idPaciente: v.idPaciente
+                });
+            });
+            generateCalendar(getUrl, saveUrl, events);
+        },
+        error: function (error) {
             alert("Oops, hemos tenido un problema...");
         }
     });
 }
+
+function startCalendar(getUrl, saveUrl, delUrl) {
+    fetchEventAndRenderCalendar(getUrl, saveUrl);
+    generateHandlers(getUrl, saveUrl, delUrl);
+}
+
+
