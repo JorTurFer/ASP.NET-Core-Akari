@@ -111,11 +111,11 @@ function GenerateCalendar(getUrl, saveUrl, events) {
 		locale: 'es',
 		contentHeight: 400,
 		defaultDate: new Date(),
-		timeFormat: 'h(:mm)a',
+        timeFormat: 'HH:mm',
 		header: {
 			left: 'prev,next today',
 			center: 'title',
-			right: 'month,basicWeek,basicDay,agenda'
+			right: 'month,basicWeek,agenda'
 		},
 		eventLimit: true,
 		eventColor: '#378006',
