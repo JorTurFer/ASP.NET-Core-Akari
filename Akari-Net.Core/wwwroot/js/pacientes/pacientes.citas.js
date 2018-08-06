@@ -79,9 +79,20 @@ function generateHandlers(getUrl, saveUrl, delUrl) {
 }
 
 function FetchEventAndRenderCalendar(getUrl, saveUrl) {
+    var date = new Date().toISOString();
+    var type = "week";
+    var calendar = $('#calendar').html;
+    if($.trim($("#calendar").html()) !== '') {
+        date = $('#calendar').fullCalendar('getDate').toISOString();
+        type = $('#calendar').fullCalendar('getView').name;
+    }
     $.ajax({
         type: "GET",
         url: getUrl,
+        data: {
+            Date: date,
+            Type: type
+        },
         success: function (data) {
             events = [];
             $.each(data, function (i, v) {

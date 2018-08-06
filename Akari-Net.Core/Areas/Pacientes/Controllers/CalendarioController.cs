@@ -6,6 +6,7 @@ using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
@@ -27,9 +28,22 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             return View();
         }
 
-        public JsonResult GetEvents()
+        public async Task<JsonResult> GetEvents(DateTime Date , string Type)
         {
-            var events = _context.CalendarEvents.ToList();
+            List<CalendarEvent> events = new List<CalendarEvent>();
+            if (Type.ToLower().Contains("month"))
+            {
+                events = await _context.CalendarEvents.Where(x=> x.Start.Date > Date.Date.AddMonths(-1) && x.Start.Date < Date.Date.AddMonths(1)).ToListAsync();
+            }
+            else if (Type.ToLower().Contains("week"))
+            {
+                events = await _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddDays(-7) && x.Start.Date < Date.Date.AddMonths(7)).ToListAsync();
+            }
+            else
+            {
+                events = await _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).ToListAsync();
+
+            }
             return new JsonResult(events);
         }
 
