@@ -36,7 +36,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
         public bool IsFullDay { get; set; }
 
         //En caso de ser una cita, id del paciente para el que es
-        public int? IdPaciente { get; set; }
-        
+        public int? IdPaciente { get; set; }        
     }
 }
