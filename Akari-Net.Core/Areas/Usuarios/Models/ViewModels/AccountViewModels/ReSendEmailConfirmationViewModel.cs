@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
 {
     public class ReSendEmailConfirmationViewModel
