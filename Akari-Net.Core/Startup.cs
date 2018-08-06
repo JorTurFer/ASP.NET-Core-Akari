@@ -132,8 +132,7 @@ namespace Akari_Net.Core
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-            //No hace falta redireccionar a http, estoy tras proxy inverso
-            //app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
