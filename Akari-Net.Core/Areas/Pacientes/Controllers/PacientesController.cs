@@ -75,11 +75,41 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             {
                 return NotFound();
             }
-
             var paciente = await _pacientesService.FindPacienteByIdAsync(id.Value);
             if (paciente == null)
             {
                 return NotFound();
+            }
+            return View(paciente);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Nacimiento,Email,Telefono")] Paciente paciente)
+        {
+            if (id != paciente.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _pacientesService.UpdateAsync(paciente);                    
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_pacientesService.PacienteExists(paciente.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(paciente);
         }

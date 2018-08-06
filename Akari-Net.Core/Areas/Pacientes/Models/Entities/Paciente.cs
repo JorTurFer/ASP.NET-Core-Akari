@@ -16,7 +16,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
         [Display(Name = "Nombre Completo")]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "El campo '{0}' es necesario")]
         [Display(Name = "Fecha de nacimiento")]
         [DataType(DataType.Date)]
         public DateTime? Nacimiento { get; set; }
