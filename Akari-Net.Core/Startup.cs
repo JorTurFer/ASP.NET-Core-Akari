@@ -58,8 +58,7 @@ namespace Akari_Net.Core
             builderPacientes.Password = Configuration["ConnectionStringPassword"];
             builderPacientes.UserID = Configuration["ConnectionStringUser"];
             builderPacientes.Database = Configuration["PacientesDB"];
-
-
+            
             services.AddDbContext<PacientesDbContext>(options =>
               options.UseMySql(builderPacientes.ConnectionString));
 

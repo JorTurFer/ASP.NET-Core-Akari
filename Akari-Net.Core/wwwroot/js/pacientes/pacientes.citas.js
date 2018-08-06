@@ -1,10 +1,7 @@
 ﻿function startCalendar(getUrl, saveUrl, delUrl) {
-    var events = [];
-    var selectedEvent = null;
     FetchEventAndRenderCalendar(getUrl, saveUrl);
     generateHandlers(getUrl, saveUrl, delUrl);
 }
-
 
 function generateHandlers(getUrl, saveUrl, delUrl) {
     $('#btnEdit').click(function () {
