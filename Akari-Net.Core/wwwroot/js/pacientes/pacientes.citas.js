@@ -109,17 +109,18 @@ function GenerateCalendar(getUrl, saveUrl, events) {
     $('#calendar').fullCalendar({
         use24hours: true,
         locale: 'es',
-        contentHeight: 400,
+        contentHeight: 600,
         defaultDate: new Date(),
         themeSystem: 'bootstrap3',
         timeFormat: 'HH:mm',
+        scrollTime: '08:00:00',
         weekNumbers: true,
         weekNumberCalculation: 'ISO',
         defaultView: 'agendaWeek',
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,basicWeek,agenda'
+            right: 'month,agendaWeek,agendaDay'
         },
         eventLimit: true,
         eventColor: '#378006',
