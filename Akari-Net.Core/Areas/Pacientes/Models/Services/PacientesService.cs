@@ -123,6 +123,5 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             };
             return result;
         }
-
     }
 }

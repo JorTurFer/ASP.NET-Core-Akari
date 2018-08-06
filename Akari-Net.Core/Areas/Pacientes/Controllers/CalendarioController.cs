@@ -21,8 +21,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         {
             _context = context;
         }
-
-
+        
         public IActionResult Index()
         {
             return View();
@@ -42,7 +41,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             else
             {
                 events = await _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).ToListAsync();
-
             }
             return new JsonResult(events);
         }
