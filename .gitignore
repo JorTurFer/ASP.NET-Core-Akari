@@ -267,4 +267,4 @@ __pycache__/
 **/js/min/*
 
 #Contenido de bower
-*/wwwroot/lib/*
+**/wwwroot/lib/*
