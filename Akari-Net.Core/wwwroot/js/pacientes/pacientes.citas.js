@@ -13,8 +13,8 @@ function openAddEditForm() {
         $("#txtDescription").val(selectedEvent.description);
         $("#ddThemeColor").val(selectedEvent.color);
     }
-    $("#myModal").modal("hide");
-    $("#myModalSave").modal();
+    $("#details-event-modal").modal("hide");
+    $("#save-event-modal").modal();
 }
 
 function saveEvent(data) {
@@ -27,7 +27,7 @@ function saveEvent(data) {
                 if (data) {
                     //Refresh the calender
                     fetchEventAndRenderCalendar();
-                    $("#myModalSave").modal("hide");
+                    $("#save-event-modal").modal("hide");
                 }
             },
             error: function () {
@@ -37,7 +37,7 @@ function saveEvent(data) {
     }
     else {
         fetchEventAndRenderCalendar();
-        $("#myModalSave").modal("hide");
+        $("#save-event-modal").modal("hide");
     }
 }
 
@@ -56,7 +56,7 @@ function generateHandlers() {
                     if (data) {
                         //Refresh the calender
                         fetchEventAndRenderCalendar();
-                        $("#myModal").modal("hide");
+                        $("#details-event-modal").modal("hide");
                     }
                 },
                 error: function () {
@@ -136,7 +136,7 @@ function generateCalendar(events) {
         events: events,
         eventClick: function (calEvent, jsEvent, view) {
             selectedEvent = calEvent;
-            $("#myModal #eventTitle").text(calEvent.title);
+            $("#details-event-modal #eventTitle").text(calEvent.title);
             var $description = $("<div/>");
             $description.append($("<p/>").html("<b>Empieza:</b>" + calEvent.start.format("DD-MMM-YYYY HH:mm")));
             if (calEvent.end !== null) {
@@ -145,9 +145,9 @@ function generateCalendar(events) {
             if (calEvent.description !== null) {
                 $description.append($("<p/>").html("<b>Descripcion:</b>" + calEvent.description));
             }
-            $("#myModal #pDetails").empty().html($description);
+            $("#details-event-modal #pDetails").empty().html($description);
 
-            $("#myModal").modal();
+            $("#details-event-modal").modal();
         },
         selectable: true,
         select: function (start, end) {
