@@ -74,6 +74,21 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [HttpPost]
+        [AuthorizePolicy(Policy = "SaveCalendarEvents", Description = "Permitir registrar en calendario")]
+        public async Task<JsonResult> GetPatientNames(string nombre)
+        {
+            //Para evitar sobrecarga, solo busco si se han escrito 4 o mas letras
+            if (nombre.Length > 4)
+            {
+                var pacientes = await _context.Pacientes.Where(x => x.Nombre.Normalize().Contains(nombre.Normalize())).Select(x=>x.Nombre).ToListAsync();
+
+                return Json(pacientes);
+            }
+            else
+                return Json("");
+        }
+
+        [HttpPost]
         [AuthorizePolicy(Policy = "DeleteCalendarEvents", Description = "Permitir borrar del calendario")]
         public async Task<JsonResult> DeleteEvent(int eventID)
         {
