@@ -35,7 +35,6 @@ function activateModalActions() {
         return false;
     });
 
-
     $(".site-modal-remove").each(function (index, element) {
         var destinationUrl = $(element).data("url");
         $(".btn-primary", $(element)).click(function () {
@@ -46,4 +45,3 @@ function activateModalActions() {
         });
     });
 }
-

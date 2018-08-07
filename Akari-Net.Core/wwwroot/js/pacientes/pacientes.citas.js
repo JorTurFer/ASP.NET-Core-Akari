@@ -224,5 +224,3 @@ function startCalendar(get, save, del, canSave) {
     fetchEventAndRenderCalendar();
     generateHandlers();
 }
-
-
