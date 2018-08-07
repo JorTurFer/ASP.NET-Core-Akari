@@ -1,7 +1,12 @@
+using Akari_Net.Core.Areas.Pacientes.Controllers;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
+using Akari_Net.Core.Areas.Pacientes.Models.Services;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace UnitaryTests
@@ -9,26 +14,26 @@ namespace UnitaryTests
     public class CalendarioControllerTest
     {
         [Fact]
-        public void GetEvents()
+        public async void GetEvents()
         {
             // Arrange
-            var serviceMock = new Mock<PacientesDbContext>();
-            serviceMock.Setup(x => x.CalendarEvents()).Returns(() => new List<CalendarEvent>
-  {
-    new CalendarEvent{EventID=1, IsFullDay=true, Subject = "test"},
-    new CalendarEvent{EventID=1, IsFullDay=true, Subject = "test"},
-    new CalendarEvent{EventID=1, IsFullDay=true, Subject = "test"},
-  });
-            var controller = new PersonsController(serviceMock.Object);
+            var serviceMock = new Mock<ICalendarioServices>();
+            serviceMock.Setup(x => x.GetCalendarEventsAsync(DateTime.Now.Date, "month")).ReturnsAsync(() => new List<CalendarEvent>
+              {
+                new CalendarEvent{EventID=1, IsFullDay=true, Subject = "test",Start = DateTime.Now},
+                new CalendarEvent{EventID=2, IsFullDay=true, Subject = "test2",Start = DateTime.Now.AddDays(7)},
+                new CalendarEvent{EventID=3, IsFullDay=true, Subject = "skip",Start = DateTime.Now.AddDays(1)},
+              });
+            var controller = new CalendarioController(serviceMock.Object);
 
             // Act
-            var result = await controller.Get();
+            var result = await controller.GetEvents(DateTime.Now.Date,"month");
 
             // Assert
-            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var persons = okResult.Value.Should().BeAssignableTo<IEnumerable<Person>>().Subject;
+            var okResult = result.Should().BeOfType<JsonResult>().Subject;
+            var citas = okResult.Value.Should().BeAssignableTo<IEnumerable<CalendarEvent>>().Subject;
 
-            persons.Count().Should().Be(3);
+            citas.Count().Should().Be(3);
         }
     }
 }
