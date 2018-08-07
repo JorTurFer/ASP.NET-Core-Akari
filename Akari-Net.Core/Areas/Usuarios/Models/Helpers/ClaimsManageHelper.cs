@@ -18,9 +18,9 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Helpers
             {
                 //Tiene la politica la coleccion de claims
                 var exist = claims.Any(x => string.Compare(x.Type, policy.PolicyName, true) == 0);
-                policyItemViewModel.Add(new PolicyItemViewModel { Id = policy.Id, PolicyName = policy.PolicyName, PolicyDesiption = policy.PolicyDesiption, IsActive = exist });
+                policyItemViewModel.Add(new PolicyItemViewModel { Id = policy.Id, PolicyName = policy.PolicyName, PolicyDesiption = policy.PolicyDesiption, IsActive = exist,PolicyGroup = policy.PolicyGroup });
             }
-            return new ClaimsManageViewModel { policyItems = policyItemViewModel, roleId = role.Id };
+            return new ClaimsManageViewModel { PolicyItems = policyItemViewModel, RoleId = role.Id,Groups = policyItemViewModel.GroupBy(x => x.PolicyGroup).Select(x=>x.Key) };
         }
     }
 }

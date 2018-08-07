@@ -9,7 +9,8 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels
 {
     public class ClaimsManageViewModel
     {
-        public IEnumerable<PolicyItemViewModel> policyItems { get; set; }
-        public string roleId { get; set; }
+        public IEnumerable<PolicyItemViewModel> PolicyItems { get; set; }
+        public string RoleId { get; set; }
+        public IEnumerable<int> Groups { get; set; }
     }
 }

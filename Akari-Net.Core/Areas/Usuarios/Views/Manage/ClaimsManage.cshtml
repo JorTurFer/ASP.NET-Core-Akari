@@ -3,23 +3,28 @@
 @{
     Layout = null;
 }
-<input type="hidden" id="roleId" value="@Model.roleId" />
+<input type="hidden" id="roleId" value="@Model.RoleId" />
 <div class="container">
-    <div class="row">
-        <hr class="col-md-2 col-md-offset-4" />
-    </div>
-    <div class="row">
-        @foreach (var item in Model.policyItems)
-        {
-            <div class="col-md-4">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="@item.Id" checked="@item.IsActive">
-                    <label class="custom-control-label" for="@item.Id">@item.PolicyDesiption</label>
-                </div>
+    @foreach (var group in Model.Groups)
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-2 col-md-offset-4">
+                <hr class="style3" />
             </div>
-        }
+        </div>
+        <div class="row justify-content-center">
+            @foreach (var item in Model.PolicyItems.Where(x => x.PolicyGroup == group))
+            {
+                <div class="col-md-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="@item.Id" checked="@item.IsActive">
+                        <label class="custom-control-label" for="@item.Id">@item.PolicyDesiption</label>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 
-    </div>
 </div>
 
 <script>
@@ -28,5 +33,5 @@
             var id = $(event.target).attr('id');
             updateClaims('@Url.Action("UpdateRoleClaims", "Manage")', id);
     });
-    });    
+    });
 </script>
