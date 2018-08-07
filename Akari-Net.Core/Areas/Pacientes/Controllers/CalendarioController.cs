@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
+using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
 using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -75,12 +76,12 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 
         [HttpPost]
         [AuthorizePolicy(Policy = "SaveCalendarEvents", Description = "Permitir registrar en calendario")]
-        public async Task<JsonResult> GetPatientNames(string nombre)
+        public async Task<JsonResult> GetPatientNames(string Nombre)
         {
             //Para evitar sobrecarga, solo busco si se han escrito 4 o mas letras
-            if (nombre.Length > 4)
+            if (Nombre.Length > 2)
             {
-                var pacientes = await _context.Pacientes.Where(x => x.Nombre.Normalize().Contains(nombre.Normalize())).Select(x=>x.Nombre).ToListAsync();
+                var pacientes = await _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x=> new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.Id }).ToListAsync();
 
                 return Json(pacientes);
             }

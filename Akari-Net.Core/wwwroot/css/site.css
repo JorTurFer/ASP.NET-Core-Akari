@@ -35,12 +35,16 @@ body {
         display: none;
     }
 }
-
+/*Estilo para el iframe del home*/
 iframe {
     width: 100%;
     height: 100vh;
 }
-
+/*Estilo para el separador en los permisos*/
 hr.style3 {
     border-top: 1px dashed #8c8b8b;
+}
+/*Añado esto para que el autocompletar se vea sobre el modal*/
+.ui-autocomplete {   
+    z-index: 2150000000 !important;   
 }

@@ -2,6 +2,7 @@
 var getUrl = "";
 var saveUrl = "";
 var delUrl = "";
+var patUrl = "";
 function openAddEditForm() {
     if (selectedEvent !== null) {
         $("#hdEventID").val(selectedEvent.eventID);
@@ -79,7 +80,7 @@ function generateHandlers() {
     $("#btnSave").click(function () {
         //Validation/
         if ($("#txtPaciente").val().trim() === "") {
-            alert("Paciente necesaria");
+            alert("Paciente necesario");
             return;
         }
         if ($("#txtStart").val().trim() === "") {
@@ -111,6 +112,27 @@ function generateHandlers() {
         saveEvent(data);
         // call function for submit data to the server 
     });
+    $("#txtPaciente").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "POST",
+                url: patUrl,
+                data: {
+                    Nombre: request.term,
+                },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        console.log('' + item.id + ' ' + item.nombre);
+                        return { label: item.nombre };
+                    }));
+                },
+                error: function (error) {
+                    alert("Oops, hemos tenido un problema...");
+                }
+            });
+        }        
+    });
+    $(".txtPaciente").autocomplete("option", "appendTo", ".eventInsForm");
 }
 
 function generateCalendar(events) {
@@ -183,7 +205,7 @@ function fetchEventAndRenderCalendar() {
     var date = new Date().toISOString();
     var type = "week";
     var calendar = $("#calendar").html;
-    if($.trim($("#calendar").html()) !== "") {
+    if ($.trim($("#calendar").html()) !== "") {
         date = $("#calendar").fullCalendar("getDate").toISOString();
         type = $("#calendar").fullCalendar("getView").name;
     }
@@ -216,11 +238,12 @@ function fetchEventAndRenderCalendar() {
     });
 }
 
-function startCalendar(get, save, del, canSave) {
+function startCalendar(get, save, del, pat, canSave) {
     hasSavePermission = canSave;
     getUrl = get;
     saveUrl = save;
     delUrl = del;
+    patUrl = pat;
     fetchEventAndRenderCalendar();
     generateHandlers();
 }

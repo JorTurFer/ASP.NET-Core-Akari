@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
-using Akari_Net.Core.Areas.Pacientes.Models.ViewModels;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
+using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
