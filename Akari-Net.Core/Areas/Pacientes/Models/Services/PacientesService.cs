@@ -123,5 +123,23 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             };
             return result;
         }
+
+        public Task<List<CalendarEvent>> GetCitasAsync(int id)
+        {
+            return _context.CalendarEvents.Where(x => x.IdPaciente == id).OrderByDescending(x => x.Start).ToListAsync();
+        }
+
+        public List<CalendarEvent> GetCitas(int id)
+        {
+            return _context.CalendarEvents.Where(x => x.IdPaciente == id).OrderByDescending(x => x.Start).ToList();
+        }
+
+        public CitasPacienteViewModel GetCitasViewModel(int id)
+        {
+            var citas = _context.CalendarEvents.Where(x => x.IdPaciente == id).ToList();
+            var paciente = _context.Pacientes.Find(id);
+            
+            return new CitasPacienteViewModel { Citas = citas, Paciente = paciente };            
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Calendario";
     var canSave = (await AuthorizationService.AuthorizeAsync(User, "SaveCalendarEvents")).Succeeded;
     var canDelete = (await AuthorizationService.AuthorizeAsync(User, "DeleteCalendarEvents")).Succeeded;
 }

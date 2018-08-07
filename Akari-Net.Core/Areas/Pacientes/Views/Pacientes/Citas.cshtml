@@ -1,0 +1,33 @@
+﻿@model Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes.CitasPacienteViewModel
+
+@{
+    ViewData["Title"] = "Citas";
+}
+
+<h2>Citas de @Model.Paciente.Nombre</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Fecha
+            </th>
+            <th>
+                Descipción
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Citas) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>           
+        </tr>}
+    </tbody>
+</table>

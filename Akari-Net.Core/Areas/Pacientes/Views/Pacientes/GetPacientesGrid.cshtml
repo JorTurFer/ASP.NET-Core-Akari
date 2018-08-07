@@ -1,7 +1,9 @@
-﻿@using Akari_Net.Core.Areas.Usuarios.Extensions
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 @model GridPacientesViewModel
 @{
     Layout = null;
+    var canSeeCitas = (await AuthorizationService.AuthorizeAsync(User, "PacientesCitas")).Succeeded;
 }
 
 @if (!Model.Pacientes.Any())
@@ -35,49 +37,53 @@ else
                     </td>
                     <td></td>
                     <td>
+                        @if (canSeeCitas)
+                        {
+                            <a asp-action="Citas" asp-route-id="@user.Id" class="btn btn-sm btn-info">Citas</a>
+                        }
                         <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-warning">Editar</a>
                         <a class="btn btn-sm btn-danger" data-targetid="@user.Id" data-modal="#confirm-remove-paciente">Eliminar</a>
                     </td>
                 </tr>
             }
-        </tbody>
-    </table>
+                    </tbody>
+                </table>
 
-    <div class="modal fade site-modal-remove" id="confirm-remove-paciente" data-url="@Url.Action("Delete")">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Borrar paciente</h4>
+                <div class="modal fade site-modal-remove" id="confirm-remove-paciente" data-url="@Url.Action("Delete")">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Borrar paciente</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>El paciente será borrado permanentemente.</p>
+                                <p>¿Desea continuar?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Eliminar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>El paciente será borrado permanentemente.</p>
-                    <p>¿Desea continuar?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-danger" data-dismiss="modal">Eliminar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    @if (Model.TotalPacientes > Model.Pacientes.Count())
-    {
-        var lastPage = (int)Math.Ceiling((decimal)Model.TotalPacientes / Model.PageSize);
+                @if (Model.TotalPacientes > Model.Pacientes.Count())
+                {
+                    var lastPage = (int)Math.Ceiling((decimal)Model.TotalPacientes / Model.PageSize);
 
-        <div class="row">
-            <div class="col-md-offset-3">
-                <button id="first" class="btn btn-primary"><span class="glyphicon glyphicon-step-backward"></span></button>
-                <button id="prev" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                <span style="margin: 10px">Página @Model.Page de @lastPage</span>
-                <button id="next" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span></button>
-                <button id="last" class="btn btn-primary"><span class="glyphicon glyphicon-step-forward"></span></button>
-            </div>
-        </div>
-    }
-}
-<script type="text/javascript">
+                    <div class="row">
+                        <div class="col-md-offset-3">
+                            <button id="first" class="btn btn-primary"><span class="glyphicon glyphicon-step-backward"></span></button>
+                            <button id="prev" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                            <span style="margin: 10px">Página @Model.Page de @lastPage</span>
+                            <button id="next" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                            <button id="last" class="btn btn-primary"><span class="glyphicon glyphicon-step-forward"></span></button>
+                        </div>
+                    </div>
+                }
+            }
+            <script type="text/javascript">
     activateModalActions();
         @{
         var last = (int)Math.Ceiling((decimal)Model.TotalPacientes / Model.PageSize);
@@ -89,4 +95,4 @@ else
     $('#name').click(function () { getPacientesGrid('@Url.Action("GetPacientesGrid", "Pacientes")', $("#searchInput").val(), 'name', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()); });
 
 
-</script>
+            </script>

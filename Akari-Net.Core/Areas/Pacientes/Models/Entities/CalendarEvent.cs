@@ -24,6 +24,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
 
         [Required(ErrorMessage = "El campo {0} es obligatiorio")]
         [Display(Name = "Inicio")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime Start { get; set; }
 
         [Display(Name = "Fin")]

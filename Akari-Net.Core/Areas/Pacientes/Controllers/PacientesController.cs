@@ -132,5 +132,13 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             vm.Pacientes = pageData.Pacientes;
             return View(vm);
         }
+
+        [AuthorizePolicy(Policy = "PacientesCitas", Description = "Visualizar citas")]
+        public async Task<IActionResult> Citas(int id)
+        {
+            var citas = _pacientesService.GetCitasViewModel(id);
+
+            return View(citas);
+        }
     }
 }
