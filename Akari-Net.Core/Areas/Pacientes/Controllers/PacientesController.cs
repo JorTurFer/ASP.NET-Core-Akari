@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
+using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
     [Area("Pacientes")]
-    [Authorize(Policy = "PacientesManager")]
+    [AuthorizePolicy(Policy = "PacientesManager",Description = "Gestión de Pacientes")]
     [Route("[area]/[controller]/[action]")]
     public class PacientesController : Controller
     {

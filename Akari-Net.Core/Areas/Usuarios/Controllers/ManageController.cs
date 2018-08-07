@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Extensions;
+using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Helpers;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
@@ -15,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
     [Area("Usuarios")]
-    [Authorize(Policy = "Administracion")]
+    [AuthorizePolicy(Policy = "Administracion", Description = "Administración de Accesos")]
     [Route("[area]/[controller]/[action]")]
     public class ManageController : Controller
     {

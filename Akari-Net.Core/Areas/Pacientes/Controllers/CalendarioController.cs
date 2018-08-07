@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
-using Akari_Net.Core.Areas.Pacientes.Models.Services;
-using Microsoft.AspNetCore.Authorization;
+using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
     [Area("Pacientes")]
-    [Authorize(Policy = "CalendarManager")]
+    [AuthorizePolicy(Policy = "CalendarManager", Description = "Gestión de Calendario")]
     [Route("[area]/[controller]/[action]")]
     public class CalendarioController : Controller
     {
