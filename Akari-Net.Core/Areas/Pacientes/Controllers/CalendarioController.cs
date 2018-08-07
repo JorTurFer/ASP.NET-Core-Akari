@@ -45,6 +45,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [HttpPost]
+        [AuthorizePolicy(Policy = "SaveCalendarEvents", Description = "Permitir registrar en calendario")]
         public JsonResult SaveEvent(CalendarEvent e)
         {
             var status = false;
@@ -73,6 +74,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [HttpPost]
+        [AuthorizePolicy(Policy = "DeleteCalendarEvents", Description = "Permitir borrar del calendario")]
         public JsonResult DeleteEvent(int eventID)
         {
             var status = false;
