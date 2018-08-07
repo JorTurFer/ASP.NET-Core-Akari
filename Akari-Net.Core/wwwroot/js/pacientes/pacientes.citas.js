@@ -5,7 +5,7 @@ var delUrl = "";
 function openAddEditForm() {
     if (selectedEvent !== null) {
         $("#hdEventID").val(selectedEvent.eventID);
-        $("#txtSubject").val(selectedEvent.title);
+        $("#txtPaciente").val(selectedEvent.title);
         $("#txtStart").val(selectedEvent.start.format("DD/MM/YYYY HH:mm"));
         $("#chkIsFullDay").prop("checked", selectedEvent.allDay || false);
         $("#chkIsFullDay").change();
@@ -78,8 +78,8 @@ function generateHandlers() {
     });
     $("#btnSave").click(function () {
         //Validation/
-        if ($("#txtSubject").val().trim() === "") {
-            alert("Cabecera necesaria");
+        if ($("#txtPaciente").val().trim() === "") {
+            alert("Paciente necesaria");
             return;
         }
         if ($("#txtStart").val().trim() === "") {
@@ -101,7 +101,7 @@ function generateHandlers() {
 
         var data = {
             EventID: $("#hdEventID").val(),
-            Subject: $("#txtSubject").val().trim(),
+            Subject: $("#txtPaciente").val().trim(),
             Start: $("#txtStart").val().trim(),
             End: $("#chkIsFullDay").is(":checked") ? null : $("#txtEnd").val().trim(),
             Description: $("#txtDescription").val(),
