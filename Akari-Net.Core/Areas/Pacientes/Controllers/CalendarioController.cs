@@ -49,6 +49,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         [AuthorizePolicy(Policy = "SaveCalendarEvents", Description = "Permitir registrar en calendario")]
         public async Task<JsonResult> SaveEvent(CalendarEvent e)
         {
+            e.IdPaciente = (await _context.Pacientes.Where(x => x.Nombre.ToLower() == e.Subject.ToLower()).FirstOrDefaultAsync())?.Id;
             var status = false;
             if (e.EventID > 0)
             {
