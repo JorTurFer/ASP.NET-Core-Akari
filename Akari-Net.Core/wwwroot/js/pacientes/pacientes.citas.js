@@ -1,4 +1,7 @@
 ﻿var hasSavePermission = false;
+var getUrl = "";
+var saveUrl = "";
+var delUrl = "";
 function openAddEditForm() {
     if (selectedEvent !== null) {
         $("#hdEventID").val(selectedEvent.eventID);
@@ -14,7 +17,7 @@ function openAddEditForm() {
     $("#myModalSave").modal();
 }
 
-function saveEvent(getUrl, saveUrl, data) {
+function saveEvent(data) {
     if (hasSavePermission === "True") {
         $.ajax({
             type: "POST",
@@ -23,7 +26,7 @@ function saveEvent(getUrl, saveUrl, data) {
             success: function (data) {
                 if (data) {
                     //Refresh the calender
-                    fetchEventAndRenderCalendar(getUrl, saveUrl);
+                    fetchEventAndRenderCalendar();
                     $("#myModalSave").modal("hide");
                 }
             },
@@ -33,12 +36,12 @@ function saveEvent(getUrl, saveUrl, data) {
         });
     }
     else {
-        fetchEventAndRenderCalendar(getUrl, saveUrl);
+        fetchEventAndRenderCalendar();
         $("#myModalSave").modal("hide");
     }
 }
 
-function generateHandlers(getUrl, saveUrl, delUrl) {
+function generateHandlers() {
     $("#btnEdit").click(function () {
         //Open modal dialog for edit event
         openAddEditForm();
@@ -52,7 +55,7 @@ function generateHandlers(getUrl, saveUrl, delUrl) {
                 success: function (data) {
                     if (data) {
                         //Refresh the calender
-                        fetchEventAndRenderCalendar(getUrl, saveUrl);
+                        fetchEventAndRenderCalendar();
                         $("#myModal").modal("hide");
                     }
                 },
@@ -105,12 +108,12 @@ function generateHandlers(getUrl, saveUrl, delUrl) {
             ThemeColor: $("#ddThemeColor").val(),
             IsFullDay: $("#chkIsFullDay").is(":checked")
         };
-        saveEvent(getUrl, saveUrl, data);
+        saveEvent(data);
         // call function for submit data to the server 
     });
 }
 
-function generateCalendar(getUrl, saveUrl, events) {
+function generateCalendar(events) {
     $("#calendar").fullCalendar("destroy");
     $("#calendar").fullCalendar({
         use24hours: true,
@@ -171,12 +174,12 @@ function generateCalendar(getUrl, saveUrl, events) {
                 ThemeColor: event.color,
                 IsFullDay: event.allDay
             };
-            saveEvent(getUrl, saveUrl, data);
+            saveEvent(data);
         }
     });
 }
 
-function fetchEventAndRenderCalendar(getUrl, saveUrl) {
+function fetchEventAndRenderCalendar() {
     var date = new Date().toISOString();
     var type = "week";
     var calendar = $("#calendar").html;
@@ -205,7 +208,7 @@ function fetchEventAndRenderCalendar(getUrl, saveUrl) {
                     idPaciente: v.idPaciente
                 });
             });
-            generateCalendar(getUrl, saveUrl, events);
+            generateCalendar(events);
         },
         error: function (error) {
             alert("Oops, hemos tenido un problema...");
@@ -213,10 +216,13 @@ function fetchEventAndRenderCalendar(getUrl, saveUrl) {
     });
 }
 
-function startCalendar(getUrl, saveUrl, delUrl, canSave) {
+function startCalendar(get, save, del, canSave) {
     hasSavePermission = canSave;
-    fetchEventAndRenderCalendar(getUrl, saveUrl);
-    generateHandlers(getUrl, saveUrl, delUrl);
+    getUrl = get;
+    saveUrl = save;
+    delUrl = del;
+    fetchEventAndRenderCalendar();
+    generateHandlers();
 }
 
 
