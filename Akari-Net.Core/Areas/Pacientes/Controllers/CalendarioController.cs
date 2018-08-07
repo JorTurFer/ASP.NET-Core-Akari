@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
     [Area("Pacientes")]
-    [AuthorizePolicy(Policy = "CalendarManager", Description = "Gestión de Calendario")]
+    [AuthorizePolicy(Policy = "GetCalendarEvents", Description = "Visualización del Calendario")]
     [Route("[area]/[controller]/[action]")]
     public class CalendarioController : Controller
     {

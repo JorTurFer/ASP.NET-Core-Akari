@@ -32,7 +32,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">                    
-                    @if ((await AuthorizationService.AuthorizeAsync(User, "CalendarManager")).Succeeded)
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "GetCalendarEvents")).Succeeded)
                     {
                         <li>
                             <a asp-area="Pacientes" asp-controller="Calendario" asp-action="Index" title="Calendario">Calendario</a>

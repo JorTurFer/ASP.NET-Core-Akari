@@ -28,17 +28,6 @@ namespace Akari_Net.Core.Controllers
         {
             return View();
         }
-        [Authorize(Policy = "CalendarManager")]
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,4 +1,5 @@
-﻿function openAddEditForm() {
+﻿var hasSavePermission = false;
+function openAddEditForm() {
     if (selectedEvent !== null) {
         $("#hdEventID").val(selectedEvent.eventID);
         $("#txtSubject").val(selectedEvent.title);
@@ -14,21 +15,27 @@
 }
 
 function saveEvent(getUrl, saveUrl, data) {
-    $.ajax({
-        type: "POST",
-        url: saveUrl,
-        data: data,
-        success: function (data) {
-            if (data) {
-                //Refresh the calender
-                fetchEventAndRenderCalendar(getUrl, saveUrl);
-                $("#myModalSave").modal("hide");
+    if (hasSavePermission === "True") {
+        $.ajax({
+            type: "POST",
+            url: saveUrl,
+            data: data,
+            success: function (data) {
+                if (data) {
+                    //Refresh the calender
+                    fetchEventAndRenderCalendar(getUrl, saveUrl);
+                    $("#myModalSave").modal("hide");
+                }
+            },
+            error: function () {
+                alert("Oops, hemos tenido un problema...");
             }
-        },
-        error: function () {
-            alert("Oops, hemos tenido un problema...");
-        }
-    });
+        });
+    }
+    else {
+        fetchEventAndRenderCalendar(getUrl, saveUrl);
+        $("#myModalSave").modal("hide");
+    }
 }
 
 function generateHandlers(getUrl, saveUrl, delUrl) {
@@ -206,7 +213,8 @@ function fetchEventAndRenderCalendar(getUrl, saveUrl) {
     });
 }
 
-function startCalendar(getUrl, saveUrl, delUrl) {
+function startCalendar(getUrl, saveUrl, delUrl, canSave) {
+    hasSavePermission = canSave;
     fetchEventAndRenderCalendar(getUrl, saveUrl);
     generateHandlers(getUrl, saveUrl, delUrl);
 }
