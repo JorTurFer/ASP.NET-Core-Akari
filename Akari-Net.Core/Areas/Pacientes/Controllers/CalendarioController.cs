@@ -46,7 +46,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 
         [HttpPost]
         [AuthorizePolicy(Policy = "SaveCalendarEvents", Description = "Permitir registrar en calendario")]
-        public JsonResult SaveEvent(CalendarEvent e)
+        public async Task<JsonResult> SaveEvent(CalendarEvent e)
         {
             var status = false;
             if (e.EventID > 0)
@@ -68,14 +68,14 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             {
                 _context.CalendarEvents.Add(e);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             status = true;
             return Json(status);
         }
 
         [HttpPost]
         [AuthorizePolicy(Policy = "DeleteCalendarEvents", Description = "Permitir borrar del calendario")]
-        public JsonResult DeleteEvent(int eventID)
+        public async Task<JsonResult> DeleteEvent(int eventID)
         {
             var status = false;
 
@@ -83,7 +83,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             if (v != null)
             {
                 _context.CalendarEvents.Remove(v);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 status = true;
             }
 
