@@ -34,7 +34,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Services
 
                 var methodPolicies = controller.GetMethods()
                 .Where(type => type.CustomAttributes.Any(x => x.AttributeType == (typeof(AuthorizePolicyAttribute))))
-                .Select(x => x.GetCustomAttribute<AuthorizePolicyAttribute>());
+                .Select(x => x.GetCustomAttribute<AuthorizePolicyAttribute>()).Distinct();
                 foreach (var methodPolicy in methodPolicies)
                 {
                     _policies.Add(new PolicyItem { Id = _policies.Count, PolicyName = methodPolicy.Policy, PolicyDesiption = methodPolicy.Description, PolicyGroup = nGroup });
