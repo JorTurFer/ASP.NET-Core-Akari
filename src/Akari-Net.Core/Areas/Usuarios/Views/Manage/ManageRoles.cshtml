@@ -23,11 +23,11 @@
             @{
                 var listRoles = RoleManager.Roles.OrderBy(x => x.Name).ToList();
             }
-            @Html.DropDownList("listaRolesUpd", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables", @onchange = "getClaims('"+@Url.Action("ClaimsManage", "Manage")+"')" })
+            @Html.DropDownList("listaRolesUpd", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables", @onchange = "getPermission('"+@Url.Action("PermissionsManage", "Manage")+"')" })
         </div>
     </div>
 </div>
-<div id="claims">
+<div id="permission">
     <!-- AQUI SE INTRODUCIRAN LOS CLAIMS-->
 </div>
 <hr class="col-md-offset-2" />
@@ -38,7 +38,7 @@
             @Html.DropDownList("listaRolesDel", new SelectList(listRoles, "Id", "Name"), "Seleccione un Rol..", new { @class = "form-control dropdown desplegables" })
         </div>
         <div class="col-md-2">
-            <button class="btn-primary form-control" id="delRole" onclick="removeRole('@Url.Action("RemoveRole", "Manage")','@Url.Action("ClaimsManage", "Manage")')">Borrar</button>
+            <button class="btn-primary form-control" id="delRole" onclick="removeRole('@Url.Action("RemoveRole", "Manage")','@Url.Action("PermissionsManage", "Manage")')">Borrar</button>
         </div>
     </div>
 </div>

@@ -15,7 +15,7 @@ function GetRoles(url) {
     });
 }
 //Guarda un nuevo rol
-function saveNewRole(url, claims) {
+function saveNewRole(url, permission) {
     if (!$("#roleName").val()) {
         alert("Introduce un nombre para el rol");
         return;
@@ -30,7 +30,7 @@ function saveNewRole(url, claims) {
         success: function (data) {
             $("#listaRolesUpd").append(new Option($("#roleName").val(), data, false, true));
             $("#listaRolesDel").append(new Option($("#roleName").val(), data, false, true));
-            getClaims(claims);
+            getPermission(permission);
         },
         error: function () {
             alert("Oops, hemos tenido un problema...");
@@ -38,7 +38,7 @@ function saveNewRole(url, claims) {
     });
 }
 //Elimina un rol
-function removeRole(url, claims) {
+function removeRole(url, permission) {
     if (!$("#listaRolesDel").val()) {
         alert("Para poder borrar un rol primero tienes que seleccionarlo");
         return;
@@ -52,17 +52,17 @@ function removeRole(url, claims) {
         type: "post",
         success: function (data) {
             $(".desplegables option[value=" + $("#listaRolesDel").val() + "]").remove();
-            getClaims(claims);
+            getPermission(permission);
         },
         error: function () {
             alert("Oops, hemos tenido un problema...");
         }
     });
 }
-//Muestra los claims
-function getClaims(url) {
+//Muestra los permission
+function getPermission(url) {
     if (!$("#listaRolesUpd").val()) {
-        $("#claims").html("");
+        $("#permission").html("");
         return;
     }
     $.ajax({
@@ -73,7 +73,7 @@ function getClaims(url) {
         },
         type: "post",
         success: function (data) {
-            $("#claims").html(data);
+            $("#permission").html(data);
         },
         error: function () {
             alert("Oops, hemos tenido un problema...");
@@ -81,12 +81,12 @@ function getClaims(url) {
     });
 }
 //Actualiza los cailms del rol
-function updateClaims(url, id) {
+function updatePermission(url, id) {
     $.ajax({
         url: url,
         data: {
             roleId: $("#roleId").val(),
-            policyId: id,
+            permissionId: id,
             set: $("#" + id).is(':checked'),
             __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val()
         },

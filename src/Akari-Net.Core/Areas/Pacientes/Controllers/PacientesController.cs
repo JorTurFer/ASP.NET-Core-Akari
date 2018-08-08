@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
-using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
+using AspNetCore.Identity.ByPermissions;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
     [Area("Pacientes")]
-    [AuthorizePolicy(Policy = "PacientesManager",Description = "Gestión de Pacientes")]
+    [Permission("PacientesManager","Gestión de Pacientes")]
     [Route("[area]/[controller]/[action]")]
     public class PacientesController : Controller
     {
@@ -133,7 +133,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             return View(vm);
         }
 
-        [AuthorizePolicy(Policy = "PacientesCitas", Description = "Visualizar citas")]
+        [Permission( "PacientesCitas",  "Visualizar citas")]
         public async Task<IActionResult> Citas(int id)
         {
             var citas = _pacientesService.GetCitasViewModel(id);

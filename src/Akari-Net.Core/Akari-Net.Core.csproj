@@ -26,6 +26,11 @@
     <Folder Include="wwwroot\js\min\usuarios\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AspNetCore.Identity.ByPermissions">
+      <HintPath>..\..\..\AspNetCore.Identity.ByPermissions\src\AspNetCore.Identity.ByPermissions\bin\Debug\netstandard2.0\AspNetCore.Identity.ByPermissions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="Areas\Pacientes\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

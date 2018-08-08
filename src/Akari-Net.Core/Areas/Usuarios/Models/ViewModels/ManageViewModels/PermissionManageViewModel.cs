@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels
 {
-    public class ClaimsManageViewModel
+    public class PermissionManageViewModel
     {
-        public IEnumerable<PolicyItemViewModel> PolicyItems { get; set; }
+        public IEnumerable<PermissionItemViewModel> PolicyItems { get; set; }
         public string RoleId { get; set; }
         public IEnumerable<int> Groups { get; set; }
     }

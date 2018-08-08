@@ -7,6 +7,7 @@ using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Extensions;
+using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -87,7 +88,7 @@ namespace Akari_Net.Core
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicies(new PoliciesManager());
+                options.AddPermissions(new PermissionService());
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -110,7 +111,7 @@ namespace Akari_Net.Core
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.Configure<AccountConfirmationOptions>(Configuration);
-            services.AddSingleton<IPoliciesManager, PoliciesManager>();
+            services.AddSingleton<IPermissionService, PermissionService>();
             services.AddScoped<IPacientesService, PacientesService>();
             services.AddScoped<ICalendarioServices, CalendarioServices>();
         }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Usuarios.Extensions;
-using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Helpers;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels;
+using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +16,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {
     [Area("Usuarios")]
-    [AuthorizePolicy(Policy = "Administracion", Description = "Administración de Accesos")]
+    [Permission("Administracion", "Administración de Accesos")]
     [Route("[area]/[controller]/[action]")]
     public class ManageController : Controller
     {
         readonly RoleManager<IdentityRole> _roleManager;
-        readonly IPoliciesManager _policiesManager;
+        readonly IPermissionService _permissionService;
         readonly UserManager<ApplicationUser> _userManager;
 
-        public ManageController(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager, IPoliciesManager policiesManager)
+        public ManageController(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager, IPermissionService permissionService)
         {
             _roleManager = roleManager;
-            _policiesManager = policiesManager;
+            _permissionService = permissionService;
             _userManager = userManager;
         }
 
@@ -140,20 +140,20 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ClaimsManage(string roleId)
+        public async Task<IActionResult> PermissionsManage(string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
                 return Json(false);
             var claims = await _roleManager.GetClaimsAsync(role);
-            ClaimsManageViewModel model = ClaimsManageHelper.GetClaimsManageViewModel(claims, role, _policiesManager);
+            PermissionManageViewModel model = PermissionsManageHelper.GetPermissionManageViewModel(claims, role, _permissionService);
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateRoleClaims(string roleId, int policyId, bool set)
+        public async Task<IActionResult> UpdateRolePermissions(string roleId, int permissionId, bool set)
         {
             //Obtengo el rol
             var role = await _roleManager.FindByIdAsync(roleId);
@@ -161,22 +161,22 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 return Json(false);
 
             //Obtengo la politica con el claim que que hay que actualizar
-            var policyItem = _policiesManager.GetPolicyId(policyId);
-            if (policyItem == null)
+            var permissionItem = _permissionService.GetPermissionById(permissionId);
+            if (permissionItem == null)
                 return Json(false);
 
             //Si tengo que setear el claim
             if (set)
             {
                 //Añado el claim al rol
-                var res = await _roleManager.AddClaimAsync(role, new Claim(policyItem.PolicyName, policyItem.PolicyName));
+                var res = await _roleManager.AddClaimAsync(role, new Claim(permissionItem.PermissionName, permissionItem.PermissionName));
                 return Json(res.Succeeded);
             }
             //Si tengo que remover el claim
             else
             {
                 //Elimino el claim
-                var res = await _roleManager.RemoveClaimAsync(role, new Claim(policyItem.PolicyName, policyItem.PolicyName));
+                var res = await _roleManager.RemoveClaimAsync(role, new Claim(permissionItem.PermissionName, permissionItem.PermissionName));
                 return Json(res.Succeeded);
             }
         }

@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
-using Akari_Net.Core.Areas.Usuarios.Models.Attributes;
+using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
     [Area("Pacientes")]
-    [AuthorizePolicy(Policy = "GetCalendarEvents", Description = "Visualización del Calendario")]
+    [Permission("GetCalendarEvents",  "Visualización del Calendario")]
     [Route("[area]/[controller]/[action]")]
     public class CalendarioController : Controller
     {
@@ -35,7 +35,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [HttpPost]
-        [AuthorizePolicy(Policy = "SaveCalendarEvents", Description = "Permitir registrar en calendario")]
+        [Permission("SaveCalendarEvents", "Permitir registrar en calendario")]
         public async Task<JsonResult> SaveEvent(CalendarEvent e)
         {
             var status = (await _calendarioServices.SaveEventAsync(e)) == 1;
@@ -43,7 +43,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [HttpPost]
-        [AuthorizePolicy(Policy = "SaveCalendarEvents", Description = "Permitir registrar en calendario")]
+        [Permission("SaveCalendarEvents", "Permitir registrar en calendario")]
         public async Task<JsonResult> GetPatientNames(string Nombre)
         {
             //Para evitar sobrecarga, solo busco si se han escrito 4 o mas letras
@@ -57,7 +57,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [HttpPost]
-        [AuthorizePolicy(Policy = "DeleteCalendarEvents", Description = "Permitir borrar del calendario")]
+        [Permission( "DeleteCalendarEvents",  "Permitir borrar del calendario")]
         public async Task<JsonResult> DeleteEvent(int eventID)
         {
             var status = (await _calendarioServices.DeleteEventAsync(eventID)) == 1;
