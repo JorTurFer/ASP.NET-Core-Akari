@@ -27,9 +27,7 @@
     <Folder Include="wwwroot\js\min\usuarios\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AspNetCore.Identity.ByPermissions">
-      <HintPath>..\..\..\AspNetCore.Identity.ByPermissions\src\AspNetCore.Identity.ByPermissions\bin\Debug\netstandard2.0\AspNetCore.Identity.ByPermissions.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\AspNetCore.Identity.ByPermissions\src\AspNetCore.Identity.ByPermissions\AspNetCore.Identity.ByPermissions.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Areas\Pacientes\Views\_ViewImports.cshtml">
