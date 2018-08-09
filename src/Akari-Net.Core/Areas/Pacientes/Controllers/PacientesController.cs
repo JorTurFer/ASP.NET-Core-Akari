@@ -134,7 +134,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [Permission( "PacientesCitas",  "Visualizar citas")]
-        public async Task<IActionResult> Citas(int id)
+        public IActionResult Citas(int id)
         {
             var citas = _pacientesService.GetCitasViewModel(id);
 

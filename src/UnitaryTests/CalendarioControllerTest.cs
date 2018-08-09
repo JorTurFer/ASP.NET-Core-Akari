@@ -1,8 +1,10 @@
 using Akari_Net.Core.Areas.Pacientes.Controllers;
+using Akari_Net.Core.Areas.Pacientes.Hubs;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,7 @@ namespace UnitaryTests
                 new CalendarEvent{EventID=2, IsFullDay=true, Subject = "test2",Start = DateTime.Now.AddDays(7)},
                 new CalendarEvent{EventID=3, IsFullDay=true, Subject = "skip",Start = DateTime.Now.AddDays(1)},
               });
-            var controller = new CalendarioController(serviceMock.Object);
+            var controller = new CalendarioController(serviceMock.Object, new CalendarioHub());
 
             // Act
             var result = await controller.GetEvents(DateTime.Now.Date,"month");
