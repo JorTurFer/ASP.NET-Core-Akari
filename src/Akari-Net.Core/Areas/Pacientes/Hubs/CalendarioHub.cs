@@ -9,9 +9,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Hubs
 {
     public class CalendarioHub : Hub
     {
-        public async Task UpdateCalendar()
-        {
-            await Clients.All.SendAsync("updateCalendar");
-        }
+
     }
 }
