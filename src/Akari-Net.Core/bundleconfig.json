@@ -54,7 +54,27 @@
     "outputFileName": "wwwroot/js/min/signalr/signalr.min.js",
     "inputFiles": [
       "wwwroot/js/signalr/signalr.js",
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/min/signalr/msgpack5.min.js",
+    "inputFiles": [
       "wwwroot/js/signalr/msgpack5.js",
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/min/signalr/signalr-protocol-msgpack.min.js",
+    "inputFiles": [
       "wwwroot/js/signalr/signalr-protocol-msgpack.js"
     ],
     "minify": {
