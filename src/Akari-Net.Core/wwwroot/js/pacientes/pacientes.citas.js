@@ -3,6 +3,21 @@ var getUrl = "";
 var saveUrl = "";
 var delUrl = "";
 var patUrl = "";
+//SignalR methods
+var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/CalendarioHub")
+    .withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
+    .build();
+
+connection.on("updateCalendar", function () {
+    fetchEventAndRenderCalendar();
+});
+
+connection.start().catch(function (err) {
+    return console.error(err.toString());
+});
+
+
 function openAddEditForm() {
     if (selectedEvent !== null) {
         $("#hdEventID").val(selectedEvent.eventID);
@@ -122,7 +137,6 @@ function generateHandlers() {
                 },
                 success: function (data) {
                     response($.map(data, function (item) {
-                        console.log('' + item.id + ' ' + item.nombre);
                         return { label: item.nombre };
                     }));
                 },
@@ -130,9 +144,8 @@ function generateHandlers() {
                     alert("Oops, hemos tenido un problema...");
                 }
             });
-        }        
+        }
     });
-    $(".txtPaciente").autocomplete("option", "appendTo", ".eventInsForm");
 }
 
 function generateCalendar(events) {

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Akari_Net.Core.Areas.Pacientes.Hubs;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
 using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
@@ -17,10 +19,11 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
     public class CalendarioController : Controller
     {
         private readonly ICalendarioServices _calendarioServices;
-
-        public CalendarioController(ICalendarioServices calendarioServices)
+        private readonly IHubContext<CalendarioHub> _calendarHubContext;
+        public CalendarioController(ICalendarioServices calendarioServices, IHubContext<CalendarioHub> calendarHubContext)
         {
             _calendarioServices = calendarioServices;
+            _calendarHubContext = calendarHubContext;
         }
         
         public IActionResult Index()
@@ -39,6 +42,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         public async Task<JsonResult> SaveEvent(CalendarEvent e)
         {
             var status = (await _calendarioServices.SaveEventAsync(e)) == 1;
+            if (status)
+                await _calendarHubContext.Clients.All.SendAsync("updateCalendar");
             return Json(status);
         }
 
@@ -61,6 +66,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         public async Task<JsonResult> DeleteEvent(int eventID)
         {
             var status = (await _calendarioServices.DeleteEventAsync(eventID)) == 1;
+            if (status)
+                await _calendarHubContext.Clients.All.SendAsync("updateCalendar");
             return Json(status);
         }
     }
