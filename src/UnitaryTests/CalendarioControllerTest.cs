@@ -26,7 +26,8 @@ namespace UnitaryTests
                 new CalendarEvent{EventID=2, IsFullDay=true, Subject = "test2",Start = DateTime.Now.AddDays(7)},
                 new CalendarEvent{EventID=3, IsFullDay=true, Subject = "skip",Start = DateTime.Now.AddDays(1)},
               });
-            var controller = new CalendarioController(serviceMock.Object, new CalendarioHub());
+            var mockHub = new Mock<IHubContext<CalendarioHub>>();
+            var controller = new CalendarioController(serviceMock.Object, mockHub.Object);
 
             // Act
             var result = await controller.GetEvents(DateTime.Now.Date,"month");
