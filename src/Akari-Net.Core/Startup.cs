@@ -114,6 +114,9 @@ namespace Akari_Net.Core
             services.AddSingleton<IPermissionService, PermissionService>();
             services.AddScoped<IPacientesService, PacientesService>();
             services.AddScoped<ICalendarioServices, CalendarioServices>();
+
+            services.AddSignalR()
+                .AddMessagePackProtocol();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

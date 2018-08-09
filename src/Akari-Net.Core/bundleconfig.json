@@ -53,7 +53,9 @@
   {
     "outputFileName": "wwwroot/js/min/signalr/signalr.min.js",
     "inputFiles": [
-      "wwwroot/js/signalr/signalr.js"
+      "wwwroot/js/signalr/signalr.js",
+      "wwwroot/js/signalr/msgpack5.js",
+      "wwwroot/js/signalr/signalr-protocol-msgpack.js"
     ],
     "minify": {
       "enabled": true,
