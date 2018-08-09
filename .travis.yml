@@ -9,5 +9,9 @@ install:
 script:
 - dotnet build
 - dotnet test src/UnitaryTests/UnitaryTests.csproj
+git:
+  submodules: false
+before_install:
+  - git submodule update --init
 -notifications:
 -  email: false
