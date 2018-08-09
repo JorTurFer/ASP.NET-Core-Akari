@@ -1,3 +1,0 @@
-[submodule "src/AspNetCore.Identity.ByPermissions"]
-	path = src/AspNetCore.Identity.ByPermissions
-	url = https://github.com/JorTurFer/AspNetCore.Identity.ByPermissions
