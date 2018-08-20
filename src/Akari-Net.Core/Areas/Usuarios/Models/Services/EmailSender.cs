@@ -32,7 +32,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("noreply@kabestrus.net", "No Reply"),
+                From = new EmailAddress("noreply@akaripodologia.com", "No Reply"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
