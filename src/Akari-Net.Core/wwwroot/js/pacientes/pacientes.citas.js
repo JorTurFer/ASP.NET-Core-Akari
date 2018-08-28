@@ -195,7 +195,11 @@ function generateCalendar(events) {
                 allDay: false,
                 color: ""
             };
-            openAddEditForm();
+            var viewName = $('#calendar').fullCalendar('getView').name;
+            if (viewName === "month")
+                $('#calendar').fullCalendar('changeView', 'agendaDay', start);
+            else
+                openAddEditForm();
             $("#calendar").fullCalendar("unselect");
         },
         editable: true,
