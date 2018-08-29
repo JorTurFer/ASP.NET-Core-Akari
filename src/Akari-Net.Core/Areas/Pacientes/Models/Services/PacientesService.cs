@@ -51,7 +51,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         public bool PacienteExists(int id)
         {
-            return _context.Pacientes.Any(e => e.Id == id);
+            return _context.Pacientes.Any(e => e.IdPaciente == id);
         }
 
         public int Remove(Paciente paciente)
@@ -114,7 +114,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             {
                 Name = x.Nombre,
                 Email = x.Email,
-                Id = x.Id.ToString()
+                Id = x.IdPaciente.ToString()
             }).ToList();
             var result = new PacientesPageDataViewModel
             {

@@ -43,7 +43,6 @@ namespace Akari_Net.Core
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
             //Añado el contexto de usuarios
             var builderUsers = new MySqlConnectionStringBuilder(
             Configuration.GetConnectionString("Akari"));

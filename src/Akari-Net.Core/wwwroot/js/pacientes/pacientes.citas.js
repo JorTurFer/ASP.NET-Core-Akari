@@ -114,7 +114,10 @@ function generateHandlers() {
                 return;
             }
         }
-
+        if ($('#ddThemeColor :selected').text() === "") {
+            alert("Seleccione tipo de cita");
+            return;
+        }
         var data = {
             EventID: $("#hdEventID").val(),
             Subject: $("#txtPaciente").val().trim(),

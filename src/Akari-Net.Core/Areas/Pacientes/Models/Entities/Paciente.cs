@@ -10,7 +10,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
     public class Paciente : IValidatableObject
     {
         [Key]
-        public int Id { get; set; }
+        public int IdPaciente { get; set; }
 
         [Required(ErrorMessage = "El campo '{0}' es necesario")]
         [Display(Name = "Nombre Completo")]
@@ -27,6 +27,44 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
         [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
         [Display(Name = "Teléfono de contacto")]
         public string Telefono { get; set; }
+
+        [Display(Name = "DNI")]
+        public string DNI { get; set; } = "";
+
+        [Display(Name = "Dirección")]
+        public string Direccion { get; set; } = "";
+
+        [Range(0,99999,ErrorMessage = "Introduce un valor válido")]
+        [Display(Name = "Código Postal")]
+        [DisplayFormat(ApplyFormatInEditMode = true,DataFormatString = "00000")]
+        public int CP { get; set; } = 0;
+
+        [Display(Name = "Provincia")]
+        public int IdProvincia { get; set; } = 0;
+
+        [Display(Name = "Pais")]
+        public int IdPais { get; set; } = 0;
+
+        [Display(Name = "RGPD")]
+        public bool RGPD { get; set; } = false;
+
+        [Display(Name = "Enfermedades")]
+        [DataType(DataType.MultilineText)]
+        public string Enfermedades { get; set; } = "";
+
+        [Display(Name = "Medicación")]
+        [DataType(DataType.MultilineText)]
+        public string Medicación { get; set; } = "";
+
+        [Display(Name = "Alergias")]
+        [DataType(DataType.MultilineText)]
+        public string Alergias { get; set; } = "";
+
+        //Relaciones EF
+        public virtual Provincia Provincia {get;set;}
+        public virtual Pais Pais { get; set; }
+        public ICollection<CalendarEvent> Citas { get; set; }
+
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

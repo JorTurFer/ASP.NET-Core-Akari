@@ -77,17 +77,17 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         public List<PacientesAutoCompleteViewModel> GetPatientNames(string Nombre)
         {
-            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.Id }).ToList();
+            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToList();
         }
 
         public Task<List<PacientesAutoCompleteViewModel>> GetPatientNamesAsync(string Nombre)
         {
-            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.Id }).ToListAsync();
+            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToListAsync();
         }
 
         public int SaveEvent(CalendarEvent e)
         {
-            e.IdPaciente = (_context.Pacientes.Where(x => x.Nombre.ToLower() == e.Subject.ToLower()).FirstOrDefault())?.Id;
+            e.IdPaciente = (_context.Pacientes.Where(x => x.Nombre.ToLower() == e.Subject.ToLower()).FirstOrDefault())?.IdPaciente;
             if (e.EventID > 0)
             {
                 //Update the event
@@ -112,7 +112,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         public Task<int> SaveEventAsync(CalendarEvent e)
         {
-            e.IdPaciente = (_context.Pacientes.Where(x => x.Nombre.ToLower() == e.Subject.ToLower()).FirstOrDefault())?.Id;
+            e.IdPaciente = (_context.Pacientes.Where(x => x.Nombre.ToLower() == e.Subject.ToLower()).FirstOrDefault())?.IdPaciente;
             if (e.EventID > 0)
             {
                 //Update the event

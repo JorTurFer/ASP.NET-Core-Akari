@@ -87,7 +87,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Nacimiento,Email,Telefono")] Paciente paciente)
         {
-            if (id != paciente.Id)
+            if (id != paciente.IdPaciente)
             {
                 return NotFound();
             }
@@ -100,7 +100,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_pacientesService.PacienteExists(paciente.Id))
+                    if (!_pacientesService.PacienteExists(paciente.IdPaciente))
                     {
                         return NotFound();
                     }
