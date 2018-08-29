@@ -36,10 +36,11 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
 
         [Range(0,99999,ErrorMessage = "Introduce un valor válido")]
         [Display(Name = "Código Postal")]
-        [DisplayFormat(ApplyFormatInEditMode = true,DataFormatString = "00000")]
+        [DisplayFormat(ApplyFormatInEditMode = true,DataFormatString = "{0:00000}")]
         public int CP { get; set; } = 0;
 
         [Display(Name = "Provincia")]
+        [DataType(DataType.PostalCode)]
         public int IdProvincia { get; set; } = 0;
 
         [Display(Name = "Pais")]
