@@ -50,7 +50,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         // GET: Pacientes/Pacientes/Create
         public IActionResult Create()
         {
-            return View();
+            var vm = _pacientesService.GetPacienteDataViewModel(0);
+            return View(vm);
         }
 
         // POST: Pacientes/Pacientes/Create
@@ -58,14 +59,16 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Nacimiento,Email,Telefono")] Paciente paciente)
+        public async Task<IActionResult> Create(Paciente paciente)
         {
             if (ModelState.IsValid)
             {
                 await _pacientesService.AddAsync(paciente);
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            var vm = await _pacientesService.GetPacienteDataViewModelAsync(0);
+            vm.Paciente = paciente;
+            return View(vm);
         }
 
         // GET: Pacientes/Pacientes/Edit/5
@@ -75,23 +78,18 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             {
                 return NotFound();
             }
-            var paciente = await _pacientesService.FindPacienteByIdAsync(id.Value);
-            if (paciente == null)
+            var vm = await _pacientesService.GetPacienteDataViewModelAsync(id.Value);
+            if (vm == null)
             {
                 return NotFound();
             }
-            return View(paciente);
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Nacimiento,Email,Telefono")] Paciente paciente)
+        public async Task<IActionResult> Edit(Paciente paciente)
         {
-            if (id != paciente.IdPaciente)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -111,7 +109,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(paciente);
+            var vm = await _pacientesService.GetPacienteDataViewModelAsync(paciente.IdPaciente);
+            vm.Paciente = paciente;
+            return View(vm);
         }
 
         [HttpPost, ActionName("Delete")]
