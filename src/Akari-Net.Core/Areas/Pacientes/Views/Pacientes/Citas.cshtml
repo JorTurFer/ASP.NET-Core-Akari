@@ -19,15 +19,18 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Citas) {
-        <tr>
+        @foreach (var item in Model.Citas)
+        {
+            <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Start)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>           
-        </tr>}
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>}
     </tbody>
 </table>
+<a asp-action="Index">Volver atras</a>
+
