@@ -1,4 +1,4 @@
-﻿@model Akari_Net.Core.Areas.Pacientes.Models.Entities.Paciente
+﻿@model PacienteDataViewModel
 
 @{
     ViewData["Title"] = "Nuevo paciente";
@@ -11,25 +11,76 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Paciente.IdPaciente" />
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label asp-for="Paciente.Nombre" class="control-label"></label>
+                <input asp-for="Paciente.Nombre" class="form-control" />
+                <span asp-validation-for="Paciente.Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Nacimiento" class="control-label"></label>
-                <input asp-for="Nacimiento" class="form-control" />
-                <span asp-validation-for="Nacimiento" class="text-danger"></span>
+                <label asp-for="Paciente.Nacimiento" class="control-label"></label>
+                <input asp-for="Paciente.Nacimiento" class="form-control" />
+                <span asp-validation-for="Paciente.Nacimiento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Paciente.Email" class="control-label"></label>
+                <input asp-for="Paciente.Email" class="form-control" />
+                <span asp-validation-for="Paciente.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
+                <label asp-for="Paciente.Telefono" class="control-label"></label>
+                <input asp-for="Paciente.Telefono" class="form-control" />
+                <span asp-validation-for="Paciente.Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.DNI" class="control-label"></label>
+                <input asp-for="Paciente.DNI" class="form-control" />
+                <span asp-validation-for="Paciente.DNI" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.Direccion" class="control-label"></label>
+                <input asp-for="Paciente.Direccion" class="form-control" />
+                <span asp-validation-for="Paciente.Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.CP" class="control-label"></label>
+                <input asp-for="Paciente.CP" class="form-control" />
+                <span asp-validation-for="Paciente.CP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.IdProvincia" class="control-label"></label>
+                <select asp-for="Paciente.IdProvincia" asp-items="Model.Provincias"></select>
+                <span asp-validation-for="Paciente.IdProvincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.IdPais" class="control-label"></label>
+                <select asp-for="Paciente.IdPais" asp-items="Model.Paises"></select>
+                <span asp-validation-for="Paciente.IdPais" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Paciente.RGPD)
+                @Html.EditorFor(model => model.Paciente.RGPD)
+                @Html.ValidationMessageFor(model => model.Paciente.RGPD)
+            </div>
+            @{
+                var cols = 45;
+                var rows = 5;
+            }
+            <div class="form-group">
+                @Html.LabelFor(model => model.Paciente.Enfermedades)
+                @Html.TextAreaFor(model => model.Paciente.Enfermedades, new { cols = cols, rows = rows })
+                @Html.ValidationMessageFor(model => model.Paciente.Enfermedades)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Paciente.Medicación)
+                @Html.TextAreaFor(model => model.Paciente.Medicación, new { cols = cols, rows = rows })
+                @Html.ValidationMessageFor(model => model.Paciente.Medicación)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Paciente.Alergias)
+                @Html.TextAreaFor(model => model.Paciente.Alergias, new { cols = cols, rows = rows })
+                @Html.ValidationMessageFor(model => model.Paciente.Alergias)
             </div>
             <div class="col-md-3">
                 <a asp-action="Index" class="btn btn-default">Volver atras</a>
