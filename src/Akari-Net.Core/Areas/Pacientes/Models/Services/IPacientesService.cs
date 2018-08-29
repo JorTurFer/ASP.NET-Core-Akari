@@ -25,6 +25,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
         Paciente FindPacienteById(int id);
         Task<Paciente> FindPacienteByIdAsync(int id);
 
+        PacienteDataViewModel GetPacienteDataViewModel(int id);
+        Task<PacienteDataViewModel> GetPacienteDataViewModelAsync(int id);
+
         bool PacienteExists(int id);
 
         int SaveChanges();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Services
@@ -31,12 +32,12 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         public Paciente FindPacienteById(int id)
         {
-            return _context.Pacientes.Find(id);
+            return _context.Pacientes.Where(x => x.IdPaciente == id).Include(b => b.Citas).Include(b => b.Pais).Include(b => b.Provincia).FirstOrDefault();
         }
 
         public Task<Paciente> FindPacienteByIdAsync(int id)
         {
-            return _context.Pacientes.FindAsync(id);
+            return _context.Pacientes.Where(x => x.IdPaciente == id).Include(b => b.Citas).Include(b => b.Pais).Include(b => b.Provincia).FirstOrDefaultAsync();
         }
 
         public List<Paciente> GetPacientes()
@@ -136,10 +137,29 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         public CitasPacienteViewModel GetCitasViewModel(int id)
         {
-            var citas = _context.CalendarEvents.Where(x => x.IdPaciente == id).ToList();
+            var paciente = _context.Pacientes.Where(x => x.IdPaciente == id).Include(b => b.Citas).FirstOrDefault();
+
+            return new CitasPacienteViewModel { Citas = paciente.Citas.OrderByDescending(x => x.Start), Paciente = paciente };
+        }
+
+        public PacienteDataViewModel GetPacienteDataViewModel(int id)
+        {
             var paciente = _context.Pacientes.Find(id);
-            
-            return new CitasPacienteViewModel { Citas = citas, Paciente = paciente };            
+            if (paciente is null)
+                paciente = new Paciente();
+            var provincias = _context.Provincias.Select(x => new SelectListItem { Value = x.IdProvincia.ToString(), Text = x.Nombre, Selected = x.IdProvincia == paciente.IdProvincia }).ToList();
+            var paises = _context.Paises.Select(x => new SelectListItem { Value = x.IdPais.ToString(), Text = x.Nombre, Selected = x.IdPais == paciente.IdPais }).ToList();
+            return new PacienteDataViewModel { Paciente = paciente, Provincias = provincias, Paises = paises };
+        }
+
+        public async Task<PacienteDataViewModel> GetPacienteDataViewModelAsync(int id)
+        {
+            var paciente = await _context.Pacientes.FindAsync(id);
+            if (paciente is null)
+                paciente = new Paciente();
+            var provincias = await _context.Provincias.Select(x => new SelectListItem { Value = x.IdProvincia.ToString(), Text = x.Nombre, Selected = x.IdProvincia == paciente.IdProvincia }).ToListAsync();
+            var paises = await _context.Paises.Select(x => new SelectListItem { Value = x.IdPais.ToString(), Text = x.Nombre, Selected = x.IdPais == paciente.IdPais }).ToListAsync();
+            return new PacienteDataViewModel { Paciente = paciente, Provincias = provincias, Paises = paises };
         }
     }
 }
