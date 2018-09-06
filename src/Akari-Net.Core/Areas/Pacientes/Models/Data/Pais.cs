@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Akari_Net.Core.Areas.Pacientes.Models.Entities
+namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
     [Table("Paises")]
     public class Pais

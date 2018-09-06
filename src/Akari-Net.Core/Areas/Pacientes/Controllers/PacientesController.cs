@@ -9,6 +9,7 @@ using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
 using AspNetCore.Identity.ByPermissions;
+using Akari_Net.Core.Areas.Pacientes.Models.Data;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
