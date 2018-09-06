@@ -33,9 +33,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         [Display(Name = "Dirección")]
         public string Direccion { get; set; } = "";
 
-        [Range(0,99999,ErrorMessage = "Introduce un valor válido")]
+        [Range(0, 99999, ErrorMessage = "Introduce un valor válido")]
         [Display(Name = "Código Postal")]
-        [DisplayFormat(ApplyFormatInEditMode = true,DataFormatString = "{0:00000}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:00000}")]
         public int CP { get; set; } = 0;
 
         [Display(Name = "Provincia")]
@@ -61,7 +61,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public string Alergias { get; set; } = "";
 
         //Relaciones EF
-        public virtual Provincia Provincia {get;set;}
+        public virtual Provincia Provincia { get; set; }
         public virtual Pais Pais { get; set; }
         public ICollection<CalendarEvent> Citas { get; set; }
 
