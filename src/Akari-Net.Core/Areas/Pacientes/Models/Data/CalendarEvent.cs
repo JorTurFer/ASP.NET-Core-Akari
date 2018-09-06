@@ -47,6 +47,5 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public virtual Paciente Paciente { get; set; }
 
         public virtual TipoCita TipoCita { get; set; }
-
     }
 }

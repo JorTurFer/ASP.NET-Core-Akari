@@ -124,16 +124,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             {
                 //Update the event
                 var v = _context.CalendarEvents.Where(a => a.EventID == e.EventID).FirstOrDefault();
-                if (v != null)
-                {
-                    v.Subject = e.Subject;
-                    v.Start = e.Start;
-                    v.End = e.End;
-                    v.Description = e.Description;
-                    v.IsFullDay = e.IsFullDay;
-                    v.IdTipoCita = e.IdTipoCita;
-                    v.IdPaciente = e.IdPaciente;
-                }
+                FetchEventData(v, e);
             }
             else
             {
@@ -149,22 +140,27 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             {
                 //Update the event
                 var v = await _context.CalendarEvents.Where(a => a.EventID == e.EventID).FirstOrDefaultAsync();
-                if (v != null)
-                {
-                    v.Subject = e.Subject;
-                    v.Start = e.Start;
-                    v.End = e.End;
-                    v.Description = e.Description;
-                    v.IsFullDay = e.IsFullDay;
-                    v.IdTipoCita = e.IdTipoCita;
-                    v.IdPaciente = e.IdPaciente;
-                }
+                FetchEventData(v, e);
             }
             else
             {
-                _context.CalendarEvents.Add(e);
+                await _context.CalendarEvents.AddAsync(e);
             }
             return await _context.SaveChangesAsync();
+        }
+
+        private void FetchEventData(CalendarEvent PreviousEvent, CalendarEvent NewEvent)
+        {
+            if (PreviousEvent != null)
+            {
+                PreviousEvent.Subject = NewEvent.Subject;
+                PreviousEvent.Start = NewEvent.Start;
+                PreviousEvent.End = NewEvent.End;
+                PreviousEvent.Description = NewEvent.Description;
+                PreviousEvent.IsFullDay = NewEvent.IsFullDay;
+                PreviousEvent.IdTipoCita = NewEvent.IdTipoCita;
+                PreviousEvent.IdPaciente = NewEvent.IdPaciente;
+            }
         }
     }
 }
