@@ -81,7 +81,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             }
             else
             {
-                events = await _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).Include(x=>x.TipoCita).ToListAsync();
+                events = await _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).Include(x => x.TipoCita).ToListAsync();
             }
             return events;
         }
@@ -142,13 +142,13 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             return _context.SaveChanges();
         }
 
-        public Task<int> SaveEventAsync(CalendarEvent e)
+        public async Task<int> SaveEventAsync(CalendarEvent e)
         {
-            e.IdPaciente = (_context.Pacientes.Where(x => x.Nombre.ToLower() == e.Subject.ToLower()).FirstOrDefault())?.IdPaciente;
+            e.IdPaciente = (await _context.Pacientes.Where(x => x.Nombre.ToLower() == e.Subject.ToLower()).FirstOrDefaultAsync())?.IdPaciente;
             if (e.EventID > 0)
             {
                 //Update the event
-                var v = _context.CalendarEvents.Where(a => a.EventID == e.EventID).FirstOrDefault();
+                var v = await _context.CalendarEvents.Where(a => a.EventID == e.EventID).FirstOrDefaultAsync();
                 if (v != null)
                 {
                     v.Subject = e.Subject;
@@ -164,7 +164,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             {
                 _context.CalendarEvents.Add(e);
             }
-            return _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
     }
 }

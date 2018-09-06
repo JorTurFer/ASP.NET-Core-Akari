@@ -213,11 +213,23 @@ function generateCalendar(events) {
                 Start: event.start.format("DD/MM/YYYY HH:mm"),
                 End: event.end !== null ? event.end.format("DD/MM/YYYY HH:mm") : null,
                 Description: event.description,
-                ThemeColor: event.color,
-                IsFullDay: event.allDay,
+                Color: event.color,
+                IsFullDay: event.allDay
             };
             saveEvent(data);
-        }
+        },
+        eventResize: function (event) {
+                var data = {
+                    EventID: event.eventID,
+                    Subject: event.title,
+                    Start: event.start.format("DD/MM/YYYY HH:mm"),
+                    End: event.end !== null ? event.end.format("DD/MM/YYYY HH:mm") : null,
+                    Description: event.description,
+                    Color: event.color,
+                    IsFullDay: event.allDay
+                };
+                saveEvent(data);
+            }
     });
 }
 
