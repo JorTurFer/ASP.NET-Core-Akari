@@ -16,6 +16,5 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public string Nombre { get; set; }
 
         public ICollection<Paciente> Pacientes { get; set; }
-
     }
 }

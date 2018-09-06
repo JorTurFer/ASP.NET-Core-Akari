@@ -65,7 +65,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public virtual Pais Pais { get; set; }
         public ICollection<CalendarEvent> Citas { get; set; }
 
-
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (string.IsNullOrWhiteSpace(Telefono) && string.IsNullOrWhiteSpace(Email))
