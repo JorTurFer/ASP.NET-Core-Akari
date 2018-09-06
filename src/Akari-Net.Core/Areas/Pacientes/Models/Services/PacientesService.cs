@@ -137,7 +137,13 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         public CitasPacienteViewModel GetCitasViewModel(int id)
         {
-            var paciente = _context.Pacientes.Where(x => x.IdPaciente == id).Include(b => b.Citas).FirstOrDefault();
+            var paciente = _context.Pacientes.Where(x => x.IdPaciente == id).Include(b => b.Citas).ThenInclude(c => c.TipoCita).FirstOrDefault();
+
+            return new CitasPacienteViewModel { Citas = paciente.Citas.OrderByDescending(x => x.Start), Paciente = paciente };
+        }
+        public async Task<CitasPacienteViewModel> GetCitasViewModelAsync(int id)
+        {
+            var paciente = await _context.Pacientes.Where(x => x.IdPaciente == id).Include(b => b.Citas).ThenInclude(c => c.TipoCita).FirstOrDefaultAsync();
 
             return new CitasPacienteViewModel { Citas = paciente.Citas.OrderByDescending(x => x.Start), Paciente = paciente };
         }

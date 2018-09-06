@@ -30,40 +30,8 @@
                     @Html.DisplayFor(modelItem => item.Start)
                 </td>
                 <td>
-                    @*@{
-                        string TipoCita;
-                        switch (item.TipoCita)
-                        {
-                            case "blue":
-                                TipoCita = "Consulta/Quiropodia";
-                                break;
-                            case "red":
-                                TipoCita = ">Cura / Revisión";
-                                break;
-                            case "#c8c800":
-                                TipoCita = "Entrega de OP";
-                                break;
-                            case "green":
-                                TipoCita = "Exploración Biomecánica";
-                                break;
-                            case "purple":
-                                TipoCita = "Revisión OP / Moldes";
-                                break;
-                            case "pink":
-                                TipoCita = "Otros";
-                                break;
-                            case "orange":
-                                TipoCita = "Personal";
-                                break;
-                            default:
-                                TipoCita = "Desconocido";
-                                break;
-                        }
-
-                        @Html.Label(TipoCita);
-                    }*@
+                    @Html.DisplayFor(modelItem => item.TipoCita.Tipo)
                 </td>
-
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>

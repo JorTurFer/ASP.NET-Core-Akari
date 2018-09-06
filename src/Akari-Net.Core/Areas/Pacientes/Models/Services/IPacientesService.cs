@@ -34,5 +34,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
         Task<int> SaveChangesAsync();
 
         CitasPacienteViewModel GetCitasViewModel(int id);
+        Task<CitasPacienteViewModel> GetCitasViewModelAsync(int id);
     }
 }
