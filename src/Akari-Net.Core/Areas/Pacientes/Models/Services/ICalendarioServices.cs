@@ -20,5 +20,14 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         int DeleteEvent(int eventID);
         Task<int> DeleteEventAsync(int eventID);
+
+        List<TipoCita> GetTipoCitas();
+        Task<List<TipoCita>> GetTipoCitasAsync();
+
+        TipoCita FindTipoCitaByColor(string Color);
+        Task<TipoCita> FindTipoCitaByColorAsync(string Color);
+
+        CalendarioViewModel GetCalendarioViewModel();
+        Task<CalendarioViewModel> GetCalendarioViewModelAsync();
     }
 }

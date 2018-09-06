@@ -1,7 +1,6 @@
 using Akari_Net.Core.Areas.Pacientes.Controllers;
 using Akari_Net.Core.Areas.Pacientes.Hubs;
 using Akari_Net.Core.Areas.Pacientes.Models.Data;
-using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;

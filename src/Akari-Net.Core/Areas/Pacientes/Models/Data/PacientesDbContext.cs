@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
@@ -39,5 +35,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public DbSet<Provincia> Provincias { get; set; }
 
         public DbSet<Pais> Paises { get; set; }
+
+        public DbSet<TipoCita> TipoCitas { get; set; }
     }
 }

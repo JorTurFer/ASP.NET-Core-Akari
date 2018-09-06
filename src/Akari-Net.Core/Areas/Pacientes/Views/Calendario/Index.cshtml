@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Authorization
+﻿@model Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario.CalendarioViewModel
+@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 @{
     ViewBag.Title = "Calendario";
@@ -84,15 +85,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tipo de cita</label>
-                            <select id="ddThemeColor" class="form-control">
-                                <option value="blue">Consulta/Quiropodia</option>
-                                <option value="red">Cura / Revisión</option>
-                                <option value="#c8c800">Entrega de OP</option>
-                                <option value="green">Exploración Biomecánica</option>
-                                <option value="purple">Revisión OP / Moldes</option>
-                                <option value="pink">Otros</option>
-                                <option value="orange">Personal</option>
-                            </select>
+                            <select asp-items="Model.TipoCitas" id="ddThemeColor" class="form-control"></select>
                         </div>
                         <button type="button" id="btnSave" class="btn btn-success">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

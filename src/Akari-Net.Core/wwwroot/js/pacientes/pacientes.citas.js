@@ -124,8 +124,8 @@ function generateHandlers() {
             Start: $("#txtStart").val().trim(),
             End: $("#chkIsFullDay").is(":checked") ? null : $("#txtEnd").val().trim(),
             Description: $("#txtDescription").val(),
-            ThemeColor: $("#ddThemeColor").val(),
-            IsFullDay: $("#chkIsFullDay").is(":checked")
+            Color: $("#ddThemeColor").val(),
+            IsFullDay: $("#chkIsFullDay").is(":checked"),
         };
         saveEvent(data);
         // call function for submit data to the server 
@@ -214,7 +214,7 @@ function generateCalendar(events) {
                 End: event.end !== null ? event.end.format("DD/MM/YYYY HH:mm") : null,
                 Description: event.description,
                 ThemeColor: event.color,
-                IsFullDay: event.allDay
+                IsFullDay: event.allDay,
             };
             saveEvent(data);
         }
@@ -247,7 +247,6 @@ function fetchEventAndRenderCalendar() {
                     end: v.end !== null ? moment(v.end) : null,
                     color: v.themeColor,
                     allDay: v.isFullDay,
-                    idPaciente: v.idPaciente
                 });
             });
             generateCalendar(events);

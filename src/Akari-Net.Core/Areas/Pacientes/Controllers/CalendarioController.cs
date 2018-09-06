@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Hubs;
 using Akari_Net.Core.Areas.Pacientes.Models.Data;
-using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
-using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
 using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
@@ -27,9 +23,10 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             _calendarHubContext = calendarHubContext;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var vm = await _calendarioServices.GetCalendarioViewModelAsync();
+            return View(vm);
         }
 
         public async Task<JsonResult> GetEvents(DateTime Date , string Type)
@@ -40,8 +37,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 
         [HttpPost]
         [Permission("SaveCalendarEvents", "Permitir registrar en calendario")]
-        public async Task<JsonResult> SaveEvent(CalendarEvent e)
+        public async Task<JsonResult> SaveEvent(CalendarEvent e,string color)
         {
+            e.IdTipoCita = (await _calendarioServices.FindTipoCitaByColorAsync(color)).IdTipoCita;
             var status = (await _calendarioServices.SaveEventAsync(e)) == 1;
             if (status)
                 await _calendarHubContext.Clients.All.SendAsync("updateCalendar");

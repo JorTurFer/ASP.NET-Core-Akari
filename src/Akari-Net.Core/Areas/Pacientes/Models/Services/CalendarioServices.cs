@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Models.Data;
-using Akari_Net.Core.Areas.Pacientes.Models.Entities;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Services
@@ -40,40 +40,61 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             return new Task<int>(() => { return 0; });
         }
 
+        public TipoCita FindTipoCitaByColor(string Color)
+        {
+            return _context.TipoCitas.Where(x => x.Color == Color).First();
+        }
+
+        public async Task<TipoCita> FindTipoCitaByColorAsync(string Color)
+        {
+            return await _context.TipoCitas.Where(x => x.Color == Color).FirstAsync();
+        }
+
         public List<CalendarEvent> GetCalendarEvents(DateTime Date, string Type)
         {
             List<CalendarEvent> events;
             if (Type.ToLower().Contains("month"))
             {
-                events = _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddMonths(-1) && x.Start.Date < Date.Date.AddMonths(1)).ToList();
+                events = _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddMonths(-1) && x.Start.Date < Date.Date.AddMonths(1)).Include(x => x.TipoCita).ToList();
             }
             else if (Type.ToLower().Contains("week"))
             {
-                events = _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddDays(-7) && x.Start.Date < Date.Date.AddMonths(7)).ToList();
+                events = _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddDays(-7) && x.Start.Date < Date.Date.AddMonths(7)).Include(x => x.TipoCita).ToList();
             }
             else
             {
-                events = _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).ToList();
+                events = _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).Include(x => x.TipoCita).ToList();
             }
             return events;
         }
 
-        public Task<List<CalendarEvent>> GetCalendarEventsAsync(DateTime Date, string Type)
+        public async Task<List<CalendarEvent>> GetCalendarEventsAsync(DateTime Date, string Type)
         {
-            Task<List<CalendarEvent>> events;
+            List<CalendarEvent> events;
             if (Type.ToLower().Contains("month"))
             {
-                events = _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddMonths(-1) && x.Start.Date < Date.Date.AddMonths(1)).ToListAsync();
+                events = await _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddMonths(-1) && x.Start.Date < Date.Date.AddMonths(1)).Include(x => x.TipoCita).ToListAsync();
             }
             else if (Type.ToLower().Contains("week"))
             {
-                events = _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddDays(-7) && x.Start.Date < Date.Date.AddMonths(7)).ToListAsync();
+                events = await _context.CalendarEvents.Where(x => x.Start.Date > Date.Date.AddDays(-7) && x.Start.Date < Date.Date.AddMonths(7)).Include(x => x.TipoCita).ToListAsync();
             }
             else
             {
-                events = _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).ToListAsync();
+                events = await _context.CalendarEvents.Where(x => x.Start.Date == Date.Date).Include(x=>x.TipoCita).ToListAsync();
             }
             return events;
+        }
+
+        public CalendarioViewModel GetCalendarioViewModel()
+        {
+            return new CalendarioViewModel { TipoCitas = _context.TipoCitas.Select(x => new SelectListItem { Value = x.Color.ToString(), Text = x.Tipo }).ToList() };
+        }
+
+        public async Task<CalendarioViewModel> GetCalendarioViewModelAsync()
+        {
+            var tipocitas = await _context.TipoCitas.Select(x => new SelectListItem { Value = x.Color.ToString(), Text = x.Tipo }).ToListAsync();
+            return new CalendarioViewModel { TipoCitas = tipocitas };
         }
 
         public List<PacientesAutoCompleteViewModel> GetPatientNames(string Nombre)
@@ -84,6 +105,16 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
         public Task<List<PacientesAutoCompleteViewModel>> GetPatientNamesAsync(string Nombre)
         {
             return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToListAsync();
+        }
+
+        public List<TipoCita> GetTipoCitas()
+        {
+            return _context.TipoCitas.ToList();
+        }
+
+        public Task<List<TipoCita>> GetTipoCitasAsync()
+        {
+            return _context.TipoCitas.ToListAsync();
         }
 
         public int SaveEvent(CalendarEvent e)
@@ -100,7 +131,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
                     v.End = e.End;
                     v.Description = e.Description;
                     v.IsFullDay = e.IsFullDay;
-                    v.ThemeColor = e.ThemeColor;
+                    v.IdTipoCita = e.IdTipoCita;
                     v.IdPaciente = e.IdPaciente;
                 }
             }
@@ -125,7 +156,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
                     v.End = e.End;
                     v.Description = e.Description;
                     v.IsFullDay = e.IsFullDay;
-                    v.ThemeColor = e.ThemeColor;
+                    v.IdTipoCita = e.IdTipoCita;
                     v.IdPaciente = e.IdPaciente;
                 }
             }
