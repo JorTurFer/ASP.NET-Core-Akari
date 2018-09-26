@@ -9,6 +9,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
     public class Paciente : IValidatableObject
     {
         [Key]
+        [Display(Name = "Nº de historia")]
         public int IdPaciente { get; set; }
 
         [Required(ErrorMessage = "El campo '{0}' es necesario")]
