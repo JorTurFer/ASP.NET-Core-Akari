@@ -28,9 +28,14 @@
                 <span asp-validation-for="Paciente.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Paciente.Telefono" class="control-label"></label>
-                <input asp-for="Paciente.Telefono" class="form-control" />
-                <span asp-validation-for="Paciente.Telefono" class="text-danger"></span>
+                <label asp-for="Paciente.Telefono1" class="control-label"></label>
+                <input asp-for="Paciente.Telefono1" class="form-control" />
+                <span asp-validation-for="Paciente.Telefono1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.Telefono2" class="control-label"></label>
+                <input asp-for="Paciente.Telefono2" class="form-control" />
+                <span asp-validation-for="Paciente.Telefono2" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Paciente.DNI" class="control-label"></label>
@@ -49,21 +54,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="Paciente.IdProvincia" class="control-label"></label>
-                <select asp-for="Paciente.IdProvincia"asp-items="Model.Provincias"></select>
-                <span asp-validation-for="Paciente.IdProvincia" class="text-danger"></span>                
+                <select asp-for="Paciente.IdProvincia" asp-items="Model.Provincias"></select>
+                <span asp-validation-for="Paciente.IdProvincia" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Paciente.IdPais" class="control-label"></label>
                 <select asp-for="Paciente.IdPais" asp-items="Model.Paises"></select>
-                <span asp-validation-for="Paciente.IdPais" class="text-danger"></span>     
+                <span asp-validation-for="Paciente.IdPais" class="text-danger"></span>
             </div>
-           
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Paciente.RGPD)
                 @Html.EditorFor(model => model.Paciente.RGPD)
                 @Html.ValidationMessageFor(model => model.Paciente.RGPD)
             </div>
-            @{ 
+            @{
                 var cols = 45;
                 var rows = 5;
             }

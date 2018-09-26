@@ -26,7 +26,11 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 
         [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
         [Display(Name = "Teléfono de contacto")]
-        public string Telefono { get; set; }
+        public string Telefono1 { get; set; }
+
+        [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
+        [Display(Name = "Teléfono de contacto")]
+        public string Telefono2 { get; set; }
 
         [Display(Name = "DNI")]
         public string DNI { get; set; } = "";
@@ -68,7 +72,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (string.IsNullOrWhiteSpace(Telefono) && string.IsNullOrWhiteSpace(Email))
+            if (string.IsNullOrWhiteSpace(Telefono1) && string.IsNullOrWhiteSpace(Telefono2) && string.IsNullOrWhiteSpace(Email))
             {
                 yield return new ValidationResult(
                     "Es necesario indicar un método de contacto",       // Error message
