@@ -25,11 +25,11 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public string Email { get; set; }
 
         [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
-        [Display(Name = "Teléfono de contacto")]
+        [Display(Name = "Teléfono fijo")]
         public string Telefono1 { get; set; }
 
         [Phone(ErrorMessage = "El campo '{0}' número de telefono valido")]
-        [Display(Name = "Teléfono de contacto")]
+        [Display(Name = "Teléfono movil")]
         public string Telefono2 { get; set; }
 
         [Display(Name = "DNI")]
