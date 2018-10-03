@@ -1,119 +1,107 @@
 ﻿@model Akari_Net.Core.Areas.Pacientes.Models.Data.Paciente
 
 @{
-    ViewData["Title"] = "Detalles de paciente";
+    Layout = null;
 }
 
-<h2>Details</h2>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.IdPaciente)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.IdPaciente)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Nombre)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Nombre)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Nacimiento)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Nacimiento)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Telefono1)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Telefono1)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Telefono2)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Telefono2)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.DNI)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.DNI)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Direccion)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Direccion)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.CP)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.CP)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.IdProvincia)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Provincia.Nombre)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.IdPais)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Pais.Nombre)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.RGPD)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.RGPD)
+    </dd>
+    <dt class="sensible" style="display:none">
+        @Html.DisplayNameFor(model => model.Enfermedades)
+    </dt>
+    <dd class="sensible" style="display:none">
+        @Html.DisplayFor(model => model.Enfermedades)
+    </dd>
+    <dt class="sensible" style="display:none">
+        @Html.DisplayNameFor(model => model.Medicación)
+    </dt>
+    <dd class="sensible" style="display:none">
+        @Html.DisplayFor(model => model.Medicación)
+    </dd>
+    <dt class="sensible" style="display:none">
+        @Html.DisplayNameFor(model => model.Alergias)
+    </dt>
+    <dd class="sensible" style="display:none">
+        @Html.DisplayFor(model => model.Alergias)
+    </dd>
+    <dt>
 
-<div>
-    <h4>Paciente</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IdPaciente)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdPaciente)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nacimiento)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nacimiento)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono1)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Telefono1)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono2)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Telefono2)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DNI)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DNI)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CP)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CP)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdProvincia)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Provincia.Nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdPais)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Pais.Nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RGPD)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RGPD)
-        </dd>
-        <dt class="sensible" style="display:none">
-            @Html.DisplayNameFor(model => model.Enfermedades)
-        </dt>
-        <dd class="sensible" style="display:none">
-            @Html.DisplayFor(model => model.Enfermedades)
-        </dd>
-        <dt class="sensible" style="display:none">
-            @Html.DisplayNameFor(model => model.Medicación)
-        </dt>
-        <dd class="sensible" style="display:none">
-            @Html.DisplayFor(model => model.Medicación)
-        </dd>
-        <dt class="sensible" style="display:none">
-            @Html.DisplayNameFor(model => model.Alergias)
-        </dt>
-        <dd class="sensible" style="display:none">
-            @Html.DisplayFor(model => model.Alergias)
-        </dd>
-        <dt>
-            
-        </dt>
-        <dd>
-            <input id="toggleButton" class="btn-primary" type="button" onclick="toggleAntecedentes()" value="Mostrar Antecedentes" />
-        </dd>
-    </dl>
-
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.IdPaciente">Editar</a> |
-    <a asp-action="Index">Volver atras</a>
-</div>
-
+    </dt>
+    <dd>
+        <input id="toggleButton" class="btn-primary" type="button" onclick="toggleAntecedentes()" value="Mostrar Antecedentes" />
+    </dd>
+</dl>
 @section Scripts {
     <environment Names="Development">
         <script src="~/js/pacientes/pacientes.pacientes.js" asp-append-version="true"></script>

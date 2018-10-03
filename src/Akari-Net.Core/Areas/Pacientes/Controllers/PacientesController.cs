@@ -31,6 +31,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         // GET: Pacientes/Pacientes/Details/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,6 +48,15 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 
             return View(paciente);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<JsonResult> DetallesPaciente(int? IdPaciente)
+        //{
+        //    var paciente = await _pacientesService.FindPacienteByIdAsync(IdPaciente.Value);          
+
+        //    return Json(paciente);
+        //}
 
         // GET: Pacientes/Pacientes/Create
         public IActionResult Create()

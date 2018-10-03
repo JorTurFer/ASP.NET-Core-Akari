@@ -72,21 +72,23 @@
                 var cols = 45;
                 var rows = 5;
             }
-            <div class="form-group">
+            <input id="toggleButton" class="btn btn-primary" type="button" onclick="toggleAntecedentes()" value="Mostrar Antecedentes" />
+            <div class="form-group sensible" style="display:none">
                 @Html.LabelFor(model => model.Paciente.Enfermedades)
                 @Html.TextAreaFor(model => model.Paciente.Enfermedades, new { cols = cols, rows = rows })
                 @Html.ValidationMessageFor(model => model.Paciente.Enfermedades)
             </div>
-            <div class="form-group">
+            <div class="form-group sensible" style="display:none">
                 @Html.LabelFor(model => model.Paciente.Medicación)
                 @Html.TextAreaFor(model => model.Paciente.Medicación, new { cols = cols, rows = rows })
                 @Html.ValidationMessageFor(model => model.Paciente.Medicación)
             </div>
-            <div class="form-group">
+            <div class="form-group sensible" style="display:none">
                 @Html.LabelFor(model => model.Paciente.Alergias)
                 @Html.TextAreaFor(model => model.Paciente.Alergias, new { cols = cols, rows = rows })
                 @Html.ValidationMessageFor(model => model.Paciente.Alergias)
             </div>
+            <hr/>
             <div class="col-md-3">
                 <a asp-action="Index" class="btn btn-default">Volver atras</a>
             </div>
@@ -96,3 +98,11 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    <environment Names="Development">
+        <script src="~/js/pacientes/pacientes.pacientes.js" asp-append-version="true"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script src="~/js/min/pacientes/pacientes.pacientes.min.js" asp-append-version="true"></script>
+    </environment>
+}

@@ -30,3 +30,30 @@ function toggleAntecedentes() {
         $("#toggleButton").val("Mostrar Antecedentes");
     }
 }
+
+function openDetailsForm(url,id) {
+    $.ajax({
+        url: url,
+        data: {
+            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val(),
+            id: id            
+        },
+        type: "post",
+        success: function (data) {
+            $("#modal-detalles").html(data);
+            //alert("hola");
+            //$("#hdEventID").val(selectedEvent.eventID);
+            //$("#txtPaciente").val(selectedEvent.title);
+            //$("#txtStart").val(selectedEvent.start.format("DD/MM/YYYY HH:mm"));
+            //$("#chkIsFullDay").prop("checked", selectedEvent.allDay || false);
+            //$("#chkIsFullDay").change();
+            //$("#txtEnd").val(selectedEvent.end !== null ? selectedEvent.end.format("DD/MM/YYYY HH:mm") : "");
+            //$("#txtDescription").val(selectedEvent.description);
+            //$("#ddThemeColor").val(selectedEvent.color);
+            $("#details-paciente").modal();
+        },
+        error: function () {
+            alert("Oops, hemos tenido un problema...");
+        }
+    });
+}
