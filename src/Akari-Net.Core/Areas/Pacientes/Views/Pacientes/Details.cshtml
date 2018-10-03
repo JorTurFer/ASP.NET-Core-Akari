@@ -82,27 +82,43 @@
         <dd>
             @Html.DisplayFor(model => model.RGPD)
         </dd>
-        <dt>
+        <dt class="sensible" style="display:none">
             @Html.DisplayNameFor(model => model.Enfermedades)
         </dt>
-        <dd>
+        <dd class="sensible" style="display:none">
             @Html.DisplayFor(model => model.Enfermedades)
         </dd>
-        <dt>
+        <dt class="sensible" style="display:none">
             @Html.DisplayNameFor(model => model.Medicación)
         </dt>
-        <dd>
+        <dd class="sensible" style="display:none">
             @Html.DisplayFor(model => model.Medicación)
         </dd>
-        <dt>
+        <dt class="sensible" style="display:none">
             @Html.DisplayNameFor(model => model.Alergias)
         </dt>
-        <dd>
+        <dd class="sensible" style="display:none">
             @Html.DisplayFor(model => model.Alergias)
         </dd>
+        <dt>
+            
+        </dt>
+        <dd>
+            <input id="toggleButton" class="btn-primary" type="button" onclick="toggleAntecedentes()" value="Mostrar Antecedentes" />
+        </dd>
     </dl>
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.IdPaciente">Editar</a> |
     <a asp-action="Index">Volver atras</a>
 </div>
+
+@section Scripts {
+    <environment Names="Development">
+        <script src="~/js/pacientes/pacientes.pacientes.js" asp-append-version="true"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script src="~/js/min/pacientes/pacientes.pacientes.min.js" asp-append-version="true"></script>
+    </environment>
+}

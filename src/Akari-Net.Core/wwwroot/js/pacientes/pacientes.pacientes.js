@@ -19,3 +19,14 @@ function getPacientesGrid(url, search, sort, ascending, page, pageSize) {
         }
     });
 }
+
+function toggleAntecedentes() { 
+    if ($("#toggleButton").val() === "Mostrar Antecedentes") {
+        $(".sensible").show();
+        $("#toggleButton").val("Ocultar Antecedentes");
+    }
+    else {
+        $(".sensible").hide();
+        $("#toggleButton").val("Mostrar Antecedentes");
+    }
+}
