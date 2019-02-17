@@ -154,6 +154,19 @@ function generateHandlers() {
 function generateCalendar(events) {
     $("#calendar").fullCalendar("destroy");
     $("#calendar").fullCalendar({
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        businessHours: [ // specify an array instead
+            {
+                dow: [2, 4],
+                start: '9:00', // 9am
+                end: '14:00' // 14pm
+            },
+            {
+                dow: [3,5],
+                start: '15:30', // 3:30pm
+                end: '20:00' // 8pm
+            }
+        ],
         use24hours: true,
         locale: "es",
         contentHeight: 600,
@@ -219,17 +232,17 @@ function generateCalendar(events) {
             saveEvent(data);
         },
         eventResize: function (event) {
-                var data = {
-                    EventID: event.eventID,
-                    Subject: event.title,
-                    Start: event.start.format("DD/MM/YYYY HH:mm"),
-                    End: event.end !== null ? event.end.format("DD/MM/YYYY HH:mm") : null,
-                    Description: event.description,
-                    Color: event.color,
-                    IsFullDay: event.allDay
-                };
-                saveEvent(data);
-            }
+            var data = {
+                EventID: event.eventID,
+                Subject: event.title,
+                Start: event.start.format("DD/MM/YYYY HH:mm"),
+                End: event.end !== null ? event.end.format("DD/MM/YYYY HH:mm") : null,
+                Description: event.description,
+                Color: event.color,
+                IsFullDay: event.allDay
+            };
+            saveEvent(data);
+        }
     });
 }
 
