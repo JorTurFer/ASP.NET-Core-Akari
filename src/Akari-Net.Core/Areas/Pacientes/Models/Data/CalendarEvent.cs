@@ -9,7 +9,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public int EventID { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatiorio")]
-        [StringLength(100,ErrorMessage = "La longitud máxima es {1}")]
+        [StringLength(100, ErrorMessage = "La longitud máxima es {1}")]
         [Display(Name = "Cabecera")]
         public string Subject { get; set; }
 
@@ -43,6 +43,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public int? IdPaciente { get; set; }
         //En caso de ser una cita, id del tipo de cita
         public int? IdTipoCita { get; set; }
+        //Se ha enviado el mensaje ya?
+        public bool IsSMSSended { get; set; }
         //EF
         public virtual Paciente Paciente { get; set; }
 

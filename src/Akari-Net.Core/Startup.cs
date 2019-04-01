@@ -8,6 +8,8 @@ using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Extensions;
+using Akari_Net.Core.Models.Entities;
+using Akari_Net.Core.Models.Services;
 using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -109,7 +111,10 @@ namespace Akari_Net.Core
             services.AddResponseCompression();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<ISMSSender, SMSSender>();
+            services.AddHostedService<TimedHostedService>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.Configure<SMSServiceOptions>(Configuration);
             services.Configure<AccountConfirmationOptions>(Configuration);
             services.AddSingleton<IPermissionService, PermissionService>();
             services.AddScoped<IPacientesService, PacientesService>();

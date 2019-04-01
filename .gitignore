@@ -260,9 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 
-#Migraciones
-*/Migrations
-
 #Scripts js min
 **/js/min/*
 

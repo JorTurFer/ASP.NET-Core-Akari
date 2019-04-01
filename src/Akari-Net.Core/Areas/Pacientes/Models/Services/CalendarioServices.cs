@@ -160,6 +160,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
                 PreviousEvent.IsFullDay = NewEvent.IsFullDay;
                 PreviousEvent.IdTipoCita = NewEvent.IdTipoCita;
                 PreviousEvent.IdPaciente = NewEvent.IdPaciente;
+                PreviousEvent.IsSMSSended = false;
             }
         }
     }
