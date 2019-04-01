@@ -1,0 +1,50 @@
+# Matriz de máquinas que vamos a utilizar
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-16.04'
+    mac:
+      imageName: 'macos-10.13'
+    windows:
+      imageName: 'vs2017-win2016'
+
+# Configuramos el pool con la imagen
+pool:
+  vmImage: $(imageName)
+
+# Variables que vamos a necesitar (podemos definir tantas como queramos)
+variables:
+    solution: '**/*.sln'
+    testProject: '**/UnitaryTests.csproj'
+    buildConfiguration: 'Release'
+    netCoreVersion: '2.2.103'
+
+# Pasos a ejecutar
+steps:
+
+# Instalar Nuget
+- task: NuGetToolInstaller@0
+
+# Instalar la versión de NetCore que hemos definido en las variables
+- task: DotNetCoreInstaller@0
+  inputs:
+    version: '$(netCoreVersion)'
+
+# Ejecutar un 'nuget restore'
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+# Lanzamos el comando de compilación
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration)' 
+
+# Lanzamos el comando de test
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '$(testProject)'
+    arguments: '--configuration $(buildConfiguration)' 
