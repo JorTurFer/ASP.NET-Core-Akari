@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Web.Areas.Pacientes.Data;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
@@ -11,7 +12,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.HasDefaultSchema("Patients");
             builder.Entity<Paciente>()
             .Property(b => b.CP)
             .HasDefaultValue(0);
@@ -37,5 +37,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public DbSet<Pais> Paises { get; set; }
 
         public DbSet<TipoCita> TipoCitas { get; set; }
+
+        public DbSet<Referencia> Referencias { get; set; }
+
+        public DbSet<FacturasHeader> FacturasHeaders { get; set; }
     }
 }

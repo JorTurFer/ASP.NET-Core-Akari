@@ -1,9 +1,6 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@inject IAuthorizationService AuthorizationService
-@model Web.Areas.Facturas.Entities.ViewModels.GridReferenciasViewModel
+﻿@model Web.Areas.Facturas.Entities.ViewModels.GridReferenciasViewModel
 @{
     Layout = null;
-    var canSeeCitas = (await AuthorizationService.AuthorizeAsync(User, "PacientesCitas")).Succeeded;
 }
 
 @if (!Model.Referencias.Any())
@@ -63,7 +60,7 @@ else
                     <h4 class="modal-title">Borrar referencia</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Referencia será borrado permanentemente.</p>
+                    <p>La referencia será borrada permanentemente.</p>
                     <p>¿Desea continuar?</p>
                 </div>
                 <div class="modal-footer">

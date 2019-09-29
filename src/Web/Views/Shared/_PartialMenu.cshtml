@@ -34,11 +34,10 @@
                         <ul class="dropdown-menu">
                             @if ((await AuthorizationService.AuthorizeAsync(User, "ReferenciasManager")).Succeeded)
                             {
-                                <li><a asp-area="Facturas" asp-controller="Referencias" asp-action="Index" title="Facturas">Gestión de referencias</a></li>
-
+                                <li><a asp-area="Pacientes" asp-controller="Referencias" asp-action="Index" title="Referencias">Gestión de referencias</a></li>
                             }
 
-                            <li><a href="#">Gestión de facturas</a></li>
+                            <li><a asp-area="Pacientes" asp-controller="Facturas" asp-action="Index" title="Facturas">Gestión de facturas</a></li>
                         </ul>
                     </li>
                 }

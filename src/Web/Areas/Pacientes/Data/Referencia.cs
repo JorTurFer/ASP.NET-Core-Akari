@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Web.Areas.Facturas.Data
+namespace Web.Areas.Pacientes.Data
 {
+    [Table("Referencias", Schema = "Facturas")]
     public class Referencia
     {
-        [Key] 
+        [Key]
         public int Id { get; set; }
         [Required]
         public string Identificador { get; set; }

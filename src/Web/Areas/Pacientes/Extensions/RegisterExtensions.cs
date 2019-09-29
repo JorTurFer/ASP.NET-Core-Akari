@@ -8,6 +8,7 @@ namespace Web.Areas.Facturas.Extensions
         public static IServiceCollection AddFacturas(this IServiceCollection services)
         {
             services.AddScoped<IReferenciasService, ReferenciasService>();
+            services.AddScoped<IFacturasServices, FacturasServices>();
 
             return services;
         }

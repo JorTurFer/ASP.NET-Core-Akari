@@ -17,7 +17,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data.SqlClient;
-using Web.Areas.Facturas.Data;
 using Web.Areas.Facturas.Extensions;
 using Web.Areas.Pacientes.Models.Services;
 using Web.Areas.Usuarios.Data;
@@ -66,18 +65,6 @@ namespace Web
 
             services.AddDbContext<PatientsDbContext>(options =>
                 options.UseSqlServer(builderPacientes.ConnectionString, x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Patients")));
-
-            //Añado el contexto de facturas
-            var builderFacturas = new SqlConnectionStringBuilder(
-                Configuration.GetConnectionString("Akari"))
-            {
-                Password = Configuration["ConnectionStringPassword"],
-                UserID = Configuration["ConnectionStringUser"],
-                InitialCatalog = Configuration["FacturasDB"]
-            };
-
-            services.AddDbContext<FacturasDbContext>(options =>
-                options.UseSqlServer(builderFacturas.ConnectionString, x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Facturas")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
              {

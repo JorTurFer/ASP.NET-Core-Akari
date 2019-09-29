@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Web.Areas.Facturas.Data;
 using Web.Areas.Facturas.Entities.ViewModels;
+using Web.Areas.Pacientes.Data;
 
 namespace Web.Areas.Facturas.Services.Referencias
 {

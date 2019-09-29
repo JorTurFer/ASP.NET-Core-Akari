@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
-    [Table("Provincias")]
+    [Table("Provincias", Schema = "Patients")]
     public class Provincia
     {
         [Key]

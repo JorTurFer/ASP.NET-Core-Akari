@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
+    [Table("CalendarEvents", Schema = "Patients")]
     public class CalendarEvent
     {
         [Key]

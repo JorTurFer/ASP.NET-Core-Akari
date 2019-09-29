@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Web.Areas.Facturas.Data;
+using Web.Areas.Pacientes.Data;
 
 namespace Web.Areas.Facturas.Entities.ViewModels
 {

@@ -1,13 +1,13 @@
-﻿using AspNetCore.Identity.ByPermissions;
+﻿using System.Threading.Tasks;
+using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Web.Areas.Facturas.Data;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Facturas.Services.Referencias;
+using Web.Areas.Pacientes.Data;
 
-namespace Web.Areas.Facturas.Controllers
+namespace Web.Areas.Pacientes.Controllers
 {
-    [Area("Facturas")]
+    [Area("Pacientes")]
     [Permission("ReferenciasManager", "Gestión de Referencias")]
     [Route("[area]/[controller]/[action]")]
     public class ReferenciasController : Controller

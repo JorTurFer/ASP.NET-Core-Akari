@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190929201202_facturas.cs" />
+    <Compile Remove="Migrations\20190929201202_facturas.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.Identity.ByPermissions" Version="1.1.16" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.4" />
@@ -26,19 +31,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Pacientes\Models\Data\" />
-    <Folder Include="Areas\Pacientes\Models\Entities\" />
+    <Folder Include="Areas\Pacientes\Entities\" />
     <Folder Include="Areas\Pacientes\Views\Shared\" />
     <Folder Include="wwwroot\js\min\facturas\" />
     <Folder Include="wwwroot\js\min\pacientes\" />
     <Folder Include="wwwroot\js\min\usuarios\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Areas\Facturas\Views\_ViewImports.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Facturas\Views\_ViewStart.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Areas\Pacientes\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

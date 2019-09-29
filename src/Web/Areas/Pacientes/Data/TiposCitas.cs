@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
+    [Table("TipoCitas", Schema = "Patients")]
     public class TipoCita
     {
         [Key]
@@ -16,6 +14,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 
         public string Color { get; set; }
 
-        ICollection<CalendarEvent> CalendarEvents { get; set; }
+        private ICollection<CalendarEvent> CalendarEvents { get; set; }
     }
 }

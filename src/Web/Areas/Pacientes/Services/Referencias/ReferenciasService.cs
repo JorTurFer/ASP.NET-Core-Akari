@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Akari_Net.Core.Areas.Pacientes.Models.Data;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
-using Web.Areas.Facturas.Data;
 using Web.Areas.Facturas.Entities.ViewModels;
+using Web.Areas.Pacientes.Data;
 
 namespace Web.Areas.Facturas.Services.Referencias
 {
     public class ReferenciasService : IReferenciasService
     {
-        private readonly FacturasDbContext _facturasDbContext;
+        private readonly PatientsDbContext _facturasDbContext;
 
-        public ReferenciasService(FacturasDbContext facturasDbContext)
+        public ReferenciasService(PatientsDbContext facturasDbContext)
         {
             _facturasDbContext = facturasDbContext;
         }
@@ -68,8 +69,8 @@ namespace Web.Areas.Facturas.Services.Referencias
 
         public async Task UpdateAsync(Referencia referencia)
         {
-            _facturasDbContext.Update(referencia);
-            _facturasDbContext.SaveChangesAsync();
+             _facturasDbContext.Update(referencia);
+            await _facturasDbContext.SaveChangesAsync();
         }
     }
 }

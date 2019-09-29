@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.Areas.Pacientes.Data;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
+    [Table("Pacientes", Schema = "Patients")]
     public class Paciente : IValidatableObject
     {
         [Key]
@@ -69,6 +72,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public virtual Provincia Provincia { get; set; }
         public virtual Pais Pais { get; set; }
         public ICollection<CalendarEvent> Citas { get; set; }
+
+        public ICollection<FacturasHeader> Facturas { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
