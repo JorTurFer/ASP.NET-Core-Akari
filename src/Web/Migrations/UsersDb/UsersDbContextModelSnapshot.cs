@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Web.Areas.Usuarios.Models.Entities;
+using Web.Areas.Usuarios.Data;
 
 namespace Web.Migrations.UsersDb
 {

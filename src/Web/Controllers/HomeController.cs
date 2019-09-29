@@ -8,6 +8,7 @@ using Akari_Net.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Controllers
 {

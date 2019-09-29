@@ -12,6 +12,7 @@ using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {

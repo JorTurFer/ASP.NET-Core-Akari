@@ -1,4 +1,5 @@
 ﻿@using Akari_Net.Core.Areas.Usuarios.Models.Entities
+@using Web.Areas.Usuarios.Data
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

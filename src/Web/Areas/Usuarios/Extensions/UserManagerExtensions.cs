@@ -1,10 +1,8 @@
-﻿using Akari_Net.Core.Areas.Usuarios.Models.Entities;
-using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels;
+﻿using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Areas.Usuarios.Extensions
 {
@@ -32,8 +30,10 @@ namespace Akari_Net.Core.Areas.Usuarios.Extensions
                     break;
             }
 
-            if (!string.IsNullOrWhiteSpace(text))
+            if (!String.IsNullOrWhiteSpace(text))
+            {
                 usersQuery = usersQuery.Where(u => u.UserName.Contains(text) || u.NombreCompleto.Contains(text) || u.Email.Contains(text) || u.PhoneNumber.Contains(text));
+            }
 
             var count = usersQuery.Count();
 

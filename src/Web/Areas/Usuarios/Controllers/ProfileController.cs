@@ -13,6 +13,7 @@ using System.Text;
 using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
+using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
 {

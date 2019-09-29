@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Extensions
 {

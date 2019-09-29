@@ -17,6 +17,17 @@
     "sourceMap": false
   },
   {
+    "outputFileName": "wwwroot//js/min/facturas/facturas.min.js",
+    "inputFiles": [
+      "wwwroot/js/facturas/facturas.referencias.js",
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
     "outputFileName": "wwwroot/js/min/usuarios/usuarios.manage.min.js",
     "inputFiles": [
       "wwwroot/js/usuarios/usuarios.manage.roles.js",

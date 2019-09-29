@@ -12,17 +12,18 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MySql.Data.MySqlClient;
 using System;
 using System.Data.SqlClient;
-using Microsoft.EntityFrameworkCore.Migrations;
+using Web.Areas.Facturas.Data;
+using Web.Areas.Facturas.Extensions;
 using Web.Areas.Pacientes.Models.Services;
-using Web.Areas.Usuarios.Models.Entities;
+using Web.Areas.Usuarios.Data;
 using Web.Models.Services;
 
-namespace Akari_Net.Core
+namespace Web
 {
     public class Startup
     {
@@ -56,7 +57,7 @@ namespace Akari_Net.Core
 
             //Añado el contexto de pacientes
             var builderPacientes = new SqlConnectionStringBuilder(
-            Configuration.GetConnectionString("Akari"))
+                Configuration.GetConnectionString("Akari"))
             {
                 Password = Configuration["ConnectionStringPassword"],
                 UserID = Configuration["ConnectionStringUser"],
@@ -64,7 +65,19 @@ namespace Akari_Net.Core
             };
 
             services.AddDbContext<PatientsDbContext>(options =>
-              options.UseSqlServer(builderPacientes.ConnectionString,x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Patients")));
+                options.UseSqlServer(builderPacientes.ConnectionString, x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Patients")));
+
+            //Añado el contexto de facturas
+            var builderFacturas = new SqlConnectionStringBuilder(
+                Configuration.GetConnectionString("Akari"))
+            {
+                Password = Configuration["ConnectionStringPassword"],
+                UserID = Configuration["ConnectionStringUser"],
+                InitialCatalog = Configuration["FacturasDB"]
+            };
+
+            services.AddDbContext<FacturasDbContext>(options =>
+                options.UseSqlServer(builderFacturas.ConnectionString, x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Facturas")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
              {
@@ -120,6 +133,8 @@ namespace Akari_Net.Core
             services.AddSingleton<IPermissionService, PermissionService>();
             services.AddScoped<IPacientesService, PacientesService>();
             services.AddScoped<ICalendarioServices, CalendarioServices>();
+
+            services.AddFacturas();
 
             services.AddSignalR()
                 .AddMessagePackProtocol();

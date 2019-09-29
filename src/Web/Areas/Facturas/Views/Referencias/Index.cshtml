@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Referencias";
+}
+<br />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nueva referencia</a>
+</p>
+
+<div class="well row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Buscar:</label>
+            <input type="text" class="form-control" id="searchInput" />  
+        </div>
+    </div>
+    <div class="col-md-1">
+        
+    </div>
+</div>
+
+<div id="referencias">
+
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    <environment Names="Development">
+        <script src="~/js/facturas/facturas.referencias.js" asp-append-version="true"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script src="~/js/min/facturas/facturas.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script type="text/javascript">
+    var pageSize = 10;
+    $(document).ready(function () {
+        getReferenciasGrid('@Url.Action("GetReferenciasGrid", "Referencias")', $("#searchInput").val(), 'name', true, 1, pageSize);
+        $("#searchInput").on('input',(function (){
+            getReferenciasGrid('@Url.Action("GetReferenciasGrid", "Referencias")', $("#searchInput").val(), 'name', true, 1, pageSize);
+        }));
+    });
+    </script>
+}
+
