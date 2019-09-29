@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2018
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Akari-Net.Core", "src\Akari-Net.Core\Akari-Net.Core.csproj", "{9E1C575E-5F4B-4EA5-B2FC-E09ED2A3BB4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "src\Web\Web.csproj", "{9E1C575E-5F4B-4EA5-B2FC-E09ED2A3BB4E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitaryTests", "src\UnitaryTests\UnitaryTests.csproj", "{AA6EDFC1-EBC7-4290-BDCC-7D8530A1BD06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitaryTests", "test\UnitaryTests\UnitaryTests.csproj", "{AA6EDFC1-EBC7-4290-BDCC-7D8530A1BD06}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-src", "1-src", "{78D0048A-501F-4E68-BD9C-4BACD1DBFAB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-test", "2-test", "{7F3B5175-636E-4943-A6BB-7C8F60597F88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,13 +25,13 @@ Global
 		{AA6EDFC1-EBC7-4290-BDCC-7D8530A1BD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA6EDFC1-EBC7-4290-BDCC-7D8530A1BD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA6EDFC1-EBC7-4290-BDCC-7D8530A1BD06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22549374-292A-4909-BE99-4D71B435E743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22549374-292A-4909-BE99-4D71B435E743}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22549374-292A-4909-BE99-4D71B435E743}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22549374-292A-4909-BE99-4D71B435E743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E1C575E-5F4B-4EA5-B2FC-E09ED2A3BB4E} = {78D0048A-501F-4E68-BD9C-4BACD1DBFAB8}
+		{AA6EDFC1-EBC7-4290-BDCC-7D8530A1BD06} = {7F3B5175-636E-4943-A6BB-7C8F60597F88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A65465F3-F657-4814-9BA7-7B3283E02B8A}
