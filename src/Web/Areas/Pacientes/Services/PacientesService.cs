@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Models.Data;
+using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -166,6 +167,16 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             var provincias = await _context.Provincias.Select(x => new SelectListItem { Value = x.IdProvincia.ToString(), Text = x.Nombre, Selected = x.IdProvincia == paciente.IdProvincia }).ToListAsync();
             var paises = await _context.Paises.Select(x => new SelectListItem { Value = x.IdPais.ToString(), Text = x.Nombre, Selected = x.IdPais == paciente.IdPais }).ToListAsync();
             return new PacienteDataViewModel { Paciente = paciente, Provincias = provincias, Paises = paises };
+        }
+
+        public List<PacientesAutoCompleteViewModel> GetPatientNames(string Nombre)
+        {
+            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToList();
+        }
+
+        public Task<List<PacientesAutoCompleteViewModel>> GetPatientNamesAsync(string Nombre)
+        {
+            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToListAsync();
         }
     }
 }

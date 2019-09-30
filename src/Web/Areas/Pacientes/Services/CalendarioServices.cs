@@ -97,16 +97,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             return new CalendarioViewModel { TipoCitas = tipocitas };
         }
 
-        public List<PacientesAutoCompleteViewModel> GetPatientNames(string Nombre)
-        {
-            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToList();
-        }
-
-        public Task<List<PacientesAutoCompleteViewModel>> GetPatientNamesAsync(string Nombre)
-        {
-            return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToListAsync();
-        }
-
         public List<TipoCita> GetTipoCitas()
         {
             return _context.TipoCitas.ToList();

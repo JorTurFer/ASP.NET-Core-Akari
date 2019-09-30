@@ -13,5 +13,6 @@ namespace Web.Areas.Facturas.Services.Referencias
         Task<List<int>> GetAvailableYearsAsync();
         Task<FacturasHeader> FindReferenciaByIdAsync(int id);
         Task RemoveAsync(FacturasHeader factura);
+        Task<bool> CreateFacturaAsync(FacturasHeader factura, string NombrePaciente);
     }
 }

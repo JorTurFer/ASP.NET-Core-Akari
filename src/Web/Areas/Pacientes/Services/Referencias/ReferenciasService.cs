@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Akari_Net.Core.Areas.Pacientes.Models.Data;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
+using Microsoft.EntityFrameworkCore;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Pacientes.Data;
 
@@ -11,17 +12,17 @@ namespace Web.Areas.Facturas.Services.Referencias
 {
     public class ReferenciasService : IReferenciasService
     {
-        private readonly PatientsDbContext _facturasDbContext;
+        private readonly PatientsDbContext _patientsDbContext;
 
-        public ReferenciasService(PatientsDbContext facturasDbContext)
+        public ReferenciasService(PatientsDbContext patientsDbContext)
         {
-            _facturasDbContext = facturasDbContext;
+            _patientsDbContext = patientsDbContext;
         }
 
         public ReferenciasPageDataViewModel GetReferenciasPageAsync(string text, int page, int pageSize, string sort,
             bool @ascending)
         {
-            IQueryable<Referencia> usersQuery = _facturasDbContext.Referencias;
+            IQueryable<Referencia> usersQuery = _patientsDbContext.Referencias;
             switch (sort.ToLower())
             {
                 case "price":
@@ -52,25 +53,30 @@ namespace Web.Areas.Facturas.Services.Referencias
 
         public async Task AddAsync(Referencia referencia)
         {
-            await _facturasDbContext.AddAsync(referencia);
-            await _facturasDbContext.SaveChangesAsync();
+            await _patientsDbContext.AddAsync(referencia);
+            await _patientsDbContext.SaveChangesAsync();
         }
 
         public async Task<Referencia> FindReferenciaByIdAsync(int id)
         {
-            return await _facturasDbContext.Referencias.FindAsync(id);
+            return await _patientsDbContext.Referencias.FindAsync(id);
         }
 
         public async Task RemoveAsync(Referencia referencia)
         {
-            _facturasDbContext.Remove(referencia);
-            await _facturasDbContext.SaveChangesAsync();
+            _patientsDbContext.Remove(referencia);
+            await _patientsDbContext.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Referencia referencia)
         {
-             _facturasDbContext.Update(referencia);
-            await _facturasDbContext.SaveChangesAsync();
+             _patientsDbContext.Update(referencia);
+            await _patientsDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Referencia>> GetReferenceNamesAsync(string nombre)
+        {
+            return await _patientsDbContext.Referencias.Where(x => x.Identificador.ToLower().Contains(nombre.ToLower())).ToListAsync();
         }
     }
 }

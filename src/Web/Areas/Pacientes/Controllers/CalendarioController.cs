@@ -47,20 +47,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
         }
 
         [HttpPost]
-        [Permission("SaveCalendarEvents", "Permitir registrar en calendario")]
-        public async Task<JsonResult> GetPatientNames(string Nombre)
-        {
-            //Para evitar sobrecarga, solo busco si se han escrito 4 o mas letras
-            if (Nombre.Length > 2)
-            {
-                var pacientes = await _calendarioServices.GetPatientNamesAsync(Nombre);
-                return Json(pacientes);
-            }
-            else
-                return Json("");
-        }
-
-        [HttpPost]
         [Permission( "DeleteCalendarEvents",  "Permitir borrar del calendario")]
         public async Task<JsonResult> DeleteEvent(int eventID)
         {

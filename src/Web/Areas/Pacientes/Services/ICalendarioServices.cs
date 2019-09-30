@@ -15,8 +15,6 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
         int SaveEvent(CalendarEvent e);
         Task<int> SaveEventAsync(CalendarEvent e);
 
-        List<PacientesAutoCompleteViewModel> GetPatientNames(string Nombre);
-        Task<List<PacientesAutoCompleteViewModel>> GetPatientNamesAsync(string Nombre);
 
         int DeleteEvent(int eventID);
         Task<int> DeleteEventAsync(int eventID);

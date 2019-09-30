@@ -23,7 +23,7 @@ namespace Web.Areas.Facturas.Services.Referencias
         {
             var usersQuery = _pacientesDbContext.FacturasHeaders.Join(_pacientesDbContext.Pacientes, f => f.IdPaciente, p => p.IdPaciente, (f, p) => new FacturasHeader()
             {
-                Id = f.Id,
+                IdFactura = f.IdFactura,
                 Fecha = f.Fecha,
                 IdPaciente = f.IdPaciente,
                 Codigo = f.Codigo,
@@ -87,6 +87,20 @@ namespace Web.Areas.Facturas.Services.Referencias
         {
             _pacientesDbContext.FacturasHeaders.Remove(factura);
             await _pacientesDbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> CreateFacturaAsync(FacturasHeader factura, string NombrePaciente)
+        {
+            var paciente = await _pacientesDbContext.Pacientes.FirstOrDefaultAsync(x => x.Nombre == NombrePaciente);
+            if (paciente is null)
+            {
+                return false;
+            }
+            factura.IdPaciente = paciente.IdPaciente;
+            factura.Paciente = paciente;
+            await _pacientesDbContext.FacturasHeaders.AddAsync(factura);
+            await _pacientesDbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

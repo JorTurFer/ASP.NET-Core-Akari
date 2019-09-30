@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Mvc;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Facturas.Services.Referencias;
+using Web.Areas.Pacientes.Data;
+using Web.Areas.Pacientes.Models.ViewModels.Facturas;
 
 namespace Web.Areas.Pacientes.Controllers
 {
@@ -26,11 +29,39 @@ namespace Web.Areas.Pacientes.Controllers
             return View(availableYears);
         }
 
-        [Route("create")]
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var vm = new CreateFacturaViewModel()
+            {
+                NombrePaciente = "",
+                Factura = new FacturasHeader()
+                {
+                    Codigo = "",
+                    Fecha = DateTime.Now,
+                    IRPF = 0,
+                    Descuento = 0
+                }
+            };
+
+            return View(vm);
+        }
+
+
+
+        [HttpPost, ActionName("Create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(string paciente,FacturasHeader factura,FacturaLine[] lineas)
+        {
+            factura.Lineas = lineas;
+            if (await _facturasServices.CreateFacturaAsync(factura, paciente))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost, ActionName("Delete")]

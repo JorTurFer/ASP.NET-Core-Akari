@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Akari_Net.Core.Areas.Pacientes.Models.Data;
+using Web.Areas.Pacientes.Data;
 
-namespace Web.Areas.Facturas.Models
+namespace Web.Areas.Pacientes.Models.ViewModels.Facturas
 {
     public class CreateFacturaViewModel
     {
-        
+        public FacturasHeader Factura { get; set; }
+        public FacturaLine Lineas { get; set; }
+
+        [DisplayName("Paciente")]
+        [Required]
+        public string NombrePaciente { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace Web.Areas.Pacientes.Controllers
             return View(referencia);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Referencia referencia)
         {
@@ -85,6 +85,21 @@ namespace Web.Areas.Pacientes.Controllers
             vm.TotalReferencias = pageData.TotalReferencias;
             vm.Referencias = pageData.Referencias;
             return View(vm);
+        }
+
+
+        [HttpPost]
+        [Route("FindReferenceByName")]
+        public async Task<JsonResult> GetReferenceByNamesAsync(string Nombre)
+        {
+            //Para evitar sobrecarga, solo busco si se han escrito 4 o mas letras
+            if (Nombre.Length > 2)
+            {
+                var reference = await _referenciasService.GetReferenceNamesAsync(Nombre);
+                return Json(reference);
+            }
+            else
+                return Json("");
         }
     }
 }

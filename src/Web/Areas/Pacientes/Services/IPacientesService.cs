@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 {
@@ -35,5 +36,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
         CitasPacienteViewModel GetCitasViewModel(int id);
         Task<CitasPacienteViewModel> GetCitasViewModelAsync(int id);
+
+        List<PacientesAutoCompleteViewModel> GetPatientNames(string Nombre);
+        Task<List<PacientesAutoCompleteViewModel>> GetPatientNamesAsync(string Nombre);
     }
 }

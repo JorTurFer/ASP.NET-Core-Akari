@@ -141,5 +141,19 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 
             return View(citas);
         }
+
+        [HttpPost]
+        [Permission("PacientesManager", "Gestión de Pacientes")]
+        public async Task<JsonResult> GetPatientNames(string Nombre)
+        {
+            //Para evitar sobrecarga, solo busco si se han escrito 4 o mas letras
+            if (Nombre.Length > 2)
+            {
+                var pacientes = await _pacientesService.GetPatientNamesAsync(Nombre);
+                return Json(pacientes);
+            }
+            else
+                return Json("");
+        }
     }
 }
