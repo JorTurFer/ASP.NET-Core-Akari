@@ -11,8 +11,10 @@ namespace Web.Areas.Facturas.Services.Referencias
     {
         FacturasPageDataViewModel GetReferenciasPageAsync(string text, int page, int pageSize, string sort, bool @ascending,int? year);
         Task<List<int>> GetAvailableYearsAsync();
-        Task<FacturasHeader> FindReferenciaByIdAsync(int id);
+        Task<FacturasHeader> FindFacturaByIdAsync(int id);
+        Task<FacturasHeader> FindFacturaByIdForEditAsync(int id);
         Task RemoveAsync(FacturasHeader factura);
         Task<bool> CreateFacturaAsync(FacturasHeader factura, string NombrePaciente);
+        Task<bool> UpdateFacturaAsync(FacturasHeader factura, string NombrePaciente);
     }
 }

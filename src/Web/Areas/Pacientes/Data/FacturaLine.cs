@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Areas.Pacientes.Data
@@ -13,15 +14,16 @@ namespace Web.Areas.Pacientes.Data
         public int IdFactura { get; set; }
 
         [Required]
-        public int IdReferencia { get; set; }
+        public string Concepto { get; set; }
+
+        [Required]
+        public double Precio { get; set; }
         
         [Required] 
         public int Cantidad { get; set; }
-
         
 
         //EFC
         public virtual FacturasHeader Factura { get; set; }
-        public virtual Referencia Referencia { get; set; }
     }
 }

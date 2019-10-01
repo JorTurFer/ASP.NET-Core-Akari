@@ -29,6 +29,7 @@ namespace Web.Areas.Facturas.Services.Referencias
                 Codigo = f.Codigo,
                 Descuento = f.Descuento,
                 IRPF = f.IRPF,
+                Lineas = f.Lineas,
                 Paciente = p
 
             });
@@ -78,9 +79,13 @@ namespace Web.Areas.Facturas.Services.Referencias
             return years;
         }
 
-        public async Task<FacturasHeader> FindReferenciaByIdAsync(int id)
+        public async Task<FacturasHeader> FindFacturaByIdAsync(int id)
         {
             return await _pacientesDbContext.FacturasHeaders.FindAsync(id);
+        }
+        public async Task<FacturasHeader> FindFacturaByIdForEditAsync(int id)
+        {
+            return await _pacientesDbContext.FacturasHeaders.Where(x => x.IdFactura == id).Include(x => x.Paciente).Include(x => x.Lineas).FirstAsync();
         }
 
         public async Task RemoveAsync(FacturasHeader factura)
@@ -96,10 +101,60 @@ namespace Web.Areas.Facturas.Services.Referencias
             {
                 return false;
             }
+            var lastFacturas = _pacientesDbContext.FacturasHeaders
+                .Where(x => x.Codigo.Contains($"/{factura.Fecha:yy}"))
+                .Select(x => Convert.ToInt32(x.Codigo.Substring(0, 7)));
+            if (await lastFacturas.AnyAsync())
+            {
+                var last = await lastFacturas.MaxAsync();
+                last++;
+                factura.Codigo = $"{last.ToString("D" + 7)}/{factura.Fecha:yy}";
+            }
+            else
+            {
+                factura.Codigo = $"0000001/{factura.Fecha:yy}";
+            }
+
             factura.IdPaciente = paciente.IdPaciente;
             factura.Paciente = paciente;
+
             await _pacientesDbContext.FacturasHeaders.AddAsync(factura);
             await _pacientesDbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateFacturaAsync(FacturasHeader factura, string NombrePaciente)
+        {
+            var paciente = await _pacientesDbContext.Pacientes.FirstOrDefaultAsync(x => x.Nombre == NombrePaciente);
+            if (paciente is null)
+            {
+                return false;
+            }
+
+            factura.IdPaciente = paciente.IdPaciente;
+            factura.Paciente = paciente;
+
+            var idLines = factura.Lineas.Select(x => x.IdLine).ToList();
+            var previousLines = _pacientesDbContext.FacturasLineas.Where(x => x.IdFactura == factura.IdFactura).ToList();
+            foreach (var line in previousLines)
+            {
+                if (!idLines.Contains(line.IdLine))
+                {
+                    _pacientesDbContext.FacturasLineas.Remove(line);
+                }
+                else
+                {
+                    var lineToRemove = factura.Lineas.First(x => x.IdLine == line.IdLine);
+                    factura.Lineas.Remove(lineToRemove);
+                }
+            }
+
+            await _pacientesDbContext.SaveChangesAsync();
+
+            _pacientesDbContext.FacturasHeaders.Update(factura);
+            await _pacientesDbContext.SaveChangesAsync();
+
+
             return true;
         }
     }

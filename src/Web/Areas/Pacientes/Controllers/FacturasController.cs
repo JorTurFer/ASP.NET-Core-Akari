@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Facturas.Services.Referencias;
 using Web.Areas.Pacientes.Data;
@@ -32,7 +36,7 @@ namespace Web.Areas.Pacientes.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var vm = new CreateFacturaViewModel()
+            var vm = new CreateOrEditFacturaViewModel()
             {
                 NombrePaciente = "",
                 Factura = new FacturasHeader()
@@ -53,7 +57,7 @@ namespace Web.Areas.Pacientes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string paciente,FacturasHeader factura,FacturaLine[] lineas)
         {
-            factura.Lineas = lineas;
+            factura.Lineas = lineas.ToList();
             if (await _facturasServices.CreateFacturaAsync(factura, paciente))
             {
                 return Ok();
@@ -64,11 +68,41 @@ namespace Web.Areas.Pacientes.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var factura = await _facturasServices.FindFacturaByIdForEditAsync(id);
+            var vm = new CreateOrEditFacturaViewModel()
+            {
+                NombrePaciente = factura.Paciente.Nombre,
+                Factura = factura
+            };
+
+            return View(vm);
+        }
+
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string paciente, FacturasHeader factura, FacturaLine[] lineas)
+        {
+            factura.Lineas = lineas.ToList();
+            if (await _facturasServices.UpdateFacturaAsync(factura, paciente))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var factura = await _facturasServices.FindReferenciaByIdAsync(id);
+            var factura = await _facturasServices.FindFacturaByIdAsync(id);
             await _facturasServices.RemoveAsync(factura);
             return RedirectToAction(nameof(Index));
         }

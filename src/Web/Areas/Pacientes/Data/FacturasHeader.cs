@@ -11,7 +11,7 @@ namespace Web.Areas.Pacientes.Data
     {
         public FacturasHeader()
         {
-            Lineas = new HashSet<FacturaLine>();
+            Lineas = new List<FacturaLine>();
         }
 
         [Key]
@@ -30,6 +30,6 @@ namespace Web.Areas.Pacientes.Data
 
         //EFC
         public virtual Paciente Paciente { get; set; }
-        public ICollection<FacturaLine> Lineas { get; set; }
+        public virtual List<FacturaLine> Lineas { get; set; }
     }
 }

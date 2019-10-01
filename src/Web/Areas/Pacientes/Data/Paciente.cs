@@ -71,9 +71,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         //Relaciones EF
         public virtual Provincia Provincia { get; set; }
         public virtual Pais Pais { get; set; }
-        public ICollection<CalendarEvent> Citas { get; set; }
+        public virtual ICollection<CalendarEvent> Citas { get; set; }
 
-        public ICollection<FacturasHeader> Facturas { get; set; }
+        public virtual ICollection<FacturasHeader> Facturas { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

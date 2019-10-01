@@ -4,7 +4,7 @@ using Web.Areas.Pacientes.Data;
 
 namespace Web.Areas.Pacientes.Models.ViewModels.Facturas
 {
-    public class CreateFacturaViewModel
+    public class CreateOrEditFacturaViewModel
     {
         public FacturasHeader Factura { get; set; }
         public FacturaLine Lineas { get; set; }

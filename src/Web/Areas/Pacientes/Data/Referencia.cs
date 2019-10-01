@@ -7,10 +7,6 @@ namespace Web.Areas.Pacientes.Data
     [Table("Referencias", Schema = "Facturas")]
     public class Referencia
     {
-        public Referencia()
-        {
-            Lineas = new HashSet<FacturaLine>();
-        }
         [Key]
         public int IdReferencia { get; set; }
         [Required]
@@ -19,8 +15,5 @@ namespace Web.Areas.Pacientes.Data
         public string Concepto { get; set; }
         [Required]
         public double Precio { get; set; }
-
-        //EFC
-        public virtual ICollection<FacturaLine> Lineas { get; set; }
     }
 }

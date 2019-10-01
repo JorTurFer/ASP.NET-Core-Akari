@@ -64,7 +64,11 @@ namespace Web
             };
 
             services.AddDbContext<PatientsDbContext>(options =>
-                options.UseSqlServer(builderPacientes.ConnectionString, x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Patients")));
+            {
+                //options.UseLazyLoadingProxies();
+                options.UseSqlServer(builderPacientes.ConnectionString,
+                    x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Patients"));
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
              {

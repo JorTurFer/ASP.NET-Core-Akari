@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using AspNetCore.Identity.ByPermissions;
+﻿using AspNetCore.Identity.ByPermissions;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Facturas.Services.Referencias;
 using Web.Areas.Pacientes.Data;
@@ -92,14 +92,8 @@ namespace Web.Areas.Pacientes.Controllers
         [Route("FindReferenceByName")]
         public async Task<JsonResult> GetReferenceByNamesAsync(string Nombre)
         {
-            //Para evitar sobrecarga, solo busco si se han escrito 4 o mas letras
-            if (Nombre.Length > 2)
-            {
-                var reference = await _referenciasService.GetReferenceNamesAsync(Nombre);
-                return Json(reference);
-            }
-            else
-                return Json("");
+            var reference = await _referenciasService.GetReferenceNamesAsync(Nombre);
+            return Json(reference);
         }
     }
 }
