@@ -48,6 +48,8 @@ else
                 <td> </td>
                 <td> </td>
                 <td>
+                    <a asp-action="Ver" asp-route-id="@factura.IdFactura" class="btn btn-sm btn-success">Ver</a>
+                    <a asp-action="Descargar" asp-route-id="@factura.IdFactura" class="btn btn-sm btn-info">Descargar</a>
                     <a asp-action="Edit" asp-route-id="@factura.IdFactura" class="btn btn-sm btn-warning">Editar</a>
                     <a class="btn btn-sm btn-danger" data-targetid="@factura.IdFactura" data-modal="#confirm-remove-factura">Eliminar</a>
                 </td>

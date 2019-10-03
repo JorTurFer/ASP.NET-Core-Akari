@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Web.Areas.Facturas.Services.Referencias;
+using Web.Areas.Pacientes.Services.Facturas;
 
 namespace Web.Areas.Facturas.Extensions
 {
@@ -9,6 +10,7 @@ namespace Web.Areas.Facturas.Extensions
         {
             services.AddScoped<IReferenciasService, ReferenciasService>();
             services.AddScoped<IFacturasServices, FacturasServices>();
+            services.AddScoped<IPdfGenerator, PdfGenerator>();
 
             return services;
         }

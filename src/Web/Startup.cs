@@ -17,6 +17,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data.SqlClient;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 using Web.Areas.Facturas.Extensions;
 using Web.Areas.Pacientes.Models.Services;
 using Web.Areas.Usuarios.Data;
@@ -149,6 +151,12 @@ namespace Web
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+
+            var cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.NumberGroupSeparator = ",";
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             app.UseStaticFiles();
             app.UseCookiePolicy();

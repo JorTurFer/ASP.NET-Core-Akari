@@ -1,15 +1,17 @@
-﻿using System;
+﻿using AspNetCore.Identity.ByPermissions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AspNetCore.Identity.ByPermissions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Facturas.Services.Referencias;
 using Web.Areas.Pacientes.Data;
 using Web.Areas.Pacientes.Models.ViewModels.Facturas;
+using Web.Areas.Pacientes.Services.Facturas;
 
 namespace Web.Areas.Pacientes.Controllers
 {
@@ -19,10 +21,14 @@ namespace Web.Areas.Pacientes.Controllers
     public class FacturasController : Controller
     {
         private readonly IFacturasServices _facturasServices;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IPdfGenerator _pdfGenerator;
 
-        public FacturasController(IFacturasServices facturasServices)
+        public FacturasController(IFacturasServices facturasServices, IHostingEnvironment hostingEnvironment, IPdfGenerator pdfGenerator)
         {
             _facturasServices = facturasServices;
+            _hostingEnvironment = hostingEnvironment;
+            _pdfGenerator = pdfGenerator;
         }
 
 
@@ -55,7 +61,7 @@ namespace Web.Areas.Pacientes.Controllers
 
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string paciente,FacturasHeader factura,FacturaLine[] lineas)
+        public async Task<IActionResult> Create(string paciente, FacturasHeader factura, FacturaLine[] lineas)
         {
             factura.Lineas = lineas.ToList();
             if (await _facturasServices.CreateFacturaAsync(factura, paciente))
@@ -113,10 +119,24 @@ namespace Web.Areas.Pacientes.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GetFacturasGrid(GridFacturasViewModel vm)
         {
-            var pageData = _facturasServices.GetReferenciasPageAsync(vm.Text, vm.Page, vm.PageSize, vm.Sort, vm.Ascending,vm.Year);
+            var pageData = _facturasServices.GetReferenciasPageAsync(vm.Text, vm.Page, vm.PageSize, vm.Sort, vm.Ascending, vm.Year);
             vm.TotalReferencias = pageData.TotalFacturas;
             vm.FacturasHeaders = pageData.Facturas;
             return View(vm);
+        }
+
+        [HttpGet, ActionName("Descargar")]
+        public async Task<IActionResult> DescargarFactura(int id)
+        {
+            var factura = await _facturasServices.FindFacturaByIdForEditAsync(id);
+            return File(_pdfGenerator.GeneratePdf(factura, _hostingEnvironment.WebRootPath), "application/pdf", $"{factura.Codigo}.pdf");
+        }
+
+        [HttpGet, ActionName("Ver")]
+        public async Task<IActionResult> VerFactura(int id)
+        {
+            var factura = await _facturasServices.FindFacturaByIdForEditAsync(id);
+            return new FileStreamResult(_pdfGenerator.GeneratePdf(factura, _hostingEnvironment.WebRootPath), "application/pdf");
         }
     }
 }

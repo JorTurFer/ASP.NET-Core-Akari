@@ -55,7 +55,7 @@ function registerHandlers(patUrl, refUrl,saveUrl,redirectUrl) {
             var linea = {};
             linea.Concepto = row.find("TD").eq(2).html();
             linea.Cantidad = parseInt(row.find("TD").eq(3).html());
-            linea.Precio = row.find("TD").eq(4).html().replace();
+            linea.Precio = row.find("TD").eq(4).html().replace(",",".");
             linea.IdLine = parseInt(row.find("TD").eq(0).html());
             linea.IdFactura = idFactura;
 
@@ -174,24 +174,50 @@ function registerHandlers(patUrl, refUrl,saveUrl,redirectUrl) {
         calculateTotal();
     });
 
-    $('body').on('keyup', 'input#txtCantidad', function () {
-        var cantidad = parseFloat($("#txtCantidad").val());
+    function calculateLineTotal() {
+        if ($("#txtCantidad").val() === "") {
+            return;
+        }
+
+        if ($("#txtPrecio").val() === "") {
+            return;
+        }
+
         var precio = parseFloat($("#txtPrecio").val());
+        var cantidad = parseInt($("#txtCantidad").val());
+
         if (Number.isFinite(cantidad) && Number.isFinite(precio)) {
             $("#txtTotal").text(Number((cantidad * precio).toFixed(2)));
         } else {
             $("#txtTotal").text(0);
         }
+    }
+
+    $('body').on('keyup', 'input#txtCantidad', function () {
+        if ($("#txtCantidad").val() === "") {
+            return;
+        }
+        var cantidad = parseInt($("#txtCantidad").val());
+        if (cantidad != $("#txtCantidad").val()) {
+            alert("Debe introducir un valor válido");
+            return;
+        }
+        
+        calculateLineTotal();
     });
 
     $('body').on('keyup', 'input#txtPrecio', function () {
-        var cantidad = parseFloat($("#txtCantidad").val());
-        var precio = parseFloat($("#txtPrecio").val());
-        if (Number.isFinite(cantidad) && Number.isFinite(precio)) {
-            $("#txtTotal").text(Number((cantidad * precio).toFixed(2)));
-        } else {
-            $("#txtTotal").text(0);
+        if ($("#txtPrecio").val() === "") {
+            return;
         }
+
+        var precio = parseFloat($("#txtPrecio").val());
+        if (precio != $("#txtPrecio").val()) {
+            alert("Debe introducir un valor válido");
+            return;
+        }
+
+        calculateLineTotal();
     });
 
 
