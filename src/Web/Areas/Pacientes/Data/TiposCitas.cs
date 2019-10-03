@@ -13,7 +13,5 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public string Tipo { get; set; }
 
         public string Color { get; set; }
-
-        public virtual ICollection<CalendarEvent> CalendarEvents { get; set; }
     }
 }
