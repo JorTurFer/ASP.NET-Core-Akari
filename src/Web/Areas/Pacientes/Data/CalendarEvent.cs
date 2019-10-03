@@ -35,9 +35,13 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
             get
             {
                 if (TipoCita != null)
+                {
                     return TipoCita.Color;
+                }
                 else
+                {
                     return "blue";
+                }
             }
         }
 

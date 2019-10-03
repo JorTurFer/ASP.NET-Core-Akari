@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Akari_Net.Core.Areas.Pacientes.Models.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Akari_Net.Core.Areas.Pacientes.Models.Data;
-using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
-using Microsoft.EntityFrameworkCore;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Pacientes.Data;
 
@@ -37,8 +36,10 @@ namespace Web.Areas.Facturas.Services.Referencias
                     break;
             }
 
-            if (!string.IsNullOrWhiteSpace(text))
+            if (!String.IsNullOrWhiteSpace(text))
+            {
                 usersQuery = usersQuery.Where(u => u.Identificador.Contains(text));
+            }
 
             var count = usersQuery.Count();
 
@@ -70,7 +71,7 @@ namespace Web.Areas.Facturas.Services.Referencias
 
         public async Task UpdateAsync(Referencia referencia)
         {
-             _patientsDbContext.Update(referencia);
+            _patientsDbContext.Update(referencia);
             await _patientsDbContext.SaveChangesAsync();
         }
 

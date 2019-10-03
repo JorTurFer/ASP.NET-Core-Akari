@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+﻿using Akari_Net.Core.Areas.Usuarios.Models.Entities;
 using Akari_Net.Core.Areas.Usuarios.Models.Services;
 using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels;
 using Akari_Net.Core.Controllers;
@@ -17,6 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
@@ -97,10 +94,10 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                     {
                         if (!await _userManager.IsEmailConfirmedAsync(user))
                         {
-                           return RedirectToAction(nameof(ReSendEmailConfirmation));
+                            return RedirectToAction(nameof(ReSendEmailConfirmation));
                         }
                     }
-                    ModelState.AddModelError(string.Empty, "El usuario y/o la contraseña no son válidos");
+                    ModelState.AddModelError(String.Empty, "El usuario y/o la contraseña no son válidos");
                     return View(model);
                 }
             }
@@ -112,8 +109,8 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ReSendEmailConfirmation()
-        {            
-            return View( new ReSendEmailConfirmationViewModel());
+        {
+            return View(new ReSendEmailConfirmationViewModel());
         }
 
         [HttpPost]
@@ -121,7 +118,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         public async Task<IActionResult> ReSendEmailConfirmation(ReSendEmailConfirmationViewModel vm)
         {
             var user = await _userManager.FindByEmailAsync(vm.Email);
-            if(user != null)
+            if (user != null)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
@@ -165,7 +162,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
+            var authenticatorCode = model.TwoFactorCode.Replace(" ", String.Empty).Replace("-", String.Empty);
 
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
 
@@ -182,7 +179,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             else
             {
                 _logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                ModelState.AddModelError(String.Empty, "Invalid authenticator code.");
                 return View();
             }
         }
@@ -219,7 +216,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
                 throw new ApplicationException($"Unable to load two-factor authentication user.");
             }
 
-            var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
+            var recoveryCode = model.RecoveryCode.Replace(" ", String.Empty);
 
             var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
 
@@ -236,7 +233,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             else
             {
                 _logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                ModelState.AddModelError(String.Empty, "Invalid recovery code entered.");
                 return View();
             }
         }
@@ -266,10 +263,15 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             //Compruebo el modelo
             var availableEmail = await _userManager.IsEmailAvalilable(model.Email);
             if (!availableEmail)
+            {
                 ModelState.AddModelError(nameof(model.Email), "El 'Correo electrónico' no esta disponible");
+            }
+
             var availableUserName = await _userManager.IsUserNameAvalilable(model.UserName);
             if (!availableUserName)
+            {
                 ModelState.AddModelError(nameof(model.UserName), "El 'Usuario' no esta disponible");
+            }
 
             if (ModelState.IsValid)
             {
@@ -430,7 +432,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                ModelState.AddModelError(String.Empty, error.Description);
             }
         }
 
@@ -455,7 +457,9 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             if (passSettingds.GetValue<bool>("RequireDigit"))
             {
                 if (!Regex.IsMatch(password, "[0-9]"))
+                {
                     return Json("*El password debe contener un numero");
+                }
             }
             //Check lenght
             var RequiredLength = passSettingds.GetValue<int>("RequiredLength");
@@ -467,24 +471,32 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             if (passSettingds.GetValue<bool>("RequireLowercase"))
             {
                 if (!Regex.IsMatch(password, "[a-z]"))
+                {
                     return Json("El password debe contener al menos una letra minúscula");
+                }
             }
             //Check uppercase
             if (passSettingds.GetValue<bool>("RequireUppercase"))
             {
                 if (!Regex.IsMatch(password, "[A-Z]"))
+                {
                     return Json("El password debe contener al menos una letra mayúscula");
+                }
             }
             //Check nonalphanumeric
             if (passSettingds.GetValue<bool>("RequireNonAlphanumeric"))
             {
                 if (!Regex.IsMatch(password, @"[^a-zA-Z\d\s:]"))
+                {
                     return Json("El password debe contener al menos un caracter no alfanumérico");
+                }
             }
             //Check uniquechars
             var RequiredUniqueChars = passSettingds.GetValue<int>("RequiredUniqueChars");
             if (password.ToCharArray().GroupBy(x => x).Count() < RequiredUniqueChars)
+            {
                 return Json($"El password debe contener al menos {RequiredUniqueChars} caracteres diferentes");
+            }
 
             //Success
             return Json(data: true);
@@ -496,9 +508,13 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             var available = await _userManager.IsUserNameAvalilable(userName);
             if (available)
+            {
                 return Json(data: true);
+            }
             else
+            {
                 return Json(data: "El 'Usuario' no esta disponible");
+            }
         }
 
         [HttpPost]
@@ -506,20 +522,26 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         public async Task<IActionResult> CheckEmailIsAvailable(string email)
         {
             var user = await _userManager.GetUserAsync(User);
-            bool available = true;
+            var available = true;
             if (user != null)
             {
-                if (string.Compare(email,user.Email,true) != 0)
+                if (String.Compare(email, user.Email, true) != 0)
+                {
                     available = await _userManager.IsEmailAvalilable(email);
+                }
             }
             else
             {
                 available = await _userManager.IsEmailAvalilable(email);
             }
             if (available)
+            {
                 return Json(data: true);
+            }
             else
+            {
                 return Json(data: "El 'Correo electrónico' no esta disponible");
+            }
         }
         #endregion
     }

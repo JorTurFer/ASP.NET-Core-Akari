@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Akari_Net.Core.Areas.Pacientes.Models.Data;
+﻿using Akari_Net.Core.Areas.Pacientes.Models.Data;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Calendario;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 {
@@ -107,8 +107,10 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
                     break;
             }
 
-            if (!string.IsNullOrWhiteSpace(text))
+            if (!String.IsNullOrWhiteSpace(text))
+            {
                 usersQuery = usersQuery.Where(u => u.Nombre.Contains(text));
+            }
 
             var count = usersQuery.Count();
 
@@ -153,7 +155,10 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
         {
             var paciente = _context.Pacientes.Find(id);
             if (paciente is null)
+            {
                 paciente = new Paciente();
+            }
+
             var provincias = _context.Provincias.Select(x => new SelectListItem { Value = x.IdProvincia.ToString(), Text = x.Nombre, Selected = x.IdProvincia == paciente.IdProvincia }).ToList();
             var paises = _context.Paises.Select(x => new SelectListItem { Value = x.IdPais.ToString(), Text = x.Nombre, Selected = x.IdPais == paciente.IdPais }).ToList();
             return new PacienteDataViewModel { Paciente = paciente, Provincias = provincias, Paises = paises };
@@ -163,7 +168,10 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
         {
             var paciente = await _context.Pacientes.FindAsync(id);
             if (paciente is null)
+            {
                 paciente = new Paciente();
+            }
+
             var provincias = await _context.Provincias.Select(x => new SelectListItem { Value = x.IdProvincia.ToString(), Text = x.Nombre, Selected = x.IdProvincia == paciente.IdProvincia }).ToListAsync();
             var paises = await _context.Paises.Select(x => new SelectListItem { Value = x.IdPais.ToString(), Text = x.Nombre, Selected = x.IdPais == paciente.IdPais }).ToListAsync();
             return new PacienteDataViewModel { Paciente = paciente, Provincias = provincias, Paises = paises };

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 using Web.Areas.Pacientes.Data;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
@@ -77,7 +75,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (string.IsNullOrWhiteSpace(Telefono1) && string.IsNullOrWhiteSpace(Telefono2) && string.IsNullOrWhiteSpace(Email))
+            if (String.IsNullOrWhiteSpace(Telefono1) && String.IsNullOrWhiteSpace(Telefono2) && String.IsNullOrWhiteSpace(Email))
             {
                 yield return new ValidationResult(
                     "Es necesario indicar un método de contacto",       // Error message

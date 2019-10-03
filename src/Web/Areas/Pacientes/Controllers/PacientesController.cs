@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Akari_Net.Core.Areas.Pacientes.Models.Data;
 using Akari_Net.Core.Areas.Pacientes.Models.Services;
 using Akari_Net.Core.Areas.Pacientes.Models.ViewModels.Pacientes;
 using AspNetCore.Identity.ByPermissions;
-using Akari_Net.Core.Areas.Pacientes.Models.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Pacientes.Controllers
 {
     [Area("Pacientes")]
-    [Permission("PacientesManager","Gestión de Pacientes")]
+    [Permission("PacientesManager", "Gestión de Pacientes")]
     [Route("[area]/[controller]/[action]")]
     public class PacientesController : Controller
     {
@@ -95,7 +91,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             {
                 try
                 {
-                    await _pacientesService.UpdateAsync(paciente);                    
+                    await _pacientesService.UpdateAsync(paciente);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -134,7 +130,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
             return View(vm);
         }
 
-        [Permission( "PacientesCitas",  "Visualizar citas")]
+        [Permission("PacientesCitas", "Visualizar citas")]
         public async Task<IActionResult> Citas(int id)
         {
             var citas = await _pacientesService.GetCitasViewModelAsync(id);
@@ -153,7 +149,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
                 return Json(pacientes);
             }
             else
+            {
                 return Json("");
+            }
         }
     }
 }

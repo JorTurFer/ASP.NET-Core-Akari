@@ -30,7 +30,7 @@ namespace UnitaryTests
             var controller = new CalendarioController(serviceMock.Object, mockHub.Object);
 
             // Act
-            var result = await controller.GetEvents(DateTime.Now.Date,"month");
+            var result = await controller.GetEvents(DateTime.Now.Date, "month");
 
             // Assert
             var okResult = result.Should().BeOfType<JsonResult>().Subject;

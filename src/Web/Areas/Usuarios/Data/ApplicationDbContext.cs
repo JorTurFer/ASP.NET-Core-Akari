@@ -1,5 +1,4 @@
-﻿using Akari_Net.Core.Areas.Usuarios.Models.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web.Areas.Usuarios.Data

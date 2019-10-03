@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Akari_Net.Core.Areas.Pacientes.Models.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Akari_Net.Core.Areas.Pacientes.Models.Data;
 
 namespace Web.Areas.Pacientes.Data
 {
@@ -16,7 +16,7 @@ namespace Web.Areas.Pacientes.Data
 
         [Key]
         public int IdFactura { get; set; }
-        [Required] 
+        [Required]
         public int IdPaciente { get; set; }
         [Required]
         public string Codigo { get; set; }

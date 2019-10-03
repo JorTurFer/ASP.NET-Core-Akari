@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
 {
@@ -25,7 +21,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.ViewModels.AccountViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "El campo '{0}' es obligatorio")]
-        [Remote(areaName:"Usuarios",controller: "Account", action: "CheckPassword",HttpMethod = "POST")]
+        [Remote(areaName: "Usuarios", controller: "Account", action: "CheckPassword", HttpMethod = "POST")]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }

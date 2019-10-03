@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Data
 {
-    [Table("Paises",Schema = "Patients")]
+    [Table("Paises", Schema = "Patients")]
     public class Pais
     {
         [Key]

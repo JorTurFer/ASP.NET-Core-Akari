@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Akari_Net.Core.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Akari_Net.Core.Models;
 using Microsoft.AspNetCore.Identity;
-using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Controllers

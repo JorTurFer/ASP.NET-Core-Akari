@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Akari_Net.Core.Areas.Usuarios.Models.Entities;
+﻿using Akari_Net.Core.Areas.Usuarios.Models.Services;
+using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels;
 using Akari_Net.Core.Extensions;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 using System.Text;
-using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ProfileViewModels;
-using Microsoft.AspNetCore.Authentication;
-using Akari_Net.Core.Areas.Usuarios.Models.Services;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
@@ -83,7 +81,9 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             {
                 var availableNewMail = await _userManager.IsEmailAvalilable(model.Email);
                 if (!availableNewMail)
+                {
                     ModelState.AddModelError(nameof(model.Email), "El 'Correo electrónico' no esta disponible");
+                }
             }
             if (!ModelState.IsValid)
             {
@@ -403,7 +403,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             }
 
             // Strip spaces and hypens
-            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+            var verificationCode = model.Code.Replace(" ", String.Empty).Replace("-", String.Empty);
 
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
@@ -505,14 +505,14 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                ModelState.AddModelError(String.Empty, error.Description);
             }
         }
 
         private string FormatKey(string unformattedKey)
         {
             var result = new StringBuilder();
-            int currentPosition = 0;
+            var currentPosition = 0;
             while (currentPosition + 4 < unformattedKey.Length)
             {
                 result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
@@ -528,7 +528,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
         private string GenerateQrCodeUri(string email, string unformattedKey)
         {
-            return string.Format(
+            return String.Format(
                 AuthenticatorUriFormat,
                 _urlEncoder.Encode("Akari_Core"),
                 _urlEncoder.Encode(email),
@@ -538,7 +538,7 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user, EnableAuthenticatorViewModel model)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            if (string.IsNullOrEmpty(unformattedKey))
+            if (String.IsNullOrEmpty(unformattedKey))
             {
                 await _userManager.ResetAuthenticatorKeyAsync(user);
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);

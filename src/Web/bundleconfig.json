@@ -20,6 +20,8 @@
     "outputFileName": "wwwroot//js/min/facturas/facturas.min.js",
     "inputFiles": [
       "wwwroot/js/facturas/facturas.referencias.js",
+      "wwwroot/js/facturas/facturas.facturas.js"
+
     ],
     "minify": {
       "enabled": true,

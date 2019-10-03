@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Areas.Pacientes.Data
@@ -18,10 +17,10 @@ namespace Web.Areas.Pacientes.Data
 
         [Required]
         public double Precio { get; set; }
-        
-        [Required] 
+
+        [Required]
         public int Cantidad { get; set; }
-        
+
 
         //EFC
         public virtual FacturasHeader Factura { get; set; }

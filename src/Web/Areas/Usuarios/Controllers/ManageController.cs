@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Akari_Net.Core.Areas.Usuarios.Extensions;
+using Akari_Net.Core.Areas.Usuarios.Models.Helpers;
+using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels;
+using AspNetCore.Identity.ByPermissions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Akari_Net.Core.Areas.Usuarios.Extensions;
-using Akari_Net.Core.Areas.Usuarios.Models.Entities;
-using Akari_Net.Core.Areas.Usuarios.Models.Helpers;
-using Akari_Net.Core.Areas.Usuarios.Models.Services;
-using Akari_Net.Core.Areas.Usuarios.Models.ViewModels.ManageViewModels;
-using AspNetCore.Identity.ByPermissions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Web.Areas.Usuarios.Data;
 
 namespace Akari_Net.Core.Areas.Usuarios.Controllers
@@ -21,11 +17,11 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
     [Route("[area]/[controller]/[action]")]
     public class ManageController : Controller
     {
-        readonly RoleManager<IdentityRole> _roleManager;
-        readonly IPermissionService _permissionService;
-        readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IPermissionService _permissionService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ManageController(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager, IPermissionService permissionService)
+        public ManageController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IPermissionService permissionService)
         {
             _roleManager = roleManager;
             _permissionService = permissionService;
@@ -60,7 +56,10 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
+            {
                 return NotFound();
+            }
+
             await _userManager.DeleteAsync(user);
             return Ok();
         }
@@ -71,11 +70,13 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
+            {
                 return NotFound();
+            }
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            UserRolesManageViewModel vm = new UserRolesManageViewModel
+            var vm = new UserRolesManageViewModel
             {
                 UserId = id,
                 Roles = _roleManager.Roles.Select(x => new UserRolesViewModel
@@ -90,17 +91,23 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateUserRole(string id, string roleName,bool set)
+        public async Task<IActionResult> UpdateUserRole(string id, string roleName, bool set)
         {
             //Busco el usuario
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
+            {
                 return NotFound();
+            }
             //En funcione del check, lo añado o lo remuevo
             if (set)
+            {
                 await _userManager.AddToRoleAsync(user, roleName);
+            }
             else
+            {
                 await _userManager.RemoveFromRoleAsync(user, roleName);
+            }
 
             return Ok();
         }
@@ -117,12 +124,16 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         public async Task<IActionResult> AddNewRole(string roleName)
         {
             //Compruebo que no exista
-            var exists = _roleManager.Roles.Any(x => string.Compare(x.Name, roleName, false) == 0);
+            var exists = _roleManager.Roles.Any(x => String.Compare(x.Name, roleName, false) == 0);
             if (exists)
+            {
                 return Json(false);
+            }
             //Si no existe lo creo
-            IdentityRole role = new IdentityRole();
-            role.Name = roleName;
+            var role = new IdentityRole
+            {
+                Name = roleName
+            };
             await _roleManager.CreateAsync(role);
             return Json(role.Id);
         }
@@ -133,7 +144,9 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
+            {
                 return Json(false);
+            }
             //Si no existe lo creo
             var res = await _roleManager.DeleteAsync(role);
             return Json(res.Succeeded);
@@ -145,9 +158,12 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
         {
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
+            {
                 return Json(false);
+            }
+
             var claims = await _roleManager.GetClaimsAsync(role);
-            PermissionManageViewModel model = PermissionsManageHelper.GetPermissionManageViewModel(claims, role, _permissionService);
+            var model = PermissionsManageHelper.GetPermissionManageViewModel(claims, role, _permissionService);
 
             return View(model);
         }
@@ -159,12 +175,16 @@ namespace Akari_Net.Core.Areas.Usuarios.Controllers
             //Obtengo el rol
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
+            {
                 return Json(false);
+            }
 
             //Obtengo la politica con el claim que que hay que actualizar
             var permissionItem = _permissionService.GetPermissionById(permissionId);
             if (permissionItem == null)
+            {
                 return Json(false);
+            }
 
             //Si tengo que setear el claim
             if (set)
