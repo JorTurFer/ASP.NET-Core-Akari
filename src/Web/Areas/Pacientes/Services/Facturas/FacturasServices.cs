@@ -131,6 +131,26 @@ namespace Web.Areas.Facturas.Services.Referencias
                 return false;
             }
 
+            var prevYear = (await _pacientesDbContext.FacturasHeaders.AsNoTracking().FirstAsync(x => x.IdFactura == factura.IdFactura)).Fecha.Year;
+
+            if (prevYear != factura.Fecha.Year)
+            {
+                var lastFacturas = _pacientesDbContext.FacturasHeaders
+                    .Where(x => x.Codigo.Contains($"/{factura.Fecha:yy}"))
+                    .Select(x => Convert.ToInt32(x.Codigo.Substring(0, 7)));
+                if (await lastFacturas.AnyAsync())
+                {
+                    var last = await lastFacturas.MaxAsync();
+                    last++;
+                    factura.Codigo = $"{last.ToString("D" + 7)}/{factura.Fecha:yy}";
+                }
+                else
+                {
+                    factura.Codigo = $"0000001/{factura.Fecha:yy}";
+                }
+            }
+
+
             factura.IdPaciente = paciente.IdPaciente;
             factura.Paciente = paciente;
 
@@ -153,7 +173,6 @@ namespace Web.Areas.Facturas.Services.Referencias
 
             _pacientesDbContext.FacturasHeaders.Update(factura);
             await _pacientesDbContext.SaveChangesAsync();
-
 
             return true;
         }

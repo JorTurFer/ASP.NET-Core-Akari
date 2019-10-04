@@ -82,7 +82,7 @@ function generateHandlers() {
         }
     });
     $("#dtp1,#dtp2").datetimepicker({
-        format: "DD/MM/YYYY HH:mm"
+        format: "DD/MM/YYYY HH:mm",
     });
     $("#chkIsFullDay").change(function () {
         if ($(this).is(":checked")) {
@@ -118,11 +118,26 @@ function generateHandlers() {
             alert("Seleccione tipo de cita");
             return;
         }
+        var txtStart = $("#txtStart").val().trim();
+        var startYear = txtStart.substring(6, 10);
+        var startMonth = txtStart.substring(3, 5);
+        var startDay = txtStart.substring(0, 2);
+        var startHour = txtStart.substring(11, 13);
+        var startMin = txtStart.substring(14, 16);
+
+        var txtEnd = $("#txtEnd").val().trim();
+        var endYear = txtEnd.substring(6, 10);
+        var endMonth = txtEnd.substring(3, 5);
+        var endDay = txtEnd.substring(0, 2);
+        var endHour = txtEnd.substring(11, 13);
+        var endMin = txtEnd.substring(14, 16);
+
+
         var data = {
             EventID: $("#hdEventID").val(),
             Subject: $("#txtPaciente").val().trim(),
-            Start: $("#txtStart").val().trim(),
-            End: $("#chkIsFullDay").is(":checked") ? null : $("#txtEnd").val().trim(),
+            Start: new Date(startYear, startMonth-1, startDay, startHour, startMin,0,0).toISOString(),
+            End: $("#chkIsFullDay").is(":checked") ? null : new Date(endYear, endMonth-1, endDay, endHour, endMin, 0, 0).toISOString(),
             Description: $("#txtDescription").val(),
             Color: $("#ddThemeColor").val(),
             IsFullDay: $("#chkIsFullDay").is(":checked"),

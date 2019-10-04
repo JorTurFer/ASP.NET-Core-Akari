@@ -45,7 +45,7 @@ function isNumeric(n) {
 }
 
 
-function registerHandlers(patUrl, refUrl,saveUrl,redirectUrl) {
+function registerHandlers(patUrl, refUrl,saveUrl,redirectUrl,today) {
     $("body").on("click", "#btnSave", function () {
         var idFactura = $("#idFactura").text();
         //Loop through the Table rows and build a JSON array.
@@ -87,11 +87,10 @@ function registerHandlers(patUrl, refUrl,saveUrl,redirectUrl) {
         var factura = {}; 
         factura.IdFactura = idFactura;
         factura.Codigo = $("#codigoFactura").text();
-        factura.Fecha = $("#Factura_Fecha").val();
+
+        factura.Fecha = $("#dtp1").data("DateTimePicker").date().toISOString();
         factura.IRPF = $("#Factura_IRPF").val();
         factura.Descuento = $("#Factura_Descuento").val();
-
-
 
         //Send the JSON array to Controller using AJAX.
         $.ajax({
@@ -228,6 +227,12 @@ function registerHandlers(patUrl, refUrl,saveUrl,redirectUrl) {
     $('body').on('keyup', 'input#Factura_Descuento', function () {
         calculateTotal();
     });
+
+    $("#dtp1").datetimepicker({
+        format: "DD/MM/YYYY"
+    });
+
+    $("#dtp1").data("DateTimePicker").date(today);
 
     $("#Paciente").autocomplete({
         source: function (request, response) {

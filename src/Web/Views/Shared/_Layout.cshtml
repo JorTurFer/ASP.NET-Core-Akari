@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     @await Html.PartialAsync("_Meta")
     <title>@ViewData["Title"] - Akari Podología</title>
@@ -18,7 +18,7 @@
     </environment>
 </head>
 <body>
-    <partial name="_PartialMenu"/>
+    <partial name="_PartialMenu" />
     <partial name="_CookieConsentPartial" />
     <div class="container body-content">
         @RenderBody()

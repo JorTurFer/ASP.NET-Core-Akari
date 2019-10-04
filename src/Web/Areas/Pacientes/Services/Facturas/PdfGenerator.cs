@@ -53,6 +53,11 @@ namespace Web.Areas.Pacientes.Services.Facturas
                 Border = Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER
             };
             nested.AddCell(nextPostCell3);
+            var nextPostCell4 = new PdfPCell(new Phrase("NIE: XXXXXXXX", bodyFont))
+            {
+                Border = Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER
+            };
+            nested.AddCell(nextPostCell4);
             var nesthousing = new PdfPCell(nested)
             {
                 Rowspan = 4,
@@ -73,7 +78,7 @@ namespace Web.Areas.Pacientes.Services.Facturas
                 Border = Rectangle.NO_BORDER
             };
             headertable.AddCell(noCell);
-            headertable.AddCell(new Phrase(factura.Codigo, bodyFont));
+            headertable.AddCell(new Phrase(factura.Codigo, boldTableFont));
             var dateCell = new PdfPCell(new Phrase("Fecha :", bodyFont))
             {
                 HorizontalAlignment = 2,

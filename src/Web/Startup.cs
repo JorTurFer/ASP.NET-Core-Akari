@@ -152,7 +152,6 @@ namespace Web
             });
 
             var cultureInfo = new CultureInfo("en-US");
-            cultureInfo.NumberFormat.NumberGroupSeparator = ",";
 
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
