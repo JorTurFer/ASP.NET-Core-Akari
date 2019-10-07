@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Pacientes.Data;
+using Web.Areas.Pacientes.Models.ViewModels.Facturas;
 
 namespace Web.Areas.Facturas.Services.Referencias
 {
@@ -131,26 +132,6 @@ namespace Web.Areas.Facturas.Services.Referencias
                 return false;
             }
 
-            var prevYear = (await _pacientesDbContext.FacturasHeaders.AsNoTracking().FirstAsync(x => x.IdFactura == factura.IdFactura)).Fecha.Year;
-
-            if (prevYear != factura.Fecha.Year)
-            {
-                var lastFacturas = _pacientesDbContext.FacturasHeaders
-                    .Where(x => x.Codigo.Contains($"/{factura.Fecha:yy}"))
-                    .Select(x => Convert.ToInt32(x.Codigo.Substring(0, 7)));
-                if (await lastFacturas.AnyAsync())
-                {
-                    var last = await lastFacturas.MaxAsync();
-                    last++;
-                    factura.Codigo = $"{last.ToString("D" + 7)}/{factura.Fecha:yy}";
-                }
-                else
-                {
-                    factura.Codigo = $"0000001/{factura.Fecha:yy}";
-                }
-            }
-
-
             factura.IdPaciente = paciente.IdPaciente;
             factura.Paciente = paciente;
 
@@ -176,5 +157,66 @@ namespace Web.Areas.Facturas.Services.Referencias
 
             return true;
         }
+
+        public Task<FacturacionViewModel> GetFacturacion(int year)
+        {
+            var facturacionVm = new FacturacionViewModel();
+            foreach (var mes in _pacientesDbContext.FacturasHeaders.Where(x => x.Fecha.Year == year).Include(x=>x.Lineas).GroupBy(x => x.Fecha.Month))
+            {
+                var facturaItem = new FacturacionItem();
+                facturaItem.Mes = GetMes(mes.Key);
+                facturaItem.Year = year;
+                facturaItem.Total = 0;
+                foreach (var factura in mes)
+                {
+                    var total = 0.0;
+                    foreach (var linea in factura.Lineas)
+                    {
+                        total += linea.Cantidad * linea.Precio;
+                    }
+                    var conDescuento = total * (1 - (factura.Descuento / 100.0));
+                    facturaItem.Total+= conDescuento * (1 + (factura.IRPF / 100.0));
+                }
+                facturaItem.Total = Math.Round(facturaItem.Total,2);
+                facturacionVm.FacturacionData.Add(facturaItem);
+                facturacionVm.Total += facturaItem.Total;
+            }
+
+            return Task.FromResult(facturacionVm);
+        }
+
+        public string GetMes(int numero)
+        {
+            switch (numero)
+            {
+                case 1:
+                    return "Enero";
+                case 2:
+                    return "Febrero";
+                case 3:
+                    return "Marzo";
+                case 4:
+                    return "Abril";
+                case 5:
+                    return "Mayo";
+                case 6:
+                    return "Junio";
+                case 7:
+                    return "Julio";
+                case 8:
+                    return "Agosto";
+                case 9:
+                    return "Septiembre";
+                case 10:
+                    return "Octubre";
+                case 11:
+                    return "Noviembre";
+                case 12:
+                    return "Diciembre";
+                default:
+                    return "Unknown";
+            }
+        }
+
     }
 }

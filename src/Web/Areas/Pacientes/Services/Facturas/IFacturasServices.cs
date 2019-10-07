@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Pacientes.Data;
+using Web.Areas.Pacientes.Models.ViewModels.Facturas;
+using Web.Areas.Pacientes.Services.Facturas;
 
 namespace Web.Areas.Facturas.Services.Referencias
 {
@@ -14,5 +17,6 @@ namespace Web.Areas.Facturas.Services.Referencias
         Task RemoveAsync(FacturasHeader factura);
         Task<bool> CreateFacturaAsync(FacturasHeader factura, string NombrePaciente);
         Task<bool> UpdateFacturaAsync(FacturasHeader factura, string NombrePaciente);
+        Task<FacturacionViewModel> GetFacturacion(int year);
     }
 }

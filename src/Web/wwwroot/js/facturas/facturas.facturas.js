@@ -1,5 +1,5 @@
 ﻿//Obtiene el grid de referencias
-function getFacturasGrid(url, search, sort, ascending, page, pageSize,year) {
+function getFacturasGrid(url, search, sort, ascending, page, pageSize, year) {
     $.ajax({
         url: url,
         data: {
@@ -9,6 +9,23 @@ function getFacturasGrid(url, search, sort, ascending, page, pageSize,year) {
             Ascending: ascending,
             Page: page,
             PageSize: pageSize,
+            Year: year
+        },
+        type: "post",
+        success: function (data) {
+            $("#facturas").html(data);
+        },
+        error: function () {
+            alert("Oops, hemos tenido un problema...");
+        }
+    });
+}
+
+function getFacturacion(url, year) {
+    $.ajax({
+        url: url,
+        data: {
+            __RequestVerificationToken: $("input[name='__RequestVerificationToken']").val(),
             Year: year
         },
         type: "post",

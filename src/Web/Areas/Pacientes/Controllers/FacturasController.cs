@@ -101,7 +101,7 @@ namespace Web.Areas.Pacientes.Controllers
             }
         }
 
-
+        [Permission("DeleteFacturas","Permite borrar facturas")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -136,5 +136,21 @@ namespace Web.Areas.Pacientes.Controllers
             var factura = await _facturasServices.FindFacturaByIdForEditAsync(id);
             return new FileStreamResult(_pdfGenerator.GeneratePdf(factura, _hostingEnvironment.WebRootPath), "application/pdf");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Facturacion()
+        {
+            var availableYear = await _facturasServices.GetAvailableYearsAsync();
+            return View(availableYear);
+        }
+
+        [HttpPost,ActionName("FacturacionYear")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FacturacionYear(int year)
+        {
+            var facturacion = await _facturasServices.GetFacturacion(year);
+            return PartialView("_FacturaciónPartial", facturacion);
+        }
+
     }
 }

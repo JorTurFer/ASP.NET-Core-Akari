@@ -1,0 +1,53 @@
+﻿@model List<int>
+@{
+    ViewData["Title"] = "Facturas";
+}
+<br />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nueva factura</a>
+</p>
+
+<div class="well row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="col-md-3">
+                @{
+                    @Html.DropDownList("listayears", new SelectList(@Model), new { @class = "form-control dropdown desplegables" })
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-1">
+
+    </div>
+</div>
+
+<div id="facturas">
+
+</div>
+
+@section Scripts {
+    <environment Names="Development">
+        <script src="~/js/facturas/facturas.facturas.js" asp-append-version="true"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script src="~/js/min/facturas/facturas.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script type="text/javascript">
+    var pageSize = 50;
+    $(document).ready(function () {
+        $("#listayears").on('change',(function (){
+            getFacturacion('@Url.Action("FacturacionYear", "Facturas")', $("#listayears").val());
+        }));
+
+        var year = @Model.Last() ;
+        $("#listayears").val(year);
+        getFacturacion('@Url.Action("FacturacionYear", "Facturas")', $("#listayears").val());
+    });
+    </script>
+}
+

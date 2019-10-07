@@ -10,6 +10,10 @@ namespace Web.Areas.Usuarios.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+        }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.HasDefaultSchema("Identity");
