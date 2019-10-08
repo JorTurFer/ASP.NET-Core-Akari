@@ -40,7 +40,6 @@ function getFacturacion(url, year) {
 
 function calculateTotal() {
     var sum = 0;
-    var irpf = parseFloat($("#Factura_IRPF").val())/100;
     var descuento = parseFloat($("#Factura_Descuento").val())/100;
     $("#tableLineas tr").not(':first').not(':last').each(function () {
         sum += getnum($(this).find("td:eq(5)").text());
@@ -51,8 +50,7 @@ function calculateTotal() {
             return 0;
         }
     });
-    var conDescuento = sum * (1 - descuento);
-    var final = conDescuento * (1 + irpf);
+    var final = sum * (1 - descuento);
     var finalRedondeado = Number((final).toFixed(2));
     $("#totalFactura").text(finalRedondeado);
 }

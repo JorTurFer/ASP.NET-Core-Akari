@@ -28,7 +28,6 @@ else
                         Paciente
                     </a>
                 </th>
-                <th>Total</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -40,16 +39,6 @@ else
                 <tr>
                     <td>@factura.Codigo</td>
                     <td>@factura.Paciente.Nombre</td>
-                    @{
-                        var total = 0.0;
-                        foreach (var linea in factura.Lineas)
-                        {
-                            total += linea.Cantidad * linea.Precio;
-                        }
-                        var conDescuento = total * (1 - (factura.Descuento / 100.0));
-                        var totalFinal = Math.Round(conDescuento * (1 + (factura.IRPF / 100.0)), 2);
-                    }
-                    <td>@totalFinal € </td>
                     <td> </td>
                     <td> </td>
                     <td>

@@ -18,5 +18,7 @@ namespace Web.Areas.Facturas.Services.Referencias
         Task<bool> CreateFacturaAsync(FacturasHeader factura, string NombrePaciente);
         Task<bool> UpdateFacturaAsync(FacturasHeader factura, string NombrePaciente);
         Task<FacturacionViewModel> GetFacturacion(int year);
+        Task<Ciudad> GetCityAsync(int ZipCode);
+        Task InsertCityAsync(Ciudad city);
     }
 }

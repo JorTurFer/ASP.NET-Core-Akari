@@ -161,12 +161,16 @@ namespace Web.Areas.Facturas.Services.Referencias
         public Task<FacturacionViewModel> GetFacturacion(int year)
         {
             var facturacionVm = new FacturacionViewModel();
-            foreach (var mes in _pacientesDbContext.FacturasHeaders.Where(x => x.Fecha.Year == year).Include(x=>x.Lineas).GroupBy(x => x.Fecha.Month))
+            foreach (var mes in _pacientesDbContext.FacturasHeaders.Where(x => x.Fecha.Year == year).Include(x => x.Lineas).GroupBy(x => x.Fecha.Month))
             {
-                var facturaItem = new FacturacionItem();
-                facturaItem.Mes = GetMes(mes.Key);
-                facturaItem.Year = year;
-                facturaItem.Total = 0;
+                var facturaItem = new FacturacionItem
+                {
+                    Mes = GetMes(mes.Key),
+                    Year = year,
+                    TotalBruto = 0,
+                    TotalNeto = 0,
+                    TotalIrpf = 0
+                };
                 foreach (var factura in mes)
                 {
                     var total = 0.0;
@@ -175,14 +179,32 @@ namespace Web.Areas.Facturas.Services.Referencias
                         total += linea.Cantidad * linea.Precio;
                     }
                     var conDescuento = total * (1 - (factura.Descuento / 100.0));
-                    facturaItem.Total+= conDescuento * (1 + (factura.IRPF / 100.0));
+                    facturaItem.TotalBruto += conDescuento;
+                    facturaItem.TotalNeto += conDescuento * (1 - (factura.IRPF / 100.0));
+                    facturaItem.TotalIrpf += conDescuento * (factura.IRPF / 100.0);
                 }
-                facturaItem.Total = Math.Round(facturaItem.Total,2);
+
+                facturaItem.TotalBruto = Math.Round(facturaItem.TotalBruto, 2);
+                facturaItem.TotalNeto = Math.Round(facturaItem.TotalNeto, 2);
+                facturaItem.TotalIrpf = Math.Round(facturaItem.TotalIrpf, 2);
                 facturacionVm.FacturacionData.Add(facturaItem);
-                facturacionVm.Total += facturaItem.Total;
+                facturacionVm.TotalBruto += facturaItem.TotalBruto;
+                facturacionVm.TotalNeto += facturaItem.TotalNeto;
+                facturacionVm.TotalIrpf += facturaItem.TotalIrpf;
             }
 
             return Task.FromResult(facturacionVm);
+        }
+
+        public async Task<Ciudad> GetCityAsync(int ZipCode)
+        {
+            return await _pacientesDbContext.Ciudades.FirstOrDefaultAsync(x => x.ZipCode == ZipCode.ToString("D5"));
+        }
+
+        public async Task InsertCityAsync(Ciudad city)
+        {
+            await _pacientesDbContext.Ciudades.AddAsync(city);
+            await _pacientesDbContext.SaveChangesAsync();
         }
 
         public string GetMes(int numero)

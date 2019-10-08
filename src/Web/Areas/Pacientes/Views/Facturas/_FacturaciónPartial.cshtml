@@ -3,9 +3,11 @@
 <table id="tableFacturacion" class="table" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th style="width: 20">Año</th>
-            <th style="width: 50">Mes</th>
-            <th style="width: 30%">€</th>
+            <th style="width: 20%">Año</th>
+            <th style="width: 20%">Mes</th>
+            <th style="width: 20%">Bruto (€)</th>
+            <th style="width: 20%">Neto (€)</th>
+            <th style="width: 20%">IRPF (€)</th>
 
             <th></th>
         </tr>
@@ -13,18 +15,22 @@
     <tbody>
         @foreach (var item in Model.FacturacionData)
         {
-            <tr>
-                <td>@item.Year</td>
-                <td>@item.Mes</td>
-                <td>@item.Total €</td>
-            </tr>
+        <tr>
+            <td>@item.Year</td>
+            <td>@item.Mes</td>
+            <td>@item.TotalBruto €</td>
+            <td>@item.TotalNeto €</td>
+            <td>@item.TotalIrpf €</td>
+        </tr>
         }
     </tbody>
     <tfoot>
         <tr>
             <td>---</td>
             <td>Total</td>
-            <td>@Model.Total €</td>
+            <td>@Model.TotalBruto €</td>
+            <td>@Model.TotalNeto €</td>
+            <td>@Model.TotalIrpf €</td>
         </tr>
     </tfoot>
 </table>

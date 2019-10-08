@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Web.Areas.Facturas.Entities.ViewModels;
 using Web.Areas.Facturas.Services.Referencias;
@@ -19,13 +20,11 @@ namespace Web.Areas.Pacientes.Controllers
     public class FacturasController : Controller
     {
         private readonly IFacturasServices _facturasServices;
-        private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IPdfGenerator _pdfGenerator;
 
-        public FacturasController(IFacturasServices facturasServices, IHostingEnvironment hostingEnvironment, IPdfGenerator pdfGenerator)
+        public FacturasController(IFacturasServices facturasServices,  IPdfGenerator pdfGenerator)
         {
             _facturasServices = facturasServices;
-            _hostingEnvironment = hostingEnvironment;
             _pdfGenerator = pdfGenerator;
         }
 
@@ -127,14 +126,14 @@ namespace Web.Areas.Pacientes.Controllers
         public async Task<IActionResult> DescargarFactura(int id)
         {
             var factura = await _facturasServices.FindFacturaByIdForEditAsync(id);
-            return File(_pdfGenerator.GeneratePdf(factura, _hostingEnvironment.WebRootPath), "application/pdf", $"{factura.Codigo}.pdf");
+            return File(await _pdfGenerator.GeneratePdf(factura), "application/pdf", $"{factura.Codigo}.pdf");
         }
 
         [HttpGet, ActionName("Ver")]
         public async Task<IActionResult> VerFactura(int id)
         {
             var factura = await _facturasServices.FindFacturaByIdForEditAsync(id);
-            return new FileStreamResult(_pdfGenerator.GeneratePdf(factura, _hostingEnvironment.WebRootPath), "application/pdf");
+            return new FileStreamResult(await _pdfGenerator.GeneratePdf(factura), "application/pdf");
         }
 
         [HttpGet]

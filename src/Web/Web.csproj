@@ -33,7 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Pacientes\Models\Data\" />
-    <Folder Include="Areas\Pacientes\Entities\" />
     <Folder Include="Areas\Pacientes\Views\Shared\" />
     <Folder Include="wwwroot\js\min\facturas\" />
     <Folder Include="wwwroot\js\min\pacientes\" />

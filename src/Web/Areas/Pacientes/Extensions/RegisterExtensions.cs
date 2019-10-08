@@ -11,7 +11,7 @@ namespace Web.Areas.Facturas.Extensions
             services.AddScoped<IReferenciasService, ReferenciasService>();
             services.AddScoped<IFacturasServices, FacturasServices>();
             services.AddScoped<IPdfGenerator, PdfGenerator>();
-
+            services.AddHttpClient();
             return services;
         }
     }

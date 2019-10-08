@@ -10,6 +10,8 @@ namespace Web.Areas.Pacientes.Models.ViewModels.Facturas
         }
 
         public List<FacturacionItem> FacturacionData { get; set; }
-        public double Total { get; set; }
+        public double TotalBruto { get; set; }
+        public double TotalNeto { get; set; }
+        public double TotalIrpf { get; set; }
     }
 }
