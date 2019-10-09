@@ -1,10 +1,19 @@
-﻿@model List<int>
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model List<int>
 @{
     ViewData["Title"] = "Facturas";
 }
 <br />
 <p>
-    <a asp-action="Create" class="btn btn-primary">Nueva factura</a>
+    @{
+        var canEditFacturas = (await AuthorizationService.AuthorizeAsync(User, "FacturasWrite")).Succeeded;
+    }
+    
+    @if (canEditFacturas)
+    {
+        <a asp-action="Create" class="btn btn-primary">Nueva factura</a>
+    }
 </p>
 
 <div class="well row">

@@ -37,6 +37,7 @@ namespace Web.Areas.Pacientes.Controllers
         }
 
         [HttpGet]
+        [Permission("FacturasWrite", "Permitir crear/editar facturas")]
         public IActionResult Create()
         {
             var vm = new CreateOrEditFacturaViewModel()
@@ -55,7 +56,7 @@ namespace Web.Areas.Pacientes.Controllers
         }
 
 
-
+        [Permission("FacturasWrite", "Permitir crear/editar facturas")]
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string paciente, FacturasHeader factura, FacturaLine[] lineas)
@@ -71,6 +72,7 @@ namespace Web.Areas.Pacientes.Controllers
             }
         }
 
+        [Permission("FacturasWrite", "Permitir crear/editar facturas")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -85,6 +87,7 @@ namespace Web.Areas.Pacientes.Controllers
         }
 
 
+        [Permission("FacturasWrite", "Permitir crear/editar facturas")]
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string paciente, FacturasHeader factura, FacturaLine[] lineas)
@@ -136,6 +139,7 @@ namespace Web.Areas.Pacientes.Controllers
             return new FileStreamResult(await _pdfGenerator.GeneratePdf(factura), "application/pdf");
         }
 
+        [Permission("Facturacion", "Permitir ver la facturación anual")]
         [HttpGet]
         public async Task<IActionResult> Facturacion()
         {
@@ -143,6 +147,7 @@ namespace Web.Areas.Pacientes.Controllers
             return View(availableYear);
         }
 
+        [Permission("Facturacion", "Permitir ver la facturación anual")]
         [HttpPost,ActionName("FacturacionYear")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> FacturacionYear(int year)
