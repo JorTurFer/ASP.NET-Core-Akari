@@ -238,8 +238,8 @@ function generateCalendar(events) {
             var data = {
                 EventID: event.eventID,
                 Subject: event.title,
-                Start: event.start.format("DD/MM/YYYY HH:mm"),
-                End: event.end !== null ? event.end.format("DD/MM/YYYY HH:mm") : null,
+                Start: getDateFromMoment(event.start),
+                End: event.end !== null ? getDateFromMoment(event.end) : null,
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay
@@ -250,8 +250,8 @@ function generateCalendar(events) {
             var data = {
                 EventID: event.eventID,
                 Subject: event.title,
-                Start: event.start.format("DD/MM/YYYY HH:mm"),
-                End: event.end !== null ? event.end.format("DD/MM/YYYY HH:mm") : null,
+                Start: getDateFromMoment(event.start),
+                End: event.end !== null ? getDateFromMoment(event.end) : null,
                 Description: event.description,
                 Color: event.color,
                 IsFullDay: event.allDay
@@ -260,6 +260,17 @@ function generateCalendar(events) {
         }
     });
 }
+
+function getDateFromMoment(moment) {
+    var year = moment.year();
+    var month = moment.month();
+    var date = moment.date();
+    var hour = moment.hour();
+    var minute = moment.minute();
+    var time = new Date(year, month, date, hour, minute, 0, 0).toISOString();
+    return time;
+}
+
 
 function fetchEventAndRenderCalendar() {
     var date = new Date().toISOString();
