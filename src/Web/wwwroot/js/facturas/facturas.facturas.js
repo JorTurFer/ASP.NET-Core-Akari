@@ -1,5 +1,6 @@
 ﻿//Obtiene el grid de referencias
-function getFacturasGrid(url, search, sort, ascending, page, pageSize, year) {
+function getFacturasGrid(url, search, sort, ascending, page, pageSize) {
+    var year = $("#listayears").val();
     $.ajax({
         url: url,
         data: {

@@ -100,10 +100,10 @@ else
     @{
         var last = (int)Math.Ceiling((decimal)Model.TotalReferencias / Model.PageSize);
     }
-    $('#first').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '1', $("#pageSize").val()),$("#listayears").val()});
-    $('#prev').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(),'@Model.Sort','@Model.Ascending', '@Math.Max(1, Model.Page - 1)', $("#pageSize").val()),$("#listayears").val()});
-    $('#next').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(),'@Model.Sort','@Model.Ascending', '@Math.Min(last, Model.Page + 1)', $("#pageSize").val()),$("#listayears").val()});
-    $('#last').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '@last', $("#pageSize").val()),$("#listayears").val() });
-    $('#codigo').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()),$("#listayears").val() });
-    $('#paciente').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'paciente', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val()),$("#listayears").val() });
+    $('#first').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '1', $("#pageSize").val())});
+    $('#prev').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '@Math.Max(1, Model.Page - 1)', $("#pageSize").val())});
+    $('#next').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '@Math.Min(last, Model.Page + 1)', $("#pageSize").val())});
+    $('#last').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), '@Model.Sort', '@Model.Ascending', '@last', $("#pageSize").val())});
+    $('#codigo').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val())});
+    $('#paciente').click(function () { getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'paciente', '@Model.InvertAscending', '@Model.Page', $("#pageSize").val())});
 </script>

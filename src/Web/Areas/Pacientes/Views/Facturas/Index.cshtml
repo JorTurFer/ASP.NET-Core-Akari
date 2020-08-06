@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-3">
                 @{
-                    @Html.DropDownList("listayears", new SelectList(@Model), "Año", new { @class = "form-control dropdown desplegables" })
+                    @Html.DropDownList("listayears", new SelectList(@Model), "Todos", new { @class = "form-control dropdown desplegables" })
                 }
             </div>
         </div>
@@ -55,16 +55,17 @@
     </environment>
 
     <script type="text/javascript">
-    var pageSize = 50;
-    $(document).ready(function () {
-        getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', true, 1, pageSize,$("#listayears").val());
-        $("#searchInput").on('input',(function (){
-            getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', true, 1, pageSize,$("#listayears").val());
-        }));
-        $("#listayears").on('change',(function (){
-            getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', true, 1, pageSize,$("#listayears").val());
-        }));
-    });
+        var pageSize = 50;
+        $("#listayears").val("@DateTime.Now.Year");
+        $(document).ready(function () {
+            getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', false, 1, pageSize);
+            $("#searchInput").on('input',(function (){
+                getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', false, 1, pageSize);
+            }));
+            $("#listayears").on('change',(function (){
+                getFacturasGrid('@Url.Action("GetFacturasGrid", "Facturas")', $("#searchInput").val(), 'codigo', false, 1, pageSize);
+            }));
+        });
     </script>
 }
 
