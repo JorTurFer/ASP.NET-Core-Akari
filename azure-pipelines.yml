@@ -22,18 +22,16 @@ variables:
 # Pasos a ejecutar
 steps:
 
-# Instalar Nuget
-- task: NuGetToolInstaller@0
-
 # Instalar la versión de NetCore que hemos definido en las variables
 - task: DotNetCoreInstaller@0
   inputs:
     version: '$(netCoreVersion)'
 
-# Ejecutar un 'nuget restore'
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
-    restoreSolution: '$(solution)'
+    command: 'restore'
+    projects: '$(solution)'
+    feedsToUse: 'select'
 
 # Lanzamos el comando de compilación
 - task: DotNetCoreCLI@2
