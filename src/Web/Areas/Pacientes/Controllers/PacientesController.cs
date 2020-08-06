@@ -122,9 +122,9 @@ namespace Akari_Net.Core.Areas.Pacientes.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GetPacientesGrid(GridPacientesViewModel vm)
+        public async Task<IActionResult> GetPacientesGrid(GridPacientesViewModel vm)
         {
-            var pageData = _pacientesService.GetPacientesPageAsync(vm.Text, vm.Page, vm.PageSize, vm.Sort, vm.Ascending);
+            var pageData = await _pacientesService.GetPacientesPageAsync(vm.Text, vm.Page, vm.PageSize, vm.Sort, vm.Ascending);
             vm.TotalPacientes = pageData.TotalPacientes;
             vm.Pacientes = pageData.Pacientes;
             return View(vm);

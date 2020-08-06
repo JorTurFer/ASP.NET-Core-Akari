@@ -53,6 +53,17 @@
     "sourceMap": false
   },
   {
+    "outputFileName": "wwwroot/js/min/pacientes/pacientes.historial.min.js",
+    "inputFiles": [
+      "wwwroot/js/pacientes/pacientes.historial.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
     "outputFileName": "wwwroot/js/min/pacientes/pacientes.citas.min.js",
     "inputFiles": [
       "wwwroot/js/pacientes/pacientes.citas.js"
@@ -66,7 +77,7 @@
   {
     "outputFileName": "wwwroot/js/min/signalr/signalr.min.js",
     "inputFiles": [
-      "wwwroot/js/signalr/signalr.js",
+      "wwwroot/js/signalr/signalr.js"
     ],
     "minify": {
       "enabled": true,
@@ -77,7 +88,7 @@
   {
     "outputFileName": "wwwroot/js/min/signalr/msgpack5.min.js",
     "inputFiles": [
-      "wwwroot/js/signalr/msgpack5.js",
+      "wwwroot/js/signalr/msgpack5.js"
     ],
     "minify": {
       "enabled": true,

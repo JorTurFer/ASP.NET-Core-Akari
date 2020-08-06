@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.Areas.Pacientes.Data;
 
 namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 {
@@ -90,7 +91,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
             return _context.SaveChangesAsync();
         }
 
-        public PacientesPageDataViewModel GetPacientesPageAsync(string text, int page, int pageSize, string sort, bool ascending)
+        public async Task<PacientesPageDataViewModel> GetPacientesPageAsync(string text, int page, int pageSize, string sort, bool ascending)
         {
             IQueryable<Paciente> usersQuery = _context.Pacientes;
             switch (sort.ToLower())
@@ -114,12 +115,12 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
 
             var count = usersQuery.Count();
 
-            var data = usersQuery.Skip((page - 1) * pageSize).Take(pageSize).Select(x => new PacienteViewModel
+            var data = await usersQuery.Skip((page - 1) * pageSize).Take(pageSize).Select(x => new PacienteViewModel
             {
                 Name = x.Nombre,
                 Email = x.Email,
                 Id = x.IdPaciente.ToString()
-            }).ToList();
+            }).ToListAsync();
             var result = new PacientesPageDataViewModel
             {
                 TotalPacientes = count,
@@ -185,6 +186,82 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Services
         public Task<List<PacientesAutoCompleteViewModel>> GetPatientNamesAsync(string Nombre)
         {
             return _context.Pacientes.Where(x => x.Nombre.ToLower().Contains(Nombre.ToLower())).Select(x => new PacientesAutoCompleteViewModel { Nombre = x.Nombre, Id = x.IdPaciente }).ToListAsync();
+        }
+
+        public int CreateRegistry(int idPaciente, string registry)
+        {
+            var registro = new Historial { IdPaciente = idPaciente, Registro = registry, Fecha = DateTime.Now };
+            _context.Add(registro);
+            return SaveChanges();
+        }
+
+        public async Task<int> CreateRegistryAsync(int idPaciente, string registry)
+        {
+            var registro = new Historial { IdPaciente = idPaciente, Registro = registry, Fecha = DateTime.Now };
+            _context.Add(registro);
+            return await SaveChangesAsync();
+        }
+
+        public async Task<HistorialPageDataViewModel> GetHistorialPageAsync(int id, string text, int page, int pageSize, string sort, bool ascending)
+        {
+            IQueryable<Historial> usersQuery = _context.Historial.Where(x=>x.IdPaciente == id);
+            switch (sort.ToLower())
+            {
+                case "fecha":
+                    usersQuery = ascending
+                       ? usersQuery.OrderBy(p => p.Fecha)
+                       : usersQuery.OrderByDescending(p => p.Fecha);
+                    break;
+                default:
+                    usersQuery = ascending
+                       ? usersQuery.OrderBy(p => p.Id)
+                       : usersQuery.OrderByDescending(p => p.Id);
+                    break;
+            }
+
+            if (!String.IsNullOrWhiteSpace(text))
+            {
+                usersQuery = usersQuery.Where(u => u.Registro.Contains(text));
+            }
+
+            var count = usersQuery.Count();
+
+            var data = await usersQuery.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            var result = new HistorialPageDataViewModel
+            {
+                TotalRegistros = count,
+                Registros = data,
+            };
+            return result;
+        }
+
+        public int Remove(Historial historia)
+        {
+            _context.Historial.Remove(historia);
+            return _context.SaveChanges();
+        }
+
+        public async Task<int> RemoveAsync(Historial historia)
+        {
+            _context.Historial.Remove(historia);
+            return await _context.SaveChangesAsync();
+        }
+
+        public Historial FindHistoriaById(int id)
+        {
+            return _context.Historial.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public async Task<Historial> FindHistoriaByIdAsync(int id)
+        {
+            return await _context.Historial.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<int> UpdateRegistryAsync(int id, string registry)
+        {
+            var historia = await _context.Historial.Where(x => x.Id == id).FirstOrDefaultAsync();
+            historia.Registro = registry;
+            return await _context.SaveChangesAsync();
         }
     }
 }

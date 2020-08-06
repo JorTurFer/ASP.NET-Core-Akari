@@ -1,0 +1,87 @@
+﻿@model Web.Areas.Pacientes.Models.ViewModels.Historial.HistorialViewModel
+@{
+    ViewData["Title"] = $"Historial de {Model.Paciente}";
+}
+<h2>Historial de @Model.Paciente</h2>
+<br />
+<p>
+    <a id="create" class="btn btn-sm btn-primary" onclick="$('#create-registry').modal();">Nuevo registro</a>
+</p>
+
+<div class="well row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Buscar:</label>
+            <input type="text" class="form-control" id="searchInput" />
+        </div>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+</div>
+
+<div id="historial">
+
+</div>
+
+<div class="modal fade site-modal-details" id="create-registry">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Introducir registro</h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="input" new-registry" rows="25" style="width:100%"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-success" onclick="saveNewRegistry('@Url.Action("Create")',@Model.PacienteId,$('#input'))">Guardar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#input').val('')">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade site-modal-details" id="update-registry">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Actualizar registro</h4>
+            </div>
+            <input type="hidden" id="registry-id"/>
+            <div class="modal-body">
+                <textarea id="input-update" new-registry" rows="25" style="width:100%"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-success" onclick="updateRegistry('@Url.Action("Update")',$('#registry-id').val(),$('#input-update').val())">Guardar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#input-update').val('')">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <environment Names="Development">
+        <script src="~/js/pacientes/pacientes.historial.js" asp-append-version="true"></script>
+    </environment>
+    <environment Names="Production,Staging">
+        <script src="~/js/min/pacientes/pacientes.historial.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script type="text/javascript">
+        var pageSize = 10;
+        function loadGrid() {
+            getHistorialGrid('@Url.Action("GetHistorialGrid", "Historial")',@Model.PacienteId, $("#searchInput").val(), 'fecha', false, 1, pageSize);
+            $(searchInput).on('input',(function (){
+                getHistorialGrid('@Url.Action("GetHistorialGrid", "Historial")',@Model.PacienteId, $("#searchInput").val(), 'fecha', false, 1, pageSize);
+            }));
+        }
+        $(document).ready(function () {
+            loadGrid();
+        });
+    </script>
+}

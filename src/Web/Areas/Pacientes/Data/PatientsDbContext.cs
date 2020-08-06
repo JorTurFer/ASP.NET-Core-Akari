@@ -45,5 +45,7 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public DbSet<FacturaLine> FacturasLineas { get; set; }
 
         public DbSet<Ciudad> Ciudades { get; set; }
+
+        public DbSet<Historial> Historial { get; set; }
     }
 }

@@ -70,8 +70,8 @@ namespace Akari_Net.Core.Areas.Pacientes.Models.Data
         public virtual Provincia Provincia { get; set; }
         public virtual Pais Pais { get; set; }
         public virtual ICollection<CalendarEvent> Citas { get; set; }
-
         public virtual ICollection<FacturasHeader> Facturas { get; set; }
+        public virtual ICollection<Historial> Registros { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
