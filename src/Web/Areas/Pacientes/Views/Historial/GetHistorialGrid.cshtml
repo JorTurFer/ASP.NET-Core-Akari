@@ -30,7 +30,7 @@ else
             {
                 <tr>
                     <td>@registro.Fecha.ToString("dd-MM-yyyy")</td>
-                    <td>@registro.Registro</td>                    
+                    <td style="white-space:pre-wrap; word-wrap:break-word">@registro.Registro</td>                    
                     <td></td>
                     <td>
                         <a class="btn btn-sm btn-warning" onclick="loadRegistry('@Url.Action("Detail")',@registro.Id)">Editar</a>                        
