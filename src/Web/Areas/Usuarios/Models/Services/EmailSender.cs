@@ -21,15 +21,15 @@ namespace Akari_Net.Core.Areas.Usuarios.Models.Services
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
+            return Execute(Options.SendGridKey, Options.SendGridUser, subject, message, email);
         }
 
-        public Task Execute(string apiKey, string subject, string message, string email)
+        public Task Execute(string apiKey,string from, string subject, string message, string email)
         {
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("noreply@akaripodologia.com", "No Reply"),
+                From = new EmailAddress(from, "No Reply"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
