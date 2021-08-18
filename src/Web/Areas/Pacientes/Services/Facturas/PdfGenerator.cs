@@ -15,10 +15,10 @@ namespace Web.Areas.Pacientes.Services.Facturas
     public class PdfGenerator : IPdfGenerator
     {
         private readonly IFacturasServices _facturasServices;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IHttpClientFactory _clientFactory;
 
-        public PdfGenerator( IFacturasServices facturasServices, IHostingEnvironment hostingEnvironment, IHttpClientFactory clientFactory)
+        public PdfGenerator( IFacturasServices facturasServices, IWebHostEnvironment hostingEnvironment, IHttpClientFactory clientFactory)
         {
             _facturasServices = facturasServices;
             _hostingEnvironment = hostingEnvironment;

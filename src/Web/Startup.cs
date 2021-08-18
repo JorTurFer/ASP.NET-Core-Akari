@@ -23,6 +23,7 @@ using Web.Areas.Facturas.Extensions;
 using Web.Areas.Pacientes.Models.Services;
 using Web.Areas.Usuarios.Data;
 using Web.Models.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace Web
 {
@@ -107,10 +108,9 @@ namespace Web
                 options.AddPermissions(new PermissionService());
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddControllersWithViews()
                              .AddRazorPagesOptions(options =>
                              {
-                                 options.AllowAreas = true;
                                  options.Conventions.AuthorizeAreaFolder("Usuarios", "/Account/Manage");
                                  options.Conventions.AuthorizeAreaPage("Usuarios", "/Account/Logout");
                              });
@@ -141,9 +141,9 @@ namespace Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName == Environments.Development)
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -168,26 +168,26 @@ namespace Web
 
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-
+            
+            app.UseRouting();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            app.UseCookiePolicy();           
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseResponseCompression();
 
-            app.UseSignalR(routes =>
+            app.UseEndpoints(endpoints => 
             {
-                routes.MapHub<CalendarioHub>("/CalendarioHub");
-            });
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<CalendarioHub>("/CalendarioHub");
+            });           
         }
     }
 }

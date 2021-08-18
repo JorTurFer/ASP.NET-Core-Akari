@@ -19,7 +19,7 @@
             <div class="form-group  col-md-2">
                 <label>Fecha</label>
                 <div class="input-group date" id="dtp1">
-                    <input type="text" id="Factura_Fecha" class="form-control" value="@Model.Factura.Fecha.ToString("yyyy-MM-dd")"  disabled/>
+                    <input type="text" id="Factura_Fecha" class="form-control" value="@Model.Factura.Fecha.ToString("yyyy-MM-dd")" disabled />
                     <span class="input-group-addon" disabled>
                         <span class="glyphicon glyphicon-calendar" disabled></span>
                     </span>
@@ -27,17 +27,17 @@
             </div>
             <div class="form-group  col-md-1">
                 <label asp-for="Factura.IRPF" class="control-label"></label>
-                <input asp-for="Factura.IRPF" class="form-control" value="@Model.Factura.IRPF"/>
+                <input asp-for="Factura.IRPF" class="form-control" value="@Model.Factura.IRPF" />
                 <span asp-validation-for="Factura.IRPF" class="text-danger"></span>
             </div>
             <div class="form-group  col-md-1">
                 <label asp-for="Factura.Descuento" class="control-label"></label>
-                <input asp-for="Factura.Descuento" class="form-control" value="@Model.Factura.Descuento"/>
+                <input asp-for="Factura.Descuento" class="form-control" value="@Model.Factura.Descuento" />
                 <span asp-validation-for="Factura.Descuento" class="text-danger"></span>
             </div>
             <div class="form-group  col-md-4">
                 <label asp-for="NombrePaciente" class="control-label"></label>
-                <input asp-for="NombrePaciente" class="form-control" id="Paciente" value="@Model.NombrePaciente"/>
+                <input asp-for="NombrePaciente" class="form-control" id="Paciente" value="@Model.NombrePaciente" />
                 <span asp-validation-for="NombrePaciente" class="text-danger"></span>
             </div>
             <div class="form-group  col-md-2">
@@ -50,15 +50,15 @@
     <hr />
     <table id="tableLineas" class="table" cellpadding="0" cellspacing="0">
         <thead>
-        <tr>
-            <th style="display: none"></th>
-            <th style="width: 25%">Referencia</th>
-            <th style="width: 35%">Concepto</th>
-            <th style="width: 15%">Cantidad</th>
-            <th style="width: 15%">Precio</th>
-            <th style="width: 20%">Total</th>
-            <th></th>
-        </tr>
+            <tr>
+                <th style="display: none"></th>
+                <th style="width: 25%">Referencia</th>
+                <th style="width: 35%">Concepto</th>
+                <th style="width: 15%">Cantidad</th>
+                <th style="width: 15%">Precio</th>
+                <th style="width: 20%">Total</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
             @foreach (var linea in Model.Factura.Lineas)
@@ -70,7 +70,7 @@
                     <td>@linea.Cantidad</td>
                     <td>@linea.Precio</td>
                     <td>@(linea.Precio * linea.Cantidad)</td>
-                    <td><input type="button" class="btnDel btn btn-danger" value="Borrar"/></td>
+                    <td><input type="button" class="btnDel btn btn-danger" value="Borrar" /></td>
                 </tr>
             }
         </tbody>
@@ -100,26 +100,21 @@
 </form>
 
 @section Scripts {
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
     <environment Names="Development">
         <script src="~/js/facturas/facturas.facturas.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
-        <link href="~/lib/jquery-ui/themes/base/jquery-ui.css" rel="stylesheet" />
-        <script src="~/lib/moment/moment.js" asp-append-version="true"></script>
-        <script src="~/lib/fullcalendar/dist/fullcalendar.js" asp-append-version="true"></script>
-        <script src="~/lib/fullcalendar/dist/locale/es.js" asp-append-version="true"></script>
-        <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" asp-append-version="true"></script>
-        <link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
     </environment>
     <environment Names="Production,Staging">
         <script src="~/js/min/facturas/facturas.min.js" asp-append-version="true"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     </environment>
+
     <script type="text/javascript">
         $(document).ready(function () {
             var date = new Date(@Model.Factura.Fecha.Year,@Model.Factura.Fecha.Month-1,@Model.Factura.Fecha.Day,0,0,0,0);
